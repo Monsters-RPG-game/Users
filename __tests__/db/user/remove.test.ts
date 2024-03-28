@@ -7,7 +7,6 @@ import type { IInventoryEntity } from '../../../src/modules/inventory/entity';
 import type { IPartyEntity } from '../../../src/modules/party/entity';
 import type { IProfileEntity } from '../../../src/modules/profile/entity';
 import type { IUserEntity } from '../../../src/modules/user/entity';
-import type { IRemoveUserDto } from '../../../src/modules/user/remove/types';
 
 describe('Remove user', () => {
   const connection = new utils.Connection();
@@ -17,9 +16,6 @@ describe('Remove user', () => {
   const fakeProfile = utils.fakeData.profiles[0] as IProfileEntity;
   const fakeInv = utils.fakeData.inventories[0] as IInventoryEntity;
   const fakeParty = utils.fakeData.parties[0] as IPartyEntity;
-  const remove: IRemoveUserDto = {
-    name: fakeUser.login,
-  };
 
   beforeAll(async () => {
     await connection.connect();
@@ -36,7 +32,7 @@ describe('Remove user', () => {
   describe('Should throw', () => {
     it('No data in database', async () => {
       const rooster = new Rooster();
-      const user = await rooster.getByLogin(remove.name);
+      const user = await rooster.get(fakeUser._id);
 
       expect(user).toEqual(null);
     });

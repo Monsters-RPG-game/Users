@@ -233,3 +233,13 @@ export class ElementTooLongError extends FullError {
     this.status = 400;
   }
 }
+
+export class NoUser extends FullError {
+  constructor() {
+    super('NoUser');
+    this.message = 'No user with provided id';
+    this.name = 'NoUser';
+    this.code = '023';
+    this.status = 400;
+  }
+}

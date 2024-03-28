@@ -1,13 +1,12 @@
 import { afterEach, beforeEach, describe, expect, it } from '@jest/globals';
-import * as errors from '../../../src/errors';
-import Handler from '../../../src/modules/user/handler';
-import Controller from '../../../src/modules/user/remove/';
-import * as utils from '../../utils';
-import type { IInventoryEntity } from '../../../src/modules/inventory/entity';
-import type { IPartyEntity } from '../../../src/modules/party/entity';
-import type { IProfileEntity } from '../../../src/modules/profile/entity';
-import type { IUserDetails, IUserEntity } from '../../../src/modules/user/entity';
-import type { IRemoveUserDto } from '../../../src/modules/user/remove/types';
+import * as errors from '../../src/errors';
+import Handler from '../../src/modules/user/handler';
+import * as utils from '../utils';
+import type { IInventoryEntity } from '../../src/modules/inventory/entity';
+import type { IPartyEntity } from '../../src/modules/party/entity';
+import type { IProfileEntity } from '../../src/modules/profile/entity';
+import type { IUserEntity } from '../../src/modules/user/entity';
+import type { IRemoveUserDto } from '../../src/modules/user/remove/types';
 
 describe('Remove user', () => {
   const db = new utils.FakeFactory();
@@ -17,9 +16,8 @@ describe('Remove user', () => {
   const fakeInv = utils.fakeData.inventories[0] as IInventoryEntity;
   const fakeParty = utils.fakeData.parties[0] as IPartyEntity;
   const remove: IRemoveUserDto = {
-    name: fakeUser.login,
+    password: fakeUser.password,
   };
-  const controller = new Controller();
   const handler = new Handler();
 
   afterEach(async () => {
@@ -27,16 +25,6 @@ describe('Remove user', () => {
   });
 
   describe('Should throw', () => {
-    describe('No data passed', () => {
-      it('Missing id', () => {
-        const clone = structuredClone(remove);
-        clone.name = undefined!;
-        controller.remove(clone.name).catch((err) => {
-          expect(err).toEqual(new errors.IncorrectCredentialsError());
-        });
-      });
-    });
-
     describe('Incorrect data', () => {
       beforeEach(async () => {
         await db.user
@@ -54,7 +42,7 @@ describe('Remove user', () => {
 
       it('No user with provided id', () => {
         handler.remove(fakeUser2.login, fakeUser2._id).catch((err) => {
-          expect(err).toEqual(new errors.NoPermission());
+          expect(err).toEqual(new errors.NoUser());
         });
       });
     });
@@ -81,7 +69,7 @@ describe('Remove user', () => {
         .party(fakeParty._id)
         .create();
 
-      const func = async (): Promise<IUserDetails> => handler.remove(remove.name, fakeUser._id);
+      const func = async (): Promise<void> => handler.remove(remove.password, fakeUser._id);
 
       expect(func).not.toThrow();
     });

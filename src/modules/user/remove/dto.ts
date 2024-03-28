@@ -2,15 +2,18 @@ import Validation from '../../../tools/validation';
 import type { IRemoveUserDto } from './types';
 
 export default class RemoveUserDto implements IRemoveUserDto {
-  name: string;
+  id: string;
+  password: string;
 
-  constructor(data: IRemoveUserDto) {
-    this.name = data.name;
+  constructor(data: IRemoveUserDto, userId: string) {
+    this.password = data.password;
+    this.id = userId;
 
     this.validate();
   }
 
   validate(): void {
-    new Validation(this.name, 'name').isDefined().isString();
+    new Validation(this.id, 'id').isDefined().isString().isObjectId();
+    new Validation(this.password, 'password').isDefined().isString();
   }
 }
