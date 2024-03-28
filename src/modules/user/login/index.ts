@@ -31,4 +31,11 @@ export default class Controller extends ControllerFactory<EModules.Users> {
       id: user._id.toString(),
     };
   }
+
+  async comparePassword(userId: string, password: string): Promise<void> {
+    const user = await this.rooster.get(userId);
+    if (!user) throw new errors.NoUser();
+
+    return this.utils.compare(password, user.password);
+  }
 }

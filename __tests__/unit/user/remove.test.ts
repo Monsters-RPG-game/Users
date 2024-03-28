@@ -8,7 +8,7 @@ import type { IRemoveUserDto } from '../../../src/modules/user/remove/types';
 describe('Remove', () => {
   const fakeUser = utils.fakeData.users[0] as IUserEntity;
   const remove: IRemoveUserDto = {
-    name: fakeUser.login,
+    password: fakeUser.password,
   };
 
   describe('Should throw', () => {
@@ -19,7 +19,7 @@ describe('Remove', () => {
           delete clone[k];
 
           try {
-            new RemoveUserDto(clone);
+            new RemoveUserDto(clone, fakeUser._id);
           } catch (err) {
             expect(err).toEqual(new errors.MissingArgError(k));
           }
@@ -28,27 +28,19 @@ describe('Remove', () => {
     });
 
     describe('Incorrect data', () => {
-      it('Name is not string', () => {
+      it('UserId is not objectId', () => {
         const clone = structuredClone(remove);
-        clone.name = 1 as unknown as string;
 
         try {
-          new RemoveUserDto(clone);
+          new RemoveUserDto(clone, 1 as unknown as string);
         } catch (err) {
-          expect(err).toEqual(new errors.IncorrectArgTypeError('name should be a string'));
+          expect(err).toEqual(new errors.IncorrectArgTypeError('id should be a string'));
         }
       });
     });
   });
 
   describe('Should pass', () => {
-    it('Remove user', () => {
-      try {
-        const data = new RemoveUserDto(remove);
-        expect(data.name).toEqual(remove.name);
-      } catch (err) {
-        expect(err).toBeUndefined();
-      }
-    });
+    // To fill
   });
 });

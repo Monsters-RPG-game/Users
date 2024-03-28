@@ -44,12 +44,12 @@ export default class Controller {
   }
 
   async removeUser(payload: unknown, user: ILocalUser): Promise<void> {
-    const { name } = new RemoveUserDto(payload as IRemoveUserDto);
+    const { password, id } = new RemoveUserDto(payload as IRemoveUserDto, user.userId as string);
 
-    const { _id } = await this.user.remove(name, user.userId!);
-    await this.profile.remove(_id.toString());
-    await this.party.remove(_id.toString());
-    await this.inventory.remove(_id.toString());
+    await this.user.remove(password, id);
+    await this.profile.remove(id);
+    await this.party.remove(id);
+    await this.inventory.remove(id);
 
     return State.broker.send(user.tempId, undefined, enums.EMessageTypes.Send);
   }

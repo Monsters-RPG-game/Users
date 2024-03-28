@@ -3,12 +3,10 @@ import GetAllController from './getAll';
 import LoginController from './login';
 import RegisterController from './register';
 import RemoveController from './remove';
-import RemoveUserDto from './remove/dto';
 import * as enums from '../../enums';
 import * as errors from '../../errors';
 import HandlerFactory from '../../tools/abstract/handler';
 import State from '../../tools/state';
-import type { IUserDetails } from './entity';
 import type { IUserDetailsDto } from './get/types';
 import type { IGetAllUsersDto } from './getAll/types';
 import type { ILoginDto } from './login/types';
@@ -69,15 +67,8 @@ export default class UserHandler extends HandlerFactory<EModules.Users> {
     return State.broker.send(user.tempId, callback, enums.EMessageTypes.Send);
   }
 
-  async remove(name: string, userId: string): Promise<IUserDetails> {
-    const data = new RemoveUserDto({ name });
-    const users = await this.getController.get([data]);
-    if (users.length === 0) throw new errors.NoPermission();
-
-    const user = users[0] as IUserDetails;
-    if (user._id.toString() !== userId) throw new errors.NoPermission();
-
-    await this.removeController.remove(user._id);
-    return user;
+  async remove(password: string, id: string): Promise<void> {
+    await this.loginController.comparePassword(id, password);
+    await this.removeController.remove(id);
   }
 }
