@@ -6,4 +6,4 @@ npm run migrate
 
 echo "Starting service"
 
-node build/src/main.js
+node src/main.js
