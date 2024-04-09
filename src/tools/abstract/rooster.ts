@@ -1,6 +1,6 @@
 import type { EModules } from './enums';
 import type * as types from './types';
-import type { Document, Model } from 'mongoose';
+import type { Document, FilterQuery, Model } from 'mongoose';
 
 export default abstract class RoosterFactory<T extends Document, U extends Model<T>, Z extends EModules>
   implements types.IRoosterFactory<Z>
@@ -21,7 +21,7 @@ export default abstract class RoosterFactory<T extends Document, U extends Model
     return callback._id as string;
   }
 
-  async count(filter: Record<string, unknown>): Promise<number> {
+  async count(filter: FilterQuery<Record<string, unknown>>): Promise<number> {
     return this.model.countDocuments(filter);
   }
 
@@ -36,10 +36,10 @@ export default abstract class RoosterFactory<T extends Document, U extends Model
   }
 
   async update(id: string, data: types.IRoosterUpdate[Z]): Promise<void> {
-    await this.model.findOneAndUpdate({ _id: id }, data);
+    await this.model.findOneAndUpdate({ _id: id } as FilterQuery<Record<string, unknown>>, data);
   }
 
   async get(_id: unknown): Promise<types.IRoosterGetData[Z] | null> {
-    return this.model.findOne({ _id }).lean();
+    return this.model.findOne({ _id } as FilterQuery<Record<string, unknown>>).lean();
   }
 }
