@@ -22,7 +22,6 @@
     "test:unit": "jest --config __tests__/jest.config.unit.ts",
     "test:db": "jest --runInBand --config __tests__/jest.config.db.ts",
     "generate": "npx module-generator",
-    "prepareHooks": "husky install",
     "migrate": "node src/migrations/index.js",
     "migrate:dev": "cross-env NODE_ENV=dev node build/src/migrations/index.js"
   },
@@ -38,7 +37,6 @@
     "amqplib": "0.10.3",
     "bcrypt": "5.1.1",
     "chalk": "4.1.2",
-    "husky": "9.0.11",
     "mongoose": "8.2.4",
     "node": "21.7.1",
     "winston": "3.13.0",
