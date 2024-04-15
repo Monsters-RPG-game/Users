@@ -7,7 +7,7 @@
   "license": "Apache-2.0",
   "private": false,
   "scripts": {
-    "start": "cross-env NODE_ENV=production node build/src/main.js",
+    "start": "cross-env NODE_ENV=production node src/main.js",
     "start:dev": "concurrently 'npm run build:watch' 'cross-env NODE_ENV=dev TS_NODE_FILES=true TS_NODE_TRANSPILE_ONLY=true nodemon build/src/main.js'",
     "start:testDev": "cross-env NODE_ENV=testDev TS_NODE_FILES=true TS_NODE_TRANSPILE_ONLY=true nodemon build/src/main.js",
     "start:test": "cross-env NODE_ENV=test TS_NODE_FILES=true TS_NODE_TRANSPILE_ONLY=true ts-node src/main.ts",
@@ -22,7 +22,6 @@
     "test:unit": "jest --config __tests__/jest.config.unit.ts",
     "test:db": "jest --runInBand --config __tests__/jest.config.db.ts",
     "generate": "npx module-generator",
-    "prepareHooks": "husky install",
     "migrate": "node src/migrations/index.js",
     "migrate:dev": "cross-env NODE_ENV=dev node build/src/migrations/index.js"
   },
@@ -38,8 +37,7 @@
     "amqplib": "0.10.3",
     "bcrypt": "5.1.1",
     "chalk": "4.1.2",
-    "husky": "9.0.11",
-    "mongoose": "8.2.4",
+    "mongoose": "8.3.0",
     "node": "21.7.2",
     "winston": "3.13.0",
     "winston-daily-rotate-file": "5.0.0"
@@ -50,7 +48,7 @@
     "@types/bcrypt": "5.0.2",
     "@types/migrate-mongo": "^10.0.4",
     "@types/node": "20.12.2",
-    "@typescript-eslint/eslint-plugin": "7.4.0",
+    "@typescript-eslint/eslint-plugin": "7.5.0",
     "@typescript-eslint/parser": "7.4.0",
     "concurrently": "8.2.2",
     "cross-env": "7.0.3",
