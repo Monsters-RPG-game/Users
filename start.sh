@@ -6,4 +6,4 @@ npm run migrate
 
 echo "Starting service"
 
-npm run start
+npm run start:testDev
