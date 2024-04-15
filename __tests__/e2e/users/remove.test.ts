@@ -1,12 +1,13 @@
 import { afterEach, beforeEach, describe, expect, it } from '@jest/globals';
-import * as errors from '../../src/errors';
-import Handler from '../../src/modules/user/handler';
-import * as utils from '../utils';
-import type { IInventoryEntity } from '../../src/modules/inventory/entity';
-import type { IPartyEntity } from '../../src/modules/party/entity';
-import type { IProfileEntity } from '../../src/modules/profile/entity';
-import type { IUserEntity } from '../../src/modules/user/entity';
-import type { IRemoveUserDto } from '../../src/modules/user/remove/types';
+import * as errors from '../../../src/errors';
+import Handler from '../../../src/modules/user/handler';
+import * as utils from '../../utils';
+import { sleep } from '../../utils';
+import type { IInventoryEntity } from '../../../src/modules/inventory/entity';
+import type { IPartyEntity } from '../../../src/modules/party/entity';
+import type { IProfileEntity } from '../../../src/modules/profile/entity';
+import type { IUserEntity } from '../../../src/modules/user/entity';
+import type { IRemoveUserDto } from '../../../src/modules/user/remove/types';
 
 describe('Remove user', () => {
   const db = new utils.FakeFactory();
@@ -27,6 +28,7 @@ describe('Remove user', () => {
   describe('Should throw', () => {
     describe('Incorrect data', () => {
       beforeEach(async () => {
+        await sleep(300);
         await db.user
           ._id(fakeUser._id)
           .login(fakeUser.login)
@@ -69,9 +71,11 @@ describe('Remove user', () => {
         .party(fakeParty._id)
         .create();
 
-      const func = async (): Promise<void> => handler.remove(remove.password, fakeUser._id);
-
-      expect(func).not.toThrow();
+      try {
+        await handler.remove(remove.password, fakeUser._id);
+      } catch (err) {
+        expect(err).toBeUndefined();
+      }
     });
   });
 });

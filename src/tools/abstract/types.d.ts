@@ -7,6 +7,10 @@ import type { IAddItemDto } from '../../modules/inventory/addBasic/types';
 import type { IInventoryEntity } from '../../modules/inventory/entity';
 import type InventoryGet from '../../modules/inventory/get';
 import type InventoryRooster from '../../modules/inventory/rooster';
+import type { IAddLoginAttempt } from '../../modules/loginAttmpt/add/types';
+import type { ILoginAttemptEntity } from '../../modules/loginAttmpt/entity';
+import type LoginAttemptGet from '../../modules/loginAttmpt/get';
+import type LoginAttemptRooster from '../../modules/loginAttmpt/rooster';
 import type { IAddLogDto } from '../../modules/logs/add/types';
 import type { ILogEntity } from '../../modules/logs/entity';
 import type LogGet from '../../modules/logs/get';
@@ -31,6 +35,7 @@ export interface IModulesGetControllers {
   [EModules.Inventory]: InventoryGet;
   [EModules.Logs]: LogGet;
   [EModules.BugReport]: BugReportGet;
+  [EModules.LoginAttempt]: LoginAttemptGet;
 }
 
 export interface IModulesControllers {
@@ -40,6 +45,7 @@ export interface IModulesControllers {
   [EModules.Party]: PartyRooster;
   [EModules.Logs]: LogsRooster;
   [EModules.BugReport]: BugReportRooster;
+  [EModules.LoginAttempt]: LoginAttemptRooster;
 }
 
 export interface IRoosterAddData {
@@ -49,6 +55,7 @@ export interface IRoosterAddData {
   [EModules.Party]: IAddPartyDto;
   [EModules.Logs]: IAddLogDto;
   [EModules.BugReport]: IAddBugReport;
+  [EModules.LoginAttempt]: IAddLoginAttempt;
 }
 
 export interface IRoosterAddDefaultData {
@@ -58,6 +65,7 @@ export interface IRoosterAddDefaultData {
   [EModules.Party]: Partial<IPartyEntity>;
   [EModules.Logs]: Partial<ILogEntity>;
   [EModules.BugReport]: Partial<IBugReportEntity>;
+  [EModules.LoginAttempt]: Partial<ILoginAttemptEntity>;
 }
 
 export interface IRoosterDefaultDataCallback {
@@ -67,6 +75,7 @@ export interface IRoosterDefaultDataCallback {
   [EModules.Party]: IPartyEntity;
   [EModules.Logs]: ILogEntity;
   [EModules.BugReport]: IBugReportEntity;
+  [EModules.LoginAttempt]: ILoginAttemptEntity;
 }
 
 export interface IRoosterUpdate extends IRoosterAddDefaultData {
@@ -80,6 +89,7 @@ export interface IRoosterGetData {
   [EModules.Party]: IPartyEntity | null;
   [EModules.Logs]: ILogEntity | null;
   [EModules.BugReport]: IBugReportEntity | null;
+  [EModules.LoginAttempt]: ILoginAttemptEntity | null;
 }
 
 export interface IRoosterFactory<Z extends EModules> {

@@ -3,6 +3,7 @@ export enum EUserTargets {
   Login = 'login',
   GetName = 'getName',
   DebugGetAll = 'debugGetAll',
+  LoginTry = 'loginTry',
 }
 
 export enum EItemsTargets {

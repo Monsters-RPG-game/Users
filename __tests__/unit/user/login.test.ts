@@ -10,6 +10,7 @@ describe('Login', () => {
   const login: ILoginDto = {
     login: 'Test',
     password: 'Test123',
+    ip: '127.0.0.1',
   };
 
   describe('Should throw', () => {
@@ -33,7 +34,7 @@ describe('Login', () => {
         const clone = structuredClone(fakeUser);
         clone.login = 'bc';
         try {
-          new LoginDto(clone);
+          new LoginDto({ ...clone, ip: login.ip });
         } catch (err) {
           expect(err).toEqual(new errors.IncorrectArgLengthError('login', 3, 30));
         }
@@ -44,7 +45,7 @@ describe('Login', () => {
         clone.login =
           'asssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss';
         try {
-          new LoginDto(clone);
+          new LoginDto({ ...clone, ip: login.ip });
         } catch (err) {
           expect(err).toEqual(new errors.IncorrectArgLengthError('login', 3, 30));
         }
@@ -54,7 +55,7 @@ describe('Login', () => {
         const clone = structuredClone(fakeUser);
         clone.password = 'abc';
         try {
-          new LoginDto(clone);
+          new LoginDto({ ...clone, ip: login.ip });
         } catch (err) {
           expect(err).toEqual(new errors.IncorrectArgLengthError('password', 6, 200));
         }
