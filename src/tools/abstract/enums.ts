@@ -6,4 +6,5 @@ export enum EModules {
   Profiles = 'profiles',
   Inventory = 'inventory',
   BugReport = 'bugReport',
+  LoginAttempt = 'loginAttempt',
 }

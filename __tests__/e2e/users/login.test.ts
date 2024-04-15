@@ -6,7 +6,7 @@ import type { ILoginDto } from '../../../src/modules/user/login/types';
 
 describe('Login', () => {
   const db = new utils.FakeFactory();
-  const loginData = utils.fakeData.users[0] as ILoginDto;
+  const loginData = { ...utils.fakeData.users[0], ip: '127.0.0.1' } as ILoginDto;
   const controller = new Controller();
 
   afterEach(async () => {

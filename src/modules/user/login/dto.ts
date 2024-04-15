@@ -1,7 +1,7 @@
 import Validation from '../../../tools/validation';
 import type { ILoginDto } from './types';
 
-export default class LoginDto implements ILoginDto {
+export default class LoginDto implements Omit<ILoginDto, 'ip'> {
   login: string;
   password: string;
 

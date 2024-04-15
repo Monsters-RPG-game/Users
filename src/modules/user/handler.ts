@@ -4,9 +4,11 @@ import LoginController from './login';
 import RegisterController from './register';
 import RemoveController from './remove';
 import * as enums from '../../enums';
+import { ELoginOutput } from '../../enums';
 import * as errors from '../../errors';
 import HandlerFactory from '../../tools/abstract/handler';
 import State from '../../tools/state';
+import LoginAttemptController from '../loginAttmpt/add';
 import type { IUserDetailsDto } from './get/types';
 import type { IGetAllUsersDto } from './getAll/types';
 import type { ILoginDto } from './login/types';
@@ -19,6 +21,7 @@ export default class UserHandler extends HandlerFactory<EModules.Users> {
   private readonly _loginController: LoginController;
   private readonly _addController: RegisterController;
   private readonly _getAllController: GetAllController;
+  private readonly _loginAttemptController: LoginAttemptController;
 
   constructor() {
     super(new GetController());
@@ -26,6 +29,7 @@ export default class UserHandler extends HandlerFactory<EModules.Users> {
     this._loginController = new LoginController();
     this._addController = new RegisterController();
     this._getAllController = new GetAllController();
+    this._loginAttemptController = new LoginAttemptController();
   }
 
   private get addController(): RegisterController {
@@ -34,6 +38,10 @@ export default class UserHandler extends HandlerFactory<EModules.Users> {
 
   private get getAllController(): GetAllController {
     return this._getAllController;
+  }
+
+  private get loginAttemptController(): LoginAttemptController {
+    return this._loginAttemptController;
   }
 
   private get removeController(): RemoveController {
@@ -45,10 +53,14 @@ export default class UserHandler extends HandlerFactory<EModules.Users> {
   }
 
   async login(payload: unknown, user: ILocalUser): Promise<void> {
+    const data = payload as ILoginDto;
+
     try {
-      const callback = await this.loginController.login(payload as ILoginDto);
+      const callback = await this.loginController.login(data);
+      await this.loginAttemptController.add({ login: data.login, ip: data.ip, output: ELoginOutput.Success });
       return State.broker.send(user.tempId, callback, enums.EMessageTypes.Credentials);
     } catch (err) {
+      await this.loginAttemptController.add({ login: data.login, ip: data.ip, output: ELoginOutput.Fail });
       throw new errors.IncorrectCredentialsError();
     }
   }
@@ -68,6 +80,7 @@ export default class UserHandler extends HandlerFactory<EModules.Users> {
   }
 
   async remove(password: string, id: string): Promise<void> {
+    console.trace('dupa');
     await this.loginController.comparePassword(id, password);
     await this.removeController.remove(id);
   }
