@@ -1,9 +1,11 @@
 #!/bin/bash
-
 echo "Starting migrations"
-
 npm run migrate
 
 echo "Starting service"
 
-npm run start:testDev
+if [ "$NODE_ENV" = "production" ]; then
+  npm run start
+else
+  npm run start:testDev
+fi
