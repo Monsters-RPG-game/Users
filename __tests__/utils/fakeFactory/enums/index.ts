@@ -4,4 +4,5 @@ export enum EFakeData {
   Profile = 'profile',
   Inventory = 'inventory',
   Party = 'party',
+  Stats = 'stats',
 }

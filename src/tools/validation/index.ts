@@ -30,6 +30,19 @@ export default class Validation {
   }
 
   /**
+   * Validate if element is typeof object
+   * Require param: any
+   */
+  isObject(): this {
+    const { v, name } = this;
+    if (typeof v !== 'object' || Array.isArray(v)) {
+      throw new errors.IncorrectArgTypeError(`${name} should be a object`);
+    }
+
+    return this;
+  }
+
+  /**
    * Validate if element is typeof string
    * Require param: any
    */

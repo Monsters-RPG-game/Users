@@ -27,12 +27,11 @@ export default abstract class RoosterFactory<T extends Document, U extends Model
 
   /**
    * Create element with default data
-   * #TODO Rewrite interface, so it will require data, required by mongoose schema
    */
-  async addDefault(data: types.IRoosterAddDefaultData[Z]): Promise<types.IRoosterDefaultDataCallback[Z]> {
+  async addDefault(data: types.IRoosterAddDefaultData[Z]): Promise<string> {
     const newElement = new this.model(data);
-    // #TODO Add fix for this. This is bad
-    return (await newElement.save()) as unknown as types.IRoosterDefaultDataCallback[Z];
+    const callback = await newElement.save();
+    return callback._id as string;
   }
 
   async update(id: string, data: types.IRoosterUpdate[Z]): Promise<void> {

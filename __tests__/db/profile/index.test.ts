@@ -7,6 +7,7 @@ import * as utils from '../../utils';
 import FakeFactory from '../../utils/fakeFactory/src';
 import type { IInventoryEntity } from '../../../src/modules/inventory/entity';
 import type { IPartyEntity } from '../../../src/modules/party/entity';
+import type { IStatsEntity } from '../../../src/modules/stats/entity';
 import type { IRegisterDto } from '../../../src/modules/user/register/types';
 
 describe('Profile', () => {
@@ -15,6 +16,7 @@ describe('Profile', () => {
   const loginData = utils.fakeData.users[0] as IRegisterDto;
   const fakeInv = utils.fakeData.inventories[0] as IInventoryEntity;
   const fakeParty = utils.fakeData.parties[0] as IPartyEntity;
+  const fakeStats = utils.fakeData.stats[0] as IStatsEntity;
 
   beforeAll(async () => {
     await connection.connect();
@@ -49,6 +51,7 @@ describe('Profile', () => {
         .race(EUserRace.Human)
         .inventory(fakeInv._id)
         .party(fakeParty._id)
+        .stats(fakeStats._id)
         .create();
 
       const rooster = new Rooster();
@@ -70,6 +73,7 @@ describe('Profile', () => {
         .race(EUserRace.Human)
         .inventory(fakeInv._id)
         .party(fakeParty._id)
+        .stats(fakeStats._id)
         .create();
 
       const rooster = new Rooster();

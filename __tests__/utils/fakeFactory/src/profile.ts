@@ -60,6 +60,11 @@ export default class FakeProfile extends TemplateFactory<EFakeData.Profile> impl
     return this;
   }
 
+  stats(stats: string): this {
+    this.data.stats = stats;
+    return this;
+  }
+
   protected override fillState(): void {
     this.data = {
       _id: undefined,
@@ -71,6 +76,7 @@ export default class FakeProfile extends TemplateFactory<EFakeData.Profile> impl
       party: undefined,
       inventory: undefined,
       initialized: false,
+      stats: undefined,
       state: enums.ECharacterState.Map,
     };
   }

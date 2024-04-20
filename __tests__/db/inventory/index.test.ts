@@ -5,6 +5,7 @@ import type { IInventoryEntity } from '../../../src/modules/inventory/entity';
 import type { IItemEntity } from '../../../src/modules/items/entity';
 import type { IPartyEntity } from '../../../src/modules/party/entity';
 import type { IProfileEntity } from '../../../src/modules/profile/entity';
+import type { IStatsEntity } from '../../../src/modules/stats/entity';
 
 describe('Inventory', () => {
   const db = new utils.FakeFactory();
@@ -12,6 +13,7 @@ describe('Inventory', () => {
   const fakeItem = utils.fakeData.items[0] as IItemEntity;
   const fakeInv = utils.fakeData.inventories[0] as IInventoryEntity;
   const fakeParty = utils.fakeData.parties[0] as IPartyEntity;
+  const fakeStats = utils.fakeData.stats[0] as IStatsEntity;
   const rooster = new Rooster();
   const connection = new utils.Connection();
 
@@ -46,6 +48,7 @@ describe('Inventory', () => {
         .friends(fakeProfile.friends)
         .inventory(fakeInv._id)
         .party(fakeParty._id)
+        .stats(fakeStats._id)
         .create();
 
       await db.inventory
@@ -74,6 +77,7 @@ describe('Inventory', () => {
         .friends(fakeProfile.friends)
         .inventory(fakeInv._id)
         .party(fakeParty._id)
+        .stats(fakeStats._id)
         .create();
 
       await db.inventory
@@ -102,6 +106,7 @@ describe('Inventory', () => {
         .friends(fakeProfile.friends)
         .inventory(fakeInv._id)
         .party(fakeParty._id)
+        .stats(fakeStats._id)
         .create();
 
       await db.inventory
@@ -130,6 +135,7 @@ describe('Inventory', () => {
         .friends(fakeProfile.friends)
         .inventory(fakeInv._id)
         .party(fakeParty._id)
+        .stats(fakeStats._id)
         .create();
 
       await db.inventory

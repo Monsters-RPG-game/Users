@@ -9,6 +9,7 @@ export interface IProfileEntity {
   exp: number[];
   initialized: boolean;
   inventory: string;
+  stats: string;
   party: string;
   state: enums.ECharacterState;
 }

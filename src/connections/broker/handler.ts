@@ -6,6 +6,7 @@ import InventoryController from '../../modules/inventory/handler';
 import LogController from '../../modules/logs/handler';
 import PartyController from '../../modules/party/handler';
 import ProfileController from '../../modules/profile/handler';
+import StatsController from '../../modules/stats/handler';
 import UserController from '../../modules/user/handler';
 import type * as types from '../../types/connection';
 
@@ -17,6 +18,7 @@ export default class Handler {
   private readonly _log: LogController;
   private readonly _controller: Controller;
   private readonly _bugReport: BugReportController;
+  private readonly _stats: StatsController;
 
   constructor() {
     this._user = new UserController();
@@ -25,11 +27,16 @@ export default class Handler {
     this._party = new PartyController();
     this._log = new LogController();
     this._bugReport = new BugReportController();
-    this._controller = new Controller(this.user, this.profile, this.inventory, this.party);
+    this._stats = new StatsController();
+    this._controller = new Controller(this.user, this.profile, this.inventory, this.party, this.stats);
   }
 
   private get user(): UserController {
     return this._user;
+  }
+
+  private get stats(): StatsController {
+    return this._stats;
   }
 
   private get inventory(): InventoryController {
@@ -70,7 +77,7 @@ export default class Handler {
   async profileMessage(payload: types.IRabbitMessage): Promise<void> {
     switch (payload.subTarget) {
       case enums.EProfileTargets.Create:
-        return this.profile.add(payload.payload, payload.user);
+        return this.controller.createProfile(payload.payload, payload.user);
       case enums.EProfileTargets.Get:
         return this.profile.get(payload.payload, payload.user);
       default:
@@ -134,6 +141,15 @@ export default class Handler {
         return this.bugReport.add(payload.payload, payload.user);
       case enums.EBugReportTargets.GetBugReport:
         return this.bugReport.get(payload.payload, payload.user);
+      default:
+        throw new errors.IncorrectTargetError();
+    }
+  }
+
+  async statsMessage(payload: types.IRabbitMessage): Promise<void> {
+    switch (payload.subTarget) {
+      case enums.EStatsTargets.GetStats:
+        return this.stats.get(payload.payload, payload.user);
       default:
         throw new errors.IncorrectTargetError();
     }

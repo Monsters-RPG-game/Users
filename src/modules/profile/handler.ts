@@ -9,7 +9,6 @@ import State from '../../tools/state';
 import type { IAddProfileDto } from './add/types';
 import type { IAddBasicProfileDto } from './addBasic/types';
 import type ChangeCharacterStatusDto from './changeState/dto';
-import type { IProfileEntity } from './entity';
 import type { IGetProfileDto } from './get/types';
 import type { IRemoveProfileDto } from './remove/types';
 import type { EModules } from '../../tools/abstract/enums';
@@ -50,13 +49,12 @@ export default class ProfileHandler extends HandlerFactory<EModules.Profiles> {
     return State.broker.send(user.tempId, callBack, enums.EMessageTypes.Send);
   }
 
-  async add(payload: unknown, user: types.ILocalUser): Promise<void> {
-    await this.addController.add(payload as IAddProfileDto, user);
-    return State.broker.send(user.tempId, undefined, enums.EMessageTypes.Send);
+  async add(payload: IAddProfileDto, user: types.ILocalUser): Promise<void> {
+    return this.addController.add(payload, user);
   }
 
-  async addBasic(user: string, party: string, inventory: string): Promise<IProfileEntity> {
-    return this.addBasicController.add({ user, party, inventory } as IAddBasicProfileDto);
+  async addBasic(user: string, party: string, inventory: string, stats: string): Promise<string> {
+    return this.addBasicController.add({ user, party, inventory, stats } as IAddBasicProfileDto);
   }
 
   async remove(id: string): Promise<void> {

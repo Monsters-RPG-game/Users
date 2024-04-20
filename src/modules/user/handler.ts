@@ -80,7 +80,6 @@ export default class UserHandler extends HandlerFactory<EModules.Users> {
   }
 
   async remove(password: string, id: string): Promise<void> {
-    console.trace('dupa');
     await this.loginController.comparePassword(id, password);
     await this.removeController.remove(id);
   }
