@@ -39,3 +39,7 @@ export enum EBugReportTargets {
   AddBugReport = 'addBugReport',
   GetBugReport = 'getBugReport',
 }
+
+export enum EStatsTargets {
+  GetStats = 'getStats',
+}

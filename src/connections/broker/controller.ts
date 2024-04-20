@@ -3,7 +3,10 @@ import RemoveUserDto from '../../modules/user/remove/dto';
 import State from '../../tools/state';
 import type InventoryController from '../../modules/inventory/handler';
 import type PartyController from '../../modules/party/handler';
+import type { IAddProfileDto } from '../../modules/profile/add/types';
 import type ProfileController from '../../modules/profile/handler';
+import type { IAddStatsDto } from '../../modules/stats/add/types';
+import type StatsController from '../../modules/stats/handler';
 import type UserController from '../../modules/user/handler';
 import type { IRegisterDto } from '../../modules/user/register/types';
 import type { IRemoveUserDto } from '../../modules/user/remove/types';
@@ -14,17 +17,21 @@ export default class Controller {
   private readonly _profile: ProfileController;
   private readonly _inventory: InventoryController;
   private readonly _party: PartyController;
+  private readonly _stats: StatsController;
 
   constructor(
     user: UserController,
     profile: ProfileController,
     inventory: InventoryController,
     party: PartyController,
+    stats: StatsController,
   ) {
     this._user = user;
     this._profile = profile;
     this._inventory = inventory;
     this._party = party;
+    this._party = party;
+    this._stats = stats;
   }
 
   private get user(): UserController {
@@ -37,6 +44,10 @@ export default class Controller {
 
   private get party(): PartyController {
     return this._party;
+  }
+
+  private get stats(): StatsController {
+    return this._stats;
   }
 
   private get inventory(): InventoryController {
@@ -59,7 +70,15 @@ export default class Controller {
 
     const party = await this.party.addBasic(id);
     const inventory = await this.inventory.addBasic(id);
-    await this.profile.addBasic(id, party._id.toString(), inventory._id.toString());
+    const stats = await this.stats.addBasic(id);
+    await this.profile.addBasic(id, party, inventory, stats);
+
+    return State.broker.send(user.tempId, undefined, enums.EMessageTypes.Send);
+  }
+
+  async createProfile(payload: unknown, user: ILocalUser): Promise<void> {
+    await this.profile.add(payload as IAddProfileDto, user);
+    await this.stats.add(payload as IAddStatsDto, user);
 
     return State.broker.send(user.tempId, undefined, enums.EMessageTypes.Send);
   }

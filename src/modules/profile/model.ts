@@ -38,6 +38,10 @@ export const profileSchema = new mongoose.Schema({
     type: mongoose.Types.ObjectId,
     required: [true, 'inventory not provided'],
   },
+  stats: {
+    type: mongoose.Types.ObjectId,
+    required: [true, 'Stats not provided'],
+  },
   party: {
     type: mongoose.Types.ObjectId,
     required: [true, 'party not provided'],

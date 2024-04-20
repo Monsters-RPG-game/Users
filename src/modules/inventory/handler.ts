@@ -8,7 +8,6 @@ import HandlerFactory from '../../tools/abstract/handler';
 import State from '../../tools/state';
 import type { IAddBasicInventoryDto } from './addBasic/types';
 import type { IDropItemDto } from './drop/types';
-import type { IInventoryEntity } from './entity';
 import type { IGetInventoryDto } from './get/types';
 import type { IRemoveInventoryDto } from './remove/types';
 import type { IUseItemDto } from './use/types';
@@ -60,7 +59,7 @@ export default class Handler extends HandlerFactory<EModules.Inventory> {
     return State.broker.send(user.tempId, undefined, enums.EMessageTypes.Send);
   }
 
-  async addBasic(userId: string): Promise<IInventoryEntity> {
+  async addBasic(userId: string): Promise<string> {
     return this.addBasicController.add({ userId } as IAddBasicInventoryDto);
   }
 

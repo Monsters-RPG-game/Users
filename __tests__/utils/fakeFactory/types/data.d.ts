@@ -4,6 +4,8 @@ import type { IPartyEntity } from '../../../../src/modules/party/entity';
 import type Party from '../../../../src/modules/party/model';
 import type { IProfileEntity } from '../../../../src/modules/profile/entity';
 import type Profile from '../../../../src/modules/profile/model';
+import type { IStatsEntity } from '../../../../src/modules/stats/entity';
+import type Stats from '../../../../src/modules/stats/model';
 import type { IUserEntity } from '../../../../src/modules/user/entity';
 import type User from '../../../../src/modules/user/model';
 import type { EFakeData } from '../enums';
@@ -13,6 +15,7 @@ export type IFakeParam<T> = {
 };
 
 export interface IFakeState {
+  [EFakeData.Stats]: IFakeParam<IStatsEntity>;
   [EFakeData.User]: IFakeParam<IUserEntity>;
   [EFakeData.Profile]: IFakeParam<IProfileEntity>;
   [EFakeData.Inventory]: IFakeParam<IInventoryEntity>;
@@ -20,6 +23,7 @@ export interface IFakeState {
 }
 
 export interface IFakeModel {
+  [EFakeData.Stats]: typeof Stats;
   [EFakeData.User]: typeof User;
   [EFakeData.Profile]: typeof Profile;
   [EFakeData.Inventory]: typeof Inventory;

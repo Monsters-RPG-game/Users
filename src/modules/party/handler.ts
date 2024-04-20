@@ -7,7 +7,6 @@ import HandlerFactory from '../../tools/abstract/handler';
 import State from '../../tools/state';
 import type { IAddPartyDto } from './add/types';
 import type { IAddBasicPartyDto } from './addBasic/types';
-import type { IPartyEntity } from './entity';
 import type { IGetPartyDto } from './get/types';
 import type { IRemovePartyDto } from './remove/types';
 import type { EModules } from '../../tools/abstract/enums';
@@ -47,7 +46,7 @@ export default class Handler extends HandlerFactory<EModules.Party> {
     return State.broker.send(user.tempId, undefined, enums.EMessageTypes.Send);
   }
 
-  async addBasic(leader: string): Promise<IPartyEntity> {
+  async addBasic(leader: string): Promise<string> {
     return this.addBasicController.add({ leader } as IAddBasicPartyDto);
   }
 

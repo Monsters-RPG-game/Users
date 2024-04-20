@@ -23,12 +23,17 @@ import type { IAddProfileDto } from '../../modules/profile/add/types';
 import type { IProfileEntity } from '../../modules/profile/entity';
 import type ProfileGet from '../../modules/profile/get';
 import type ProfileRooster from '../../modules/profile/rooster';
+import type { IAddStatsDto } from '../../modules/stats/add/types';
+import type { IStatsEntity } from '../../modules/stats/entity';
+import type StatsGet from '../../modules/stats/get';
+import type StatsRooster from '../../modules/stats/rooster';
 import type { IUserEntity } from '../../modules/user/entity';
 import type UserGet from '../../modules/user/get';
 import type { IRegisterDto } from '../../modules/user/register/types';
 import type UserRooster from '../../modules/user/rooster';
 
 export interface IModulesGetControllers {
+  [EModules.Stats]: StatsGet;
   [EModules.Users]: UserGet;
   [EModules.Party]: PartyGet;
   [EModules.Profiles]: ProfileGet;
@@ -40,6 +45,7 @@ export interface IModulesGetControllers {
 
 export interface IModulesControllers {
   [EModules.Users]: UserRooster;
+  [EModules.Stats]: StatsRooster;
   [EModules.Profiles]: ProfileRooster;
   [EModules.Inventory]: InventoryRooster;
   [EModules.Party]: PartyRooster;
@@ -50,6 +56,7 @@ export interface IModulesControllers {
 
 export interface IRoosterAddData {
   [EModules.Users]: IRegisterDto;
+  [EModules.Stats]: IAddStatsDto;
   [EModules.Profiles]: IAddProfileDto;
   [EModules.Inventory]: IAddItemDto;
   [EModules.Party]: IAddPartyDto;
@@ -60,6 +67,7 @@ export interface IRoosterAddData {
 
 export interface IRoosterAddDefaultData {
   [EModules.Users]: Partial<IUserEntity>;
+  [EModules.Stats]: Partial<IStatsEntity>;
   [EModules.Profiles]: Partial<IProfileEntity>;
   [EModules.Inventory]: Partial<IInventoryEntity>;
   [EModules.Party]: Partial<IPartyEntity>;
@@ -70,6 +78,7 @@ export interface IRoosterAddDefaultData {
 
 export interface IRoosterDefaultDataCallback {
   [EModules.Users]: IUserEntity;
+  [EModules.Stats]: IStatsEntity;
   [EModules.Profiles]: IProfileEntity;
   [EModules.Inventory]: IInventoryEntity;
   [EModules.Party]: IPartyEntity;
@@ -80,10 +89,12 @@ export interface IRoosterDefaultDataCallback {
 
 export interface IRoosterUpdate extends IRoosterAddDefaultData {
   [EModules.Logs]: Partial<ILogEntity>;
+  [EModules.Stats]: Partial<IStatsEntity>;
 }
 
 export interface IRoosterGetData {
   [EModules.Users]: IUserEntity | null;
+  [EModules.Stats]: IStatsEntity | null;
   [EModules.Profiles]: IProfileEntity | null;
   [EModules.Inventory]: IInventoryEntity | null;
   [EModules.Party]: IPartyEntity | null;

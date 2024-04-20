@@ -1,6 +1,7 @@
 import FakeInventory from './inventory';
 import FakeParty from './party';
 import FakeProfile from './profile';
+import FakeStats from './stats';
 import FakeUser from './user';
 
 export default class FakeFactory {
@@ -8,12 +9,14 @@ export default class FakeFactory {
   private readonly _profile: FakeProfile;
   private readonly _inventory: FakeInventory;
   private readonly _party: FakeParty;
+  private readonly _stats: FakeStats;
 
   constructor() {
     this._user = new FakeUser();
     this._profile = new FakeProfile();
     this._inventory = new FakeInventory();
     this._party = new FakeParty();
+    this._stats = new FakeStats();
   }
 
   get user(): FakeUser {
@@ -22,6 +25,10 @@ export default class FakeFactory {
 
   get profile(): FakeProfile {
     return this._profile;
+  }
+
+  get stats(): FakeStats {
+    return this._stats;
   }
 
   get inventory(): FakeInventory {

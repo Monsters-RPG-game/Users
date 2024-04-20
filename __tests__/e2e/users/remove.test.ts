@@ -6,6 +6,7 @@ import { sleep } from '../../utils';
 import type { IInventoryEntity } from '../../../src/modules/inventory/entity';
 import type { IPartyEntity } from '../../../src/modules/party/entity';
 import type { IProfileEntity } from '../../../src/modules/profile/entity';
+import type { IStatsEntity } from '../../../src/modules/stats/entity';
 import type { IUserEntity } from '../../../src/modules/user/entity';
 import type { IRemoveUserDto } from '../../../src/modules/user/remove/types';
 
@@ -16,6 +17,7 @@ describe('Remove user', () => {
   const fakeProfile = utils.fakeData.profiles[0] as IProfileEntity;
   const fakeInv = utils.fakeData.inventories[0] as IInventoryEntity;
   const fakeParty = utils.fakeData.parties[0] as IPartyEntity;
+  const fakeStats = utils.fakeData.stats[0] as IStatsEntity;
   const remove: IRemoveUserDto = {
     password: fakeUser.password,
   };
@@ -69,6 +71,7 @@ describe('Remove user', () => {
         .friends(fakeProfile.friends)
         .inventory(fakeInv._id)
         .party(fakeParty._id)
+        .stats(fakeStats._id)
         .create();
 
       try {

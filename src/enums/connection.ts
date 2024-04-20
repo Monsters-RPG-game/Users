@@ -22,6 +22,7 @@ export enum EAmqQueues {
 export enum EMessageTargets {
   Log = 'log',
   User = 'user',
+  Stats = 'stats',
   Party = 'party',
   Profile = 'profile',
   Inventory = 'inventory',

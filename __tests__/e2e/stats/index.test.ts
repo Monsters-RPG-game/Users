@@ -3,18 +3,18 @@ import mongoose from 'mongoose';
 import * as enums from '../../../src/enums';
 import * as errors from '../../../src/errors';
 import AddController from '../../../src/modules/profile/add';
-import GetController from '../../../src/modules/profile/get';
+import GetController from '../../../src/modules/stats/get';
 import * as utils from '../../utils';
 import { fakeData } from '../../utils';
 import type { IInventoryEntity } from '../../../src/modules/inventory/entity';
 import type { IPartyEntity } from '../../../src/modules/party/entity';
 import type { IAddProfileDto } from '../../../src/modules/profile/add/types';
 import type { IProfileEntity } from '../../../src/modules/profile/entity';
-import type { IGetProfileDto } from '../../../src/modules/profile/get/types';
 import type { IStatsEntity } from '../../../src/modules/stats/entity';
+import type { IGetStatsDto } from '../../../src/modules/stats/get/types';
 import type * as types from '../../../src/types';
 
-describe('Profile', () => {
+describe('Stats', () => {
   const db = new utils.FakeFactory();
   const id = utils.fakeData.users[0]!._id;
   const race: IAddProfileDto = {
@@ -24,7 +24,7 @@ describe('Profile', () => {
   const fakeInv = fakeData.inventories[0] as IInventoryEntity;
   const fakeParty = fakeData.parties[0] as IPartyEntity;
   const fakeStats = fakeData.stats[0] as IStatsEntity;
-  const userId: IGetProfileDto = {
+  const userId: IGetStatsDto = {
     id,
   };
   const localUser: types.ILocalUser = {
@@ -92,51 +92,24 @@ describe('Profile', () => {
         });
       });
 
-      it('Profile already exists', async () => {
-        await db.profile
-          .user(localUser2.userId)
-          .race(race.race)
-          .inventory(fakeInv._id)
-          .party(fakeParty._id)
-          .stats(fakeStats._id)
-          .create();
-
-        try {
-          await addController.add(race, localUser2);
-        } catch (err) {
-          expect(err).not.toBeUndefined();
-        }
-      });
-
-      it('Profile does not exist', async () => {
-        const profile = await getController.get(userId);
-        expect(profile).toBeNull();
+      it('Stats do not exist', async () => {
+        const stats = await getController.get(userId);
+        expect(stats).toBeNull();
       });
     });
   });
 
   describe('Should pass', () => {
-    it('Got profile', async () => {
-      await db.profile
-        .user(localUser3.userId)
-        .race(fake.race)
-        .lvl(fake.lvl)
-        .exp(fake.exp)
-        .friends(fake.friends)
-        .inventory(fakeInv._id)
-        .party(fakeParty._id)
-        .stats(fakeStats._id)
-        .create();
+    it('Got stats', async () => {
+      await db.stats.owner(localUser3.userId).intelligence(1).strength(1).initialized(true)._id(fakeStats._id).create();
 
-      const profile = (await getController.get({ id: localUser3.userId! }))!;
+      const stats = (await getController.get({ id: fakeStats._id }))!;
 
-      expect(profile.user.toString()).toEqual(localUser3.userId);
-      expect(profile.lvl).toEqual(fake.lvl);
-      expect(profile.race).toEqual(fake.race);
-      expect(profile.friends).toEqual(fake.friends);
+      expect(stats.intelligence).toEqual(1);
+      expect(stats.strength).toEqual(1);
     });
 
-    it('Initialized profile', async () => {
+    it('Initialized stats', async () => {
       await db.profile
         .user(localUser2.userId)
         .race(fake.race)
