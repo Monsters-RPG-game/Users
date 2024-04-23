@@ -13,6 +13,7 @@ export interface IRabbitMessage {
     | enums.ECharacterStateTargets
     | enums.EBugReportTargets
     | enums.EStatsTargets
+    | enums.ENpcTargets
     | enums.EPartyTargets;
   payload: unknown;
 }

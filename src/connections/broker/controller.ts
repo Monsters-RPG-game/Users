@@ -2,6 +2,9 @@ import * as enums from '../../enums';
 import RemoveUserDto from '../../modules/user/remove/dto';
 import State from '../../tools/state';
 import type InventoryController from '../../modules/inventory/handler';
+import type { IAddCharacterDto } from '../../modules/npc/add/types';
+import type { IAddBasicCharacterDto } from '../../modules/npc/addBasic/types';
+import type NpcController from '../../modules/npc/handler';
 import type PartyController from '../../modules/party/handler';
 import type { IAddProfileDto } from '../../modules/profile/add/types';
 import type ProfileController from '../../modules/profile/handler';
@@ -18,6 +21,7 @@ export default class Controller {
   private readonly _inventory: InventoryController;
   private readonly _party: PartyController;
   private readonly _stats: StatsController;
+  private readonly _npc: NpcController;
 
   constructor(
     user: UserController,
@@ -25,6 +29,7 @@ export default class Controller {
     inventory: InventoryController,
     party: PartyController,
     stats: StatsController,
+    npc: NpcController,
   ) {
     this._user = user;
     this._profile = profile;
@@ -32,10 +37,15 @@ export default class Controller {
     this._party = party;
     this._party = party;
     this._stats = stats;
+    this._npc = npc;
   }
 
   private get user(): UserController {
     return this._user;
+  }
+
+  private get npc(): NpcController {
+    return this._npc;
   }
 
   private get profile(): ProfileController {
@@ -79,6 +89,26 @@ export default class Controller {
   async createProfile(payload: unknown, user: ILocalUser): Promise<void> {
     await this.profile.add(payload as IAddProfileDto, user);
     await this.stats.add(payload as IAddStatsDto, user);
+
+    return State.broker.send(user.tempId, undefined, enums.EMessageTypes.Send);
+  }
+
+  async createNpc(payload: unknown, user: ILocalUser): Promise<void> {
+    const id = (await this.npc.addBasic(payload as IAddBasicCharacterDto)).toString();
+
+    const party = await this.party.addBasic(id);
+    const inventory = await this.inventory.addBasic(id);
+    const stats = await this.stats.addBasic(id);
+
+    await this.npc.add(
+      {
+        party,
+        inventory,
+        stats,
+      } as IAddCharacterDto,
+      id,
+    );
+    await this.stats.add({ race: (payload as IAddBasicCharacterDto).race }, user);
 
     return State.broker.send(user.tempId, undefined, enums.EMessageTypes.Send);
   }

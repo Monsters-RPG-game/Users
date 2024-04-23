@@ -1,3 +1,5 @@
-import type { IAddProfileDto } from '../../profile/add/types';
+import type * as enums from '../../../enums';
 
-export type IAddStatsDto = IAddProfileDto;
+export interface IAddStatsDto {
+  race: enums.ENpcRace;
+}

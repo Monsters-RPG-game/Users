@@ -1,9 +1,9 @@
-import { EUserRace } from '../../../enums';
+import { ENpcRace } from '../../../enums';
 import Validation from '../../../tools/validation';
 import type { IAddStatsDto } from './types';
 
 export default class AddStatsDto implements IAddStatsDto {
-  race: EUserRace;
+  race: ENpcRace;
 
   constructor(data: IAddStatsDto) {
     this.race = data.race;
@@ -12,6 +12,6 @@ export default class AddStatsDto implements IAddStatsDto {
   }
 
   private validate(): void {
-    new Validation(this.race, 'race').isDefined().isPartOfEnum(EUserRace);
+    new Validation(this.race, 'race').isDefined().isPartOfEnum(ENpcRace);
   }
 }

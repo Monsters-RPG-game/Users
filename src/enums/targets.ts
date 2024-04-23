@@ -43,3 +43,9 @@ export enum EBugReportTargets {
 export enum EStatsTargets {
   GetStats = 'getStats',
 }
+
+export enum ENpcTargets {
+  GetNpc = 'getNpc',
+  AddNpc = 'addNpc',
+  RemoveNpc = 'removeNpc',
+}
