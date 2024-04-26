@@ -168,6 +168,10 @@ export default class Handler {
         return this.npc.get(payload.payload, payload.user);
       case enums.ENpcTargets.AddNpc:
         return this.controller.createNpc(payload.payload, payload.user);
+      case enums.ENpcTargets.UpdateNpc:
+        return this.npc.update(payload.payload, payload.user);
+      case enums.ENpcTargets.RemoveNpc:
+        return this.npc.remove(payload.payload, payload.user);
       default:
         throw new errors.IncorrectTargetError();
     }

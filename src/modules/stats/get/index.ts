@@ -14,4 +14,9 @@ export default class Controller extends ControllerFactory<EModules.Stats> {
     const { id } = new GetStatsDto(data);
     return this.rooster.get(id);
   }
+
+  async getMany(data: IGetStatsDto[]): Promise<IStatsEntity[]> {
+    const payload = data.map((e) => new GetStatsDto(e));
+    return this.rooster.getMany(payload.map((e) => e.id));
+  }
 }

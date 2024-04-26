@@ -48,4 +48,5 @@ export enum ENpcTargets {
   GetNpc = 'getNpc',
   AddNpc = 'addNpc',
   RemoveNpc = 'removeNpc',
+  UpdateNpc = 'updateNpc',
 }

@@ -21,6 +21,19 @@ export default class Rooster extends RoosterFactory<IStats, typeof Stats, EModul
       .lean();
   }
 
+  async getMany(ids: string[]): Promise<IStatsEntity[]> {
+    return this.model
+      .find({
+        _id: { $in: ids },
+      })
+      .select({
+        _id: true,
+        strength: true,
+        intelligence: true,
+      })
+      .lean();
+  }
+
   async getByUser(id: string): Promise<IStatsEntity | null> {
     return this.model
       .find({ owner: id })
