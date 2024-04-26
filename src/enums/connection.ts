@@ -23,6 +23,7 @@ export enum EMessageTargets {
   Log = 'log',
   User = 'user',
   Stats = 'stats',
+  Npc = 'npc',
   Party = 'party',
   Profile = 'profile',
   Inventory = 'inventory',

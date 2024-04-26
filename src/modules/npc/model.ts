@@ -9,7 +9,7 @@ export const characterSchema = new mongoose.Schema({
   },
   race: {
     type: String,
-    enum: enums.EUserRace,
+    enum: enums.ENpcRace,
     required: [true, 'race not provided'],
     default: enums.EUserRace.Human,
   },
@@ -25,9 +25,13 @@ export const characterSchema = new mongoose.Schema({
   },
   inventory: {
     type: mongoose.Types.ObjectId,
-    required: [true, 'inventory not provided'],
+    required: false,
   },
   party: {
+    type: mongoose.Types.ObjectId,
+    required: false,
+  },
+  stats: {
     type: mongoose.Types.ObjectId,
     required: false,
   },

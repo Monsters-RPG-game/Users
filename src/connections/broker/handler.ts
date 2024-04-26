@@ -4,6 +4,7 @@ import * as errors from '../../errors';
 import BugReportController from '../../modules/bugReport/handler';
 import InventoryController from '../../modules/inventory/handler';
 import LogController from '../../modules/logs/handler';
+import NpcController from '../../modules/npc/handler';
 import PartyController from '../../modules/party/handler';
 import ProfileController from '../../modules/profile/handler';
 import StatsController from '../../modules/stats/handler';
@@ -19,6 +20,7 @@ export default class Handler {
   private readonly _controller: Controller;
   private readonly _bugReport: BugReportController;
   private readonly _stats: StatsController;
+  private readonly _npc: NpcController;
 
   constructor() {
     this._user = new UserController();
@@ -27,8 +29,9 @@ export default class Handler {
     this._party = new PartyController();
     this._log = new LogController();
     this._bugReport = new BugReportController();
+    this._npc = new NpcController();
     this._stats = new StatsController();
-    this._controller = new Controller(this.user, this.profile, this.inventory, this.party, this.stats);
+    this._controller = new Controller(this.user, this.profile, this.inventory, this.party, this.stats, this.npc);
   }
 
   private get user(): UserController {
@@ -57,6 +60,10 @@ export default class Handler {
 
   private get log(): LogController {
     return this._log;
+  }
+
+  private get npc(): NpcController {
+    return this._npc;
   }
 
   private get controller(): Controller {
@@ -150,6 +157,21 @@ export default class Handler {
     switch (payload.subTarget) {
       case enums.EStatsTargets.GetStats:
         return this.stats.get(payload.payload, payload.user);
+      default:
+        throw new errors.IncorrectTargetError();
+    }
+  }
+
+  async npmMessages(payload: types.IRabbitMessage): Promise<void> {
+    switch (payload.subTarget) {
+      case enums.ENpcTargets.GetNpc:
+        return this.npc.get(payload.payload, payload.user);
+      case enums.ENpcTargets.AddNpc:
+        return this.controller.createNpc(payload.payload, payload.user);
+      case enums.ENpcTargets.UpdateNpc:
+        return this.npc.update(payload.payload, payload.user);
+      case enums.ENpcTargets.RemoveNpc:
+        return this.npc.remove(payload.payload, payload.user);
       default:
         throw new errors.IncorrectTargetError();
     }
