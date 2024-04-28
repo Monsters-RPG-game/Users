@@ -4,4 +4,5 @@ export interface IGetCharacterDto {
   race?: ENpcRace;
   lvl?: number;
   page: number;
+  id?: string[];
 }
