@@ -14,8 +14,12 @@ export default class Controller extends ControllerFactory<EModules.Npc> {
     const payload = new GetCharacterDto(data);
 
     const filter: { [key: string]: unknown } = {};
-    if (payload.race !== undefined) filter.race = payload.race;
-    if (payload.lvl !== undefined && payload.lvl !== 0) filter.lvl = payload.lvl;
+    if (payload.id) {
+      filter._id = { $in: [payload.id] };
+    } else {
+      if (payload.race !== undefined) filter.race = payload.race;
+      if (payload.lvl !== undefined && payload.lvl !== 0) filter.lvl = payload.lvl;
+    }
 
     return this.rooster.getMany(filter, payload.page);
   }

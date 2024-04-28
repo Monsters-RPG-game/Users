@@ -142,7 +142,8 @@ export default class Validation {
     if (value.length === 0) return this;
 
     value.forEach((e) => {
-      if (mongoose.Types.ObjectId.isValid(e)) throw new errors.IncorrectArgTypeError(`${name} should be objectId`);
+      if (!mongoose.Types.ObjectId.isValid(e))
+        throw new errors.IncorrectArgTypeError(`${name}.${e} should be objectId`);
     });
 
     return this;
