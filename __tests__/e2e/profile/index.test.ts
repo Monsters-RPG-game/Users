@@ -19,6 +19,7 @@ describe('Profile', () => {
   const id = utils.fakeData.users[0]!._id;
   const race: IAddProfileDto = {
     race: enums.EUserRace.Human,
+    location: new mongoose.Types.ObjectId().toString(),
   };
   const fake = fakeData.profiles[1] as IProfileEntity;
   const fakeInv = fakeData.inventories[0] as IInventoryEntity;
