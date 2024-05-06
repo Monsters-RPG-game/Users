@@ -38,7 +38,7 @@
     "bcrypt": "5.1.1",
     "chalk": "4.1.2",
     "mongoose": "8.3.3",
-    "node": "22.0.0",
+    "node": "22.1.0",
     "winston": "3.13.0",
     "winston-daily-rotate-file": "5.0.0"
   },
