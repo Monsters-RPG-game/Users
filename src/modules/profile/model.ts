@@ -46,6 +46,10 @@ export const profileSchema = new mongoose.Schema({
     type: mongoose.Types.ObjectId,
     required: [true, 'party not provided'],
   },
+  location: {
+    type: mongoose.Types.ObjectId,
+    required: false,
+  },
   state: {
     type: String,
     enum: enums.ECharacterState,
