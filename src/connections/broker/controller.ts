@@ -81,7 +81,7 @@ export default class Controller {
     const party = await this.party.addBasic(id);
     const inventory = await this.inventory.addBasic(id);
     const stats = await this.stats.addBasic(id);
-    await this.profile.addBasic(id, party, inventory, stats);
+    await this.profile.addBasic(id.toString(), party.toString(), inventory.toString(), stats.toString());
 
     return State.broker.send(user.tempId, undefined, enums.EMessageTypes.Send);
   }

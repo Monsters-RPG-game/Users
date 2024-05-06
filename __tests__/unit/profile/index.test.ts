@@ -9,6 +9,7 @@ import type { IGetProfileDto } from '../../../src/modules/profile/get/types';
 
 describe('Profile', () => {
   const race: IAddProfileDto = {
+    location: new mongoose.Types.ObjectId().toString(),
     race: enums.EUserRace.Elf,
   };
   const userId: IGetProfileDto = {
