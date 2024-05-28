@@ -19,8 +19,6 @@ export default class Router {
     this.logNewMessage(payload);
 
     switch (payload.target) {
-      case enums.EMessageTargets.Log:
-        return this.handler.logMessages(payload);
       case enums.EMessageTargets.Profile:
         return this.handler.profileMessage(payload);
       case enums.EMessageTargets.CharacterState:
