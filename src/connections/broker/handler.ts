@@ -3,7 +3,6 @@ import * as enums from '../../enums';
 import * as errors from '../../errors';
 import BugReportController from '../../modules/bugReport/handler';
 import InventoryController from '../../modules/inventory/handler';
-import LogController from '../../modules/logs/handler';
 import NpcController from '../../modules/npc/handler';
 import PartyController from '../../modules/party/handler';
 import ProfileController from '../../modules/profile/handler';
@@ -16,7 +15,6 @@ export default class Handler {
   private readonly _party: PartyController;
   private readonly _profile: ProfileController;
   private readonly _inventory: InventoryController;
-  private readonly _log: LogController;
   private readonly _controller: Controller;
   private readonly _bugReport: BugReportController;
   private readonly _stats: StatsController;
@@ -27,7 +25,6 @@ export default class Handler {
     this._profile = new ProfileController();
     this._inventory = new InventoryController();
     this._party = new PartyController();
-    this._log = new LogController();
     this._bugReport = new BugReportController();
     this._npc = new NpcController();
     this._stats = new StatsController();
@@ -58,27 +55,12 @@ export default class Handler {
     return this._profile;
   }
 
-  private get log(): LogController {
-    return this._log;
-  }
-
   private get npc(): NpcController {
     return this._npc;
   }
 
   private get controller(): Controller {
     return this._controller;
-  }
-
-  async logMessages(payload: types.IRabbitMessage): Promise<void> {
-    switch (payload.subTarget) {
-      case enums.ELogTargets.AddLog:
-        return this.log.add(payload.payload, payload.user);
-      case enums.ELogTargets.GetLog:
-        return this.log.get(payload.payload, payload.user);
-      default:
-        throw new errors.IncorrectTargetError();
-    }
   }
 
   async profileMessage(payload: types.IRabbitMessage): Promise<void> {
