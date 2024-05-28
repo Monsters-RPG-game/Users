@@ -11,10 +11,6 @@ import type { IAddLoginAttempt } from '../../modules/loginAttmpt/add/types';
 import type { ILoginAttemptEntity } from '../../modules/loginAttmpt/entity';
 import type LoginAttemptGet from '../../modules/loginAttmpt/get';
 import type LoginAttemptRooster from '../../modules/loginAttmpt/rooster';
-import type { IAddLogDto } from '../../modules/logs/add/types';
-import type { ILogEntity } from '../../modules/logs/entity';
-import type LogGet from '../../modules/logs/get';
-import type LogsRooster from '../../modules/logs/rooster';
 import type { IAddNpcDto } from '../../modules/npc/add/types';
 import type { ICharacterEntity } from '../../modules/npc/entity';
 import type NpcGet from '../../modules/npc/get';
@@ -43,7 +39,6 @@ export interface IModulesGetControllers {
   [EModules.Party]: PartyGet;
   [EModules.Profiles]: ProfileGet;
   [EModules.Inventory]: InventoryGet;
-  [EModules.Logs]: LogGet;
   [EModules.BugReport]: BugReportGet;
   [EModules.LoginAttempt]: LoginAttemptGet;
 }
@@ -55,7 +50,6 @@ export interface IModulesControllers {
   [EModules.Profiles]: ProfileRooster;
   [EModules.Inventory]: InventoryRooster;
   [EModules.Party]: PartyRooster;
-  [EModules.Logs]: LogsRooster;
   [EModules.BugReport]: BugReportRooster;
   [EModules.LoginAttempt]: LoginAttemptRooster;
 }
@@ -67,7 +61,6 @@ export interface IRoosterAddData {
   [EModules.Profiles]: IAddProfileDto;
   [EModules.Inventory]: IAddItemDto;
   [EModules.Party]: IAddPartyDto;
-  [EModules.Logs]: IAddLogDto;
   [EModules.BugReport]: IAddBugReport;
   [EModules.LoginAttempt]: IAddLoginAttempt;
 }
@@ -79,13 +72,11 @@ export interface IRoosterAddDefaultData {
   [EModules.Profiles]: Partial<IProfileEntity>;
   [EModules.Inventory]: Partial<IInventoryEntity>;
   [EModules.Party]: Partial<IPartyEntity>;
-  [EModules.Logs]: Partial<ILogEntity>;
   [EModules.BugReport]: Partial<IBugReportEntity>;
   [EModules.LoginAttempt]: Partial<ILoginAttemptEntity>;
 }
 
 export interface IRoosterUpdate extends IRoosterAddDefaultData {
-  [EModules.Logs]: Partial<ILogEntity>;
   [EModules.Stats]: Partial<IStatsEntity>;
 }
 
@@ -96,7 +87,6 @@ export interface IRoosterGetData {
   [EModules.Profiles]: IProfileEntity | null;
   [EModules.Inventory]: IInventoryEntity | null;
   [EModules.Party]: IPartyEntity | null;
-  [EModules.Logs]: ILogEntity | null;
   [EModules.BugReport]: IBugReportEntity | null;
   [EModules.LoginAttempt]: ILoginAttemptEntity | null;
 }
