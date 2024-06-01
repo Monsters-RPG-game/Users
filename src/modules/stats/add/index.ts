@@ -27,6 +27,7 @@ export default class Controller extends ControllerFactory<EModules.Stats> {
         return {
           [ECharacterStats.Intelligence]: 2,
           [ECharacterStats.Strength]: 2,
+          [ECharacterStats.HP]: 10,
         };
     }
   }

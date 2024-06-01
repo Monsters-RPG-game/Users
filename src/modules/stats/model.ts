@@ -19,6 +19,10 @@ export const statsSchema = new mongoose.Schema({
     type: Number,
     default: 1,
   },
+  hp: {
+    type: Number,
+    default: 10,
+  },
 });
 
 const Stats = mongoose.model<IStats>('Stats', statsSchema);

@@ -34,7 +34,7 @@ export default class Router {
       case enums.EMessageTargets.Stats:
         return this.handler.statsMessage(payload);
       case enums.EMessageTargets.Npc:
-        return this.handler.npmMessages(payload);
+        return this.handler.npcMessages(payload);
       default:
         throw new errors.IncorrectTargetError();
     }
