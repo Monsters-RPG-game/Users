@@ -102,12 +102,20 @@ describe('Stats', () => {
 
   describe('Should pass', () => {
     it('Got stats', async () => {
-      await db.stats.owner(localUser3.userId).intelligence(1).strength(1).initialized(true)._id(fakeStats._id).create();
+      await db.stats
+        .owner(localUser3.userId)
+        .intelligence(1)
+        .strength(1)
+        .hp(10)
+        .initialized(true)
+        ._id(fakeStats._id)
+        .create();
 
       const stats = (await getController.get({ id: fakeStats._id }))!;
 
       expect(stats.intelligence).toEqual(1);
       expect(stats.strength).toEqual(1);
+      expect(stats.hp).toEqual(10);
     });
 
     it('Initialized stats', async () => {

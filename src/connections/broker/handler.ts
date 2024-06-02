@@ -144,7 +144,7 @@ export default class Handler {
     }
   }
 
-  async npmMessages(payload: types.IRabbitMessage): Promise<void> {
+  async npcMessages(payload: types.IRabbitMessage): Promise<void> {
     switch (payload.subTarget) {
       case enums.ENpcTargets.GetNpc:
         return this.npc.get(payload.payload, payload.user);

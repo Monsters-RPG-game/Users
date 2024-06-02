@@ -6,4 +6,5 @@ export enum ECharacterState {
 export enum ECharacterStats {
   Strength = 'strength',
   Intelligence = 'intelligence',
+  HP = 'hp',
 }

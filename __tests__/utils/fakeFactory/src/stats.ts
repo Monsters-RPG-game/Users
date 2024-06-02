@@ -34,6 +34,11 @@ export default class FakeStats extends TemplateFactory<EFakeData.Stats> implemen
     return this;
   }
 
+  hp(hp?: number): this {
+    this.data.hp = hp;
+    return this;
+  }
+
   protected override fillState(): void {
     this.data = {
       _id: undefined,
@@ -41,6 +46,7 @@ export default class FakeStats extends TemplateFactory<EFakeData.Stats> implemen
       initialized: undefined,
       intelligence: undefined,
       strength: undefined,
+      hp: undefined,
     };
   }
 }

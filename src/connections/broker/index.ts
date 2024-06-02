@@ -46,7 +46,7 @@ export default class Broker {
       .catch(() => null);
   }
 
-  private sendHeartBeat(payload: unknown, target: enums.EMessageTypes): void {
+  private sendHeartbeat(payload: unknown, target: enums.EMessageTypes): void {
     const body = { payload, target };
     if (!this._channel) throw new NotConnectedError();
     this._channel.publish(enums.EAmqQueues.Gateway, '', Buffer.from(JSON.stringify(body)));
@@ -121,7 +121,7 @@ export default class Broker {
         if (!message) return;
         const payload = JSON.parse(message.content.toString()) as types.IRabbitMessage;
         if (payload.target === enums.EMessageTypes.Heartbeat) {
-          this.sendHeartBeat(enums.EServices.Users, enums.EMessageTypes.Heartbeat);
+          this.sendHeartbeat(enums.EServices.Users, enums.EMessageTypes.Heartbeat);
         } else {
           this._queue[payload.user.tempId] = payload;
           this.errorWrapper(async () => this.router.handleMessage(payload), payload.user.tempId);
@@ -129,7 +129,7 @@ export default class Broker {
       },
       { noAck: true },
     );
-    return this.sendHeartBeat(enums.EServices.Users, enums.EMessageTypes.Heartbeat);
+    return this.sendHeartbeat(enums.EServices.Users, enums.EMessageTypes.Heartbeat);
   }
 
   private async closeChannel(): Promise<void> {

@@ -17,6 +17,7 @@ export default class Rooster extends RoosterFactory<IStats, typeof Stats, EModul
         _id: false,
         strength: true,
         intelligence: true,
+        hp: true,
       })
       .lean();
   }
@@ -30,6 +31,7 @@ export default class Rooster extends RoosterFactory<IStats, typeof Stats, EModul
         _id: true,
         strength: true,
         intelligence: true,
+        hp: true,
       })
       .lean();
   }
@@ -41,6 +43,7 @@ export default class Rooster extends RoosterFactory<IStats, typeof Stats, EModul
         _id: false,
         strength: true,
         intelligence: true,
+        hp: true,
       })
       .lean();
   }
