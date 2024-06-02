@@ -49,8 +49,12 @@ export default class Migrations {
   }
 
   private async migrate(toMigrate: Record<string, IMigrationFile>): Promise<void> {
-    function isUpdateWriteOpResult(result: any): result is UpdateWriteOpResult {
-      return result && result.upsertedCount !== undefined;
+    /**
+     * isUpdateWriteOpResult method checks if return value from up method
+     *   in migration file is of a mongo update type or a number
+     */
+    function isUpdateWriteOpResult(result: UpdateWriteOpResult | number): result is UpdateWriteOpResult {
+      return typeof result === 'object';
     }
     let migrationName = '';
     let down: (() => Promise<void>) | undefined;
