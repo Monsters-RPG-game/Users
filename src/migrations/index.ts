@@ -3,7 +3,7 @@ import MongoConnection from './connection';
 import getModel from './model';
 import Log from '../tools/logger';
 import type { IMigration, IMigrationFile } from './types';
-import type { Connection, UpdateWriteOpResult } from 'mongoose';
+import type { Connection } from 'mongoose';
 
 export default class Migrations {
   private readonly _client: MongoConnection;
@@ -49,13 +49,6 @@ export default class Migrations {
   }
 
   private async migrate(toMigrate: Record<string, IMigrationFile>): Promise<void> {
-    /**
-     * isUpdateWriteOpResult method checks if return value from up method
-     *   in migration file is of a mongo update type or a number
-     */
-    function isUpdateWriteOpResult(result: UpdateWriteOpResult | number): result is UpdateWriteOpResult {
-      return typeof result === 'object';
-    }
     let migrationName = '';
     let down: (() => Promise<void>) | undefined;
     const succeeded: string[] = [];
@@ -66,10 +59,10 @@ export default class Migrations {
           migrationName = k;
           down = (): Promise<void> => v.down();
           const result = await v.up();
-
-          if (isUpdateWriteOpResult(result)) {
-            Log.log('Migration', `${k} finished. Changed ${result.upsertedCount} entries`);
-          } else {
+          if (typeof result === 'object') {
+            Log.log('Migration', `${k} finished. Changed ${result.modifiedCount} entries`);
+          }
+          if (typeof result === 'number') {
             Log.log('Migration', `${k} finished. Inserted ${result} entries`);
           }
           succeeded.push(k);
