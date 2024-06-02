@@ -20,11 +20,6 @@ export default {
     const updatePromise: Promise<void>[] = [];
     for (const race of Object.values(enums.ENpcRace)) {
       for (let i = 1; i <= 5; i++) {
-        // const id = await npcHandler.addBasic({
-        //   name: `${race}_lvl_${i}`,
-        //   lvl: i,
-        //   race,
-        // });
         addPromises.push(
           npcHandler
             .addBasic({
@@ -60,11 +55,17 @@ export default {
 
   async down(): Promise<void> {
     const idsToDelete: string[] = [];
-    // for (const race of Object.values(enums.ENpcRace)) {
-    //   const regexPattern = new RegExp(`^${race}*`);
-    //   const list = await Npc.find({ name: { $regex: regexPattern } }, { _id: 1 });
-    //   list.forEach((doc) => idsToDelete.push(doc._id.toString()));
-    // }
+    const promises: Promise<void>[] = [];
+
+    for (const race of Object.values(enums.ENpcRace)) {
+      promises.push(
+        Npc.find({ name: { $regex: `^${race}*` } }, { _id: 1 }).then((list) => {
+          list.forEach((doc) => idsToDelete.push(doc._id.toString()));
+        }),
+      );
+    }
+    await Promise.all(promises);
+
     await Npc.deleteMany({ _id: { $in: idsToDelete } }).exec();
     await Inventory.deleteMany({ userId: { $in: idsToDelete } }).exec();
     await Stats.deleteMany({ owner: { $in: idsToDelete } }).exec();
