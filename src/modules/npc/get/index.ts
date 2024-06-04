@@ -9,7 +9,6 @@ export default class Controller extends ControllerFactory<EModules.Npc> {
   constructor() {
     super(new Rooster());
   }
-
   async get(data: IGetCharacterDto): Promise<ICharacterEntity[]> {
     const payload = new GetCharacterDto(data);
 
@@ -22,5 +21,9 @@ export default class Controller extends ControllerFactory<EModules.Npc> {
     }
 
     return this.rooster.getMany(filter, payload.page);
+  }
+
+  async getByName(name: string, lvl: number): Promise<ICharacterEntity[]> {
+    return this.rooster.getByName(name, lvl);
   }
 }
