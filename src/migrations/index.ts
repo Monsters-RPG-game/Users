@@ -59,8 +59,12 @@ export default class Migrations {
           migrationName = k;
           down = (): Promise<void> => v.down();
           const result = await v.up();
-
-          Log.log('Migration', `${k} finished. Changed ${result.upsertedCount} entries`);
+          if (typeof result === 'object') {
+            Log.log('Migration', `${k} finished. Changed ${result.modifiedCount} entries`);
+          }
+          if (typeof result === 'number') {
+            Log.log('Migration', `${k} finished. Inserted ${result} entries`);
+          }
           succeeded.push(k);
         }),
       );
