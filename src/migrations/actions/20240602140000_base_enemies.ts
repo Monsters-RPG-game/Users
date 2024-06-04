@@ -23,7 +23,7 @@ export default {
         addPromises.push(
           npcHandler
             .addBasic({
-              name: `${race}_lvl_${i}`,
+              name: race,
               lvl: i,
               race,
             })
