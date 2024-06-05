@@ -22,6 +22,10 @@ export default class Rooster extends RoosterFactory<ICharacter, typeof Character
       .lean();
   }
 
+  async getByName(name: string, lvl: number): Promise<ICharacterEntity[]> {
+    return this.model.find({ name, lvl }).lean();
+  }
+
   async remove(_id: string): Promise<void> {
     await this.model.findOneAndDelete({ _id });
   }
