@@ -11,6 +11,6 @@ export interface IMigration extends IMigrationEntity, mongoose.Document {
 }
 
 export interface IMigrationFile {
-  up: () => Promise<QueryWithHelpers<UpdateWriteOpResult, unknown, unknown, unknown, 'updateMany'>>;
+  up: () => Promise<QueryWithHelpers<UpdateWriteOpResult, unknown, unknown, unknown, 'updateMany'>> | Promise<number>;
   down: () => Promise<void>;
 }
