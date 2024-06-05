@@ -1,3 +1,5 @@
 export interface IGetStatsDto {
-  id: string;
+  id?: string;
+  character?: string;
+  lvl?: number;
 }
