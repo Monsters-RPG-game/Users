@@ -14,7 +14,7 @@ export default class UserStatsDto implements IGetStatsDto {
   }
 
   private validate(): void {
-    if (this.id) new Validation(this.id, 'id').isDefined().isString().isObjectId();
+    if (!this.character || this.id) new Validation(this.id, 'id').isDefined().isString().isObjectId();
     if (this.character) {
       new Validation(this.character, 'character').isDefined().isString();
       new Validation(this.lvl, 'lvl').isDefined().isNumber();
