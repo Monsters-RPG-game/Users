@@ -30,7 +30,7 @@ export default class FakeProfile extends TemplateFactory<EFakeData.Profile> impl
     return this;
   }
 
-  exp(exp?: number[]): this {
+  exp(exp?: number): this {
     this.data.exp = exp;
     return this;
   }
@@ -73,7 +73,7 @@ export default class FakeProfile extends TemplateFactory<EFakeData.Profile> impl
   protected override fillState(): void {
     this.data = {
       _id: undefined,
-      exp: [0, 10],
+      exp: 1,
       friends: [],
       lvl: 1,
       race: undefined,
