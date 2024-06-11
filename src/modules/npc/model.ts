@@ -19,9 +19,9 @@ export const characterSchema = new mongoose.Schema({
     default: 1,
   },
   exp: {
-    type: [Number, Number],
+    type: Number,
     required: false,
-    default: [0, 10],
+    default: 1,
   },
   inventory: {
     type: mongoose.Types.ObjectId,

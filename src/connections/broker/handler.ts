@@ -69,6 +69,8 @@ export default class Handler {
         return this.controller.createProfile(payload.payload, payload.user);
       case enums.EProfileTargets.Get:
         return this.profile.get(payload.payload, payload.user);
+      case enums.EProfileTargets.AddExp:
+        return this.profile.addExp(payload.payload, payload.user);
       default:
         throw new errors.IncorrectTargetError();
     }

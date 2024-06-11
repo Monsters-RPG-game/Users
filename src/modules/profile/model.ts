@@ -25,9 +25,9 @@ export const profileSchema = new mongoose.Schema({
     default: 1,
   },
   exp: {
-    type: [Number, Number],
+    type: Number,
     required: false,
-    default: [0, 10],
+    default: 1,
   },
   initialized: {
     type: Boolean,
