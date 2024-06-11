@@ -7,6 +7,6 @@ export default {
   },
 
   async down(): Promise<void> {
-    await Npc.updateMany({}, { $unset: { exp: '' } });
+    await Npc.updateMany({}, { $set: { exp: [0, 10] } });
   },
 };
