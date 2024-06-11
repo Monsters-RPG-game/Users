@@ -84,7 +84,7 @@ describe('Profile', () => {
       expect(user).toEqual(userId);
       expect(friends.length).toEqual(0);
       expect(lvl).toEqual(1);
-      expect(exp[0]).toEqual(0);
+      expect(exp).toEqual(1);
     });
   });
 });
