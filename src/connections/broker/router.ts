@@ -35,6 +35,8 @@ export default class Router {
         return this.handler.statsMessage(payload);
       case enums.EMessageTargets.Npc:
         return this.handler.npcMessages(payload);
+      case enums.EMessageTargets.Skills:
+        return this.handler.skillsMessage(payload);
       default:
         throw new errors.IncorrectTargetError();
     }

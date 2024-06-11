@@ -23,6 +23,10 @@ import type { IAddProfileDto } from '../../modules/profile/add/types';
 import type { IProfileEntity } from '../../modules/profile/entity';
 import type ProfileGet from '../../modules/profile/get';
 import type ProfileRooster from '../../modules/profile/rooster';
+import type { IAddSkillsDto } from '../../modules/skills/add/types';
+import type { ISkillsEntity } from '../../modules/skills/entity';
+import type SkillsGet from '../../modules/skills/get';
+import type SkillsRooster from '../../modules/skills/rooster';
 import type { IAddStatsDto } from '../../modules/stats/add/types';
 import type { IStatsEntity } from '../../modules/stats/entity';
 import type StatsGet from '../../modules/stats/get';
@@ -41,6 +45,7 @@ export interface IModulesGetControllers {
   [EModules.Inventory]: InventoryGet;
   [EModules.BugReport]: BugReportGet;
   [EModules.LoginAttempt]: LoginAttemptGet;
+  [EModules.Skills]: SkillsGet;
 }
 
 export interface IModulesControllers {
@@ -52,6 +57,7 @@ export interface IModulesControllers {
   [EModules.Party]: PartyRooster;
   [EModules.BugReport]: BugReportRooster;
   [EModules.LoginAttempt]: LoginAttemptRooster;
+  [EModules.Skills]: SkillsRooster;
 }
 
 export interface IRoosterAddData {
@@ -63,6 +69,7 @@ export interface IRoosterAddData {
   [EModules.Party]: IAddPartyDto;
   [EModules.BugReport]: IAddBugReport;
   [EModules.LoginAttempt]: IAddLoginAttempt;
+  [EModules.Skills]: IAddSkillsDto;
 }
 
 export interface IRoosterAddDefaultData {
@@ -74,6 +81,7 @@ export interface IRoosterAddDefaultData {
   [EModules.Party]: Partial<IPartyEntity>;
   [EModules.BugReport]: Partial<IBugReportEntity>;
   [EModules.LoginAttempt]: Partial<ILoginAttemptEntity>;
+  [EModules.Skills]: Partial<ISkillsEntity>;
 }
 
 export interface IRoosterUpdate extends IRoosterAddDefaultData {
@@ -89,6 +97,7 @@ export interface IRoosterGetData {
   [EModules.Party]: IPartyEntity | null;
   [EModules.BugReport]: IBugReportEntity | null;
   [EModules.LoginAttempt]: ILoginAttemptEntity | null;
+  [EModules.Skills]: ISkillsEntity | null;
 }
 
 export interface IRoosterFactory<Z extends EModules> {

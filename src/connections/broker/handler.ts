@@ -6,6 +6,7 @@ import InventoryController from '../../modules/inventory/handler';
 import NpcController from '../../modules/npc/handler';
 import PartyController from '../../modules/party/handler';
 import ProfileController from '../../modules/profile/handler';
+import SkillsController from '../../modules/skills/handler';
 import StatsController from '../../modules/stats/handler';
 import UserController from '../../modules/user/handler';
 import type * as types from '../../types/connection';
@@ -19,6 +20,7 @@ export default class Handler {
   private readonly _bugReport: BugReportController;
   private readonly _stats: StatsController;
   private readonly _npc: NpcController;
+  private readonly _skills: SkillsController;
 
   constructor() {
     this._user = new UserController();
@@ -28,6 +30,7 @@ export default class Handler {
     this._bugReport = new BugReportController();
     this._npc = new NpcController();
     this._stats = new StatsController();
+    this._skills = new SkillsController();
     this._controller = new Controller(this.user, this.profile, this.inventory, this.party, this.stats, this.npc);
   }
 
@@ -57,6 +60,10 @@ export default class Handler {
 
   private get npc(): NpcController {
     return this._npc;
+  }
+
+  private get skills(): SkillsController {
+    return this._skills;
   }
 
   private get controller(): Controller {
@@ -139,6 +146,16 @@ export default class Handler {
     switch (payload.subTarget) {
       case enums.EStatsTargets.GetStats:
         return this.stats.get(payload.payload, payload.user);
+      default:
+        throw new errors.IncorrectTargetError();
+    }
+  }
+
+  async skillsMessage(payload: types.IRabbitMessage): Promise<void> {
+    console.log("\tASDASDASDADS")
+    switch (payload.subTarget) {
+      case enums.ESkillsTargets.GetSkills:
+        return this.skills.get(payload.payload, payload.user);
       default:
         throw new errors.IncorrectTargetError();
     }

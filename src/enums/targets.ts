@@ -17,6 +17,10 @@ export enum EPartyTargets {
   Get = 'get',
 }
 
+export enum ESkillsTargets {
+  GetSkills = 'getSkills',
+}
+
 export enum ESharedTargets {
   RemoveUser = 'removeUser',
 }
