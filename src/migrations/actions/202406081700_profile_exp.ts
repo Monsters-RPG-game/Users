@@ -7,6 +7,6 @@ export default {
   },
 
   async down(): Promise<void> {
-    await Profile.updateMany({}, { $unset: { exp: '' } });
+    await Profile.updateMany({}, { $set: { exp: [0, 10] } });
   },
 };
