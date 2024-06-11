@@ -5,6 +5,7 @@ export interface ICharacterEntity {
   name: string;
   race: enums.ENpcRace;
   lvl: number;
+  exp: number;
   inventory: string;
   stats: string;
   party: string;
