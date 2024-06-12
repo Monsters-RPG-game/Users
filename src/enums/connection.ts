@@ -29,4 +29,5 @@ export enum EMessageTargets {
   BugReport = 'bugReport',
   CharacterState = 'characterState',
   Skills = 'skills',
+  SingleSkill = 'singleSkill',
 }

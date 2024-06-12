@@ -9,4 +9,5 @@ export enum EModules {
   BugReport = 'bugReport',
   LoginAttempt = 'loginAttempt',
   Skills = 'skills',
+  SingleSkill = 'singleSkill',
 }

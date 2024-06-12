@@ -15,6 +15,7 @@ export interface IRabbitMessage {
     | enums.EStatsTargets
     | enums.ENpcTargets
     | enums.EPartyTargets
+    | enums.ESingleSkillTargets
     | enums.ESkillsTargets;
   payload: unknown;
 }

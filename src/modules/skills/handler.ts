@@ -12,7 +12,6 @@ export default class Handler extends HandlerFactory<EModules.Skills> {
   }
 
   async get(payload: unknown, user: types.ILocalUser): Promise<void> {
-    console.log('\t\t------------------')
     const callBack = await this.getController.get(payload as IGetSkillsDto);
     return State.broker.send(user.tempId, callBack, enums.EMessageTypes.Send);
   }
