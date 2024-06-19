@@ -18,6 +18,12 @@ const singleSkillSchema = new mongoose.Schema({
     required: [true, 'type not provided'],
     default: enums.ESkillsType.Melee,
   },
+  target: {
+    type: String,
+    enum: enums.ESkillTarget,
+    required: [true, 'type not provided'],
+    default: enums.ESkillTarget.Enemy,
+  },
 });
 
 const SingleSkill = mongoose.model<ISingleSkill>('SingleSkill', singleSkillSchema);

@@ -5,4 +5,5 @@ export interface ISingleSkillEntity {
   name: string;
   power: number;
   type: enums.ESkillsType;
+  target: enums.ESkillTarget;
 }
