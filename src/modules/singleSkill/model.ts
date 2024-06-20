@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import * as enums from '../../enums';
 import type { ISingleSkill } from './types';
 
-const singleSkillSchema = new mongoose.Schema({
+export const singleSkillSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, 'name not provided'],

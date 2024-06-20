@@ -9,6 +9,7 @@ import type { IInventoryEntity } from '../../../src/modules/inventory/entity';
 import type { IPartyEntity } from '../../../src/modules/party/entity';
 import type { IAddExpDto } from '../../../src/modules/profile/addExp/types';
 import type { IProfileEntity } from '../../../src/modules/profile/entity';
+import type { ISkillsEntity } from '../../../src/modules/skills/entity';
 import type { IStatsEntity } from '../../../src/modules/stats/entity';
 import type * as types from '../../../src/types';
 
@@ -18,6 +19,7 @@ describe('Profile', () => {
   const fakeInv = fakeData.inventories[0] as IInventoryEntity;
   const fakeParty = fakeData.parties[0] as IPartyEntity;
   const fakeStats = fakeData.stats[0] as IStatsEntity;
+  const fakeSkills = utils.fakeData.skills[0] as ISkillsEntity;
 
   const localUser: types.ILocalUser = {
     userId: fake.user,
@@ -101,6 +103,7 @@ describe('Profile', () => {
         ._id(fake._id)
         .inventory(fakeInv._id)
         .party(fakeParty._id)
+        .skills(fakeSkills._id)
         .stats(fakeStats._id)
         .create();
       await addExpController.addExp(payload);
@@ -119,6 +122,7 @@ describe('Profile', () => {
         ._id(fake._id)
         .inventory(fakeInv._id)
         .party(fakeParty._id)
+        .skills(fakeSkills._id)
         .stats(fakeStats._id)
         .create();
       const clone = structuredClone(payload);

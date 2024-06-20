@@ -34,7 +34,9 @@ export default class SkillsController extends HandlerFactory<EModules.Skills> {
   }
 
   async add(payload: unknown, user: types.ILocalUser): Promise<void> {
-    return this.addController.add(payload as IAddSkillsDto, user);
+    // return this.addController.add(payload as IAddSkillsDto, user);
+    const callBack = await this.addController.add(payload as IAddSkillsDto, user);
+    return State.broker.send(user.tempId, callBack, enums.EMessageTypes.Send);
   }
 
   async addBasic(owner: string): Promise<string> {

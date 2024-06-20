@@ -64,6 +64,13 @@
       "type": "user"
     }
   ],
+  "skills":[
+    {
+    "_id": "64649e344e19dfa5f75fd7db",
+    "owner":"63e55edbe8a800060941121d",
+    "singleSkills": []
+    }
+  ],
   "profiles": [
     {
       "user": "63e55edbe8a800060941121d",
@@ -242,7 +249,7 @@
     {
       "_id": "64649e344e19dfa5f75fd7db",
       "owner": "63e55edbe8a800060941121d",
-      "skills": []
+      "singleSkills": []
     }
   ],
   "stats": [

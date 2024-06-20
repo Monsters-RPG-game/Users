@@ -11,6 +11,7 @@ import type { IPartyEntity } from '../../../src/modules/party/entity';
 import type { IAddProfileDto } from '../../../src/modules/profile/add/types';
 import type { IProfileEntity } from '../../../src/modules/profile/entity';
 import type { IGetProfileDto } from '../../../src/modules/profile/get/types';
+import type { ISkillsEntity } from '../../../src/modules/skills/entity';
 import type { IStatsEntity } from '../../../src/modules/stats/entity';
 import type * as types from '../../../src/types';
 
@@ -25,6 +26,7 @@ describe('Profile', () => {
   const fakeInv = fakeData.inventories[0] as IInventoryEntity;
   const fakeParty = fakeData.parties[0] as IPartyEntity;
   const fakeStats = fakeData.stats[0] as IStatsEntity;
+  const fakeSkills = utils.fakeData.skills[0] as ISkillsEntity;
   const userId: IGetProfileDto = {
     id,
   };
@@ -100,6 +102,7 @@ describe('Profile', () => {
           .inventory(fakeInv._id)
           .party(fakeParty._id)
           .stats(fakeStats._id)
+          .skills(fakeSkills._id)
           .create();
 
         try {
@@ -124,6 +127,7 @@ describe('Profile', () => {
         .lvl(fake.lvl)
         .exp(fake.exp)
         .friends(fake.friends)
+        .skills(fakeSkills._id)
         .inventory(fakeInv._id)
         .party(fakeParty._id)
         .stats(fakeStats._id)
@@ -146,6 +150,7 @@ describe('Profile', () => {
         .friends(fake.friends)
         .inventory(fakeInv._id)
         .party(fakeParty._id)
+        .skills(fakeSkills._id)
         .stats(fakeStats._id)
         .create();
 

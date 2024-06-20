@@ -1,22 +1,13 @@
 import mongoose from 'mongoose';
-import * as enums from '../../enums';
+// import * as enums from '../../enums';
+// import { singleSkillSchema } from '../../modules/singleSkill/model';
 import type { ISkills } from './types';
 
 const singleSkillSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, 'name not provided'],
-  },
-  power: {
-    type: Number,
-    required: [true, 'power not provided'],
-    default: 1,
-  },
-  type: {
-    type: String,
-    enum: enums.ESkillsType,
-    required: [true, 'type not provided'],
-    default: enums.ESkillsType.Attack,
+  skillId: {
+    type: mongoose.Types.ObjectId,
+    required: [true, 'skillId not provided'],
+    unique: true,
   },
 });
 

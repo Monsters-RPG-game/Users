@@ -25,6 +25,7 @@ export enum ESkillsTargets {
 export enum ESingleSkillTargets {
   GetSingleSkill = 'getSkill',
   AddSingleSkill = 'addSingleSkill',
+  AddToProfile = 'addToProfile',
 }
 
 export enum ESharedTargets {

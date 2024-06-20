@@ -34,7 +34,15 @@ export default class Handler {
     this._stats = new StatsController();
     this._singleSkill = new SingleSkillController();
     this._skills = new SkillsController();
-    this._controller = new Controller(this.user, this.profile, this.inventory, this.party, this.stats,this.skills, this.npc);
+    this._controller = new Controller(
+      this.user,
+      this.profile,
+      this.inventory,
+      this.party,
+      this.stats,
+      this.skills,
+      this.npc,
+    );
   }
 
   private get user(): UserController {
