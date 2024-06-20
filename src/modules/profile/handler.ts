@@ -71,6 +71,10 @@ export default class ProfileHandler extends HandlerFactory<EModules.Profiles> {
     return State.broker.send(user.tempId, updatedUser, enums.EMessageTypes.Send);
   }
 
+  async addBasic(user: string, party: string, inventory: string, stats: string, skills: string): Promise<string> {
+    return this.addBasicController.add({ user, party, inventory, stats, skills } as IAddBasicProfileDto);
+  }
+
   async remove(id: string): Promise<void> {
     return this.removeController.remove({ id } as IRemoveProfileDto);
   }
