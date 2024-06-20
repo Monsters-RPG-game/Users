@@ -16,7 +16,7 @@ const singleSkillSchema = new mongoose.Schema({
     type: String,
     enum: enums.ESkillsType,
     required: [true, 'type not provided'],
-    default: enums.ESkillsType.Melee,
+    default: enums.ESkillsType.Attack,
   },
   target: {
     type: String,

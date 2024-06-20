@@ -53,8 +53,8 @@ export default class ProfileHandler extends HandlerFactory<EModules.Profiles> {
     return this.addController.add(payload, user);
   }
 
-  async addBasic(user: string, party: string, inventory: string, stats: string): Promise<string> {
-    return this.addBasicController.add({ user, party, inventory, stats } as IAddBasicProfileDto);
+  async addBasic(user: string, party: string, inventory: string, stats: string, skills: string): Promise<string> {
+    return this.addBasicController.add({ user, party, inventory, stats, skills } as IAddBasicProfileDto);
   }
 
   async remove(id: string): Promise<void> {

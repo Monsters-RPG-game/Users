@@ -11,5 +11,6 @@ export interface IProfileEntity {
   inventory: string;
   stats: string;
   party: string;
+  skills: string;
   state: enums.ECharacterState;
 }

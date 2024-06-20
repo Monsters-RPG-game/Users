@@ -65,6 +65,11 @@ export default class FakeProfile extends TemplateFactory<EFakeData.Profile> impl
     return this;
   }
 
+  skills(skills: string): this {
+    this.data.skills = skills;
+    return this;
+  }
+
   protected override fillState(): void {
     this.data = {
       _id: undefined,

@@ -1,7 +1,9 @@
 // eslint-disable-next-line import/prefer-default-export
 export enum ESkillsType {
-  Melee = 'melee',
-  Magic = 'magic',
+  // Melee = 'melee',
+  // Magic = 'magic',
+  Attack = 'attack',
+  Support = 'support',
 }
 
 export enum ESkillTarget {

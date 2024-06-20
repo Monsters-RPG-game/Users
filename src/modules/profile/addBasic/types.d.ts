@@ -3,4 +3,5 @@ export interface IAddBasicProfileDto {
   party: string;
   inventory: string;
   stats: string;
+  skills: string;
 }

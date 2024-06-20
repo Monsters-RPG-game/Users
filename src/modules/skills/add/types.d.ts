@@ -1,3 +1,3 @@
 export interface IAddSkillsDto {
-  userId: string;
+  owner: string;
 }

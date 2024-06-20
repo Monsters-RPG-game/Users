@@ -7,16 +7,4 @@ export default class Rooster extends RoosterFactory<ISkills, typeof Skills, EMod
   constructor() {
     super(Skills);
   }
-
-  // async getByUser(id: string): Promise<IInventoryEntity | null> {
-  //   return this.model.findOne({ userId: id }).lean();
-  // }
-  //
-  // async remove(user: string): Promise<null> {
-  //   return this.model.findOneAndDelete({ userId: user });
-  // }
-  //
-  // override async update(id: string, data: Partial<IInventoryEntity>): Promise<void> {
-  //   await this.model.findOneAndUpdate({ userId: id }, data);
-  // }
 }

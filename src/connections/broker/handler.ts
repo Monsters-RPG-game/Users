@@ -34,7 +34,7 @@ export default class Handler {
     this._stats = new StatsController();
     this._singleSkill = new SingleSkillController();
     this._skills = new SkillsController();
-    this._controller = new Controller(this.user, this.profile, this.inventory, this.party, this.stats, this.npc);
+    this._controller = new Controller(this.user, this.profile, this.inventory, this.party, this.stats,this.skills, this.npc);
   }
 
   private get user(): UserController {
@@ -162,6 +162,8 @@ export default class Handler {
     switch (payload.subTarget) {
       case enums.ESkillsTargets.GetSkills:
         return this.skills.get(payload.payload, payload.user);
+      case enums.ESkillsTargets.AddSkills:
+        return this.skills.add(payload.payload, payload.user);
       default:
         throw new errors.IncorrectTargetError();
     }
@@ -181,7 +183,7 @@ export default class Handler {
   async npcMessages(payload: types.IRabbitMessage): Promise<void> {
     switch (payload.subTarget) {
       case enums.ENpcTargets.GetNpc:
-        return this.npc.get(payload.payload, payload.user);
+        return this.npc.get(payload.payload, payload.user); // GET/npc
       case enums.ENpcTargets.AddNpc:
         return this.controller.createNpc(payload.payload, payload.user);
       case enums.ENpcTargets.UpdateNpc:

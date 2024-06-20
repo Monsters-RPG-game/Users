@@ -11,6 +11,7 @@ export default class Controller extends ControllerFactory<EModules.Profiles> {
 
   async add(data: IAddBasicProfileDto): Promise<string> {
     const payload = new AddBasicProfileDto(data);
+    console.log('PAYLOAD',payload)
     return this.rooster.addDefault(payload);
   }
 }

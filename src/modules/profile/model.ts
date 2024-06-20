@@ -42,6 +42,10 @@ export const profileSchema = new mongoose.Schema({
     type: mongoose.Types.ObjectId,
     required: [true, 'Stats not provided'],
   },
+  skills: {
+    type: mongoose.Types.ObjectId,
+    required: [true, 'Skills not provided'],
+  },
   party: {
     type: mongoose.Types.ObjectId,
     required: [true, 'party not provided'],

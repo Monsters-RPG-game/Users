@@ -2,13 +2,13 @@ import Validation from '../../../tools/validation';
 import type { IAddSkillsDto } from './types';
 
 export default class AddSkillsDto implements IAddSkillsDto {
-  userId: string;
+  owner: string;
   constructor(data: IAddSkillsDto) {
-    this.userId = data.userId;
+    this.owner = data.owner;
     this.validate();
   }
 
   private validate(): void {
-    new Validation(this.userId, 'userId').isDefined().isObject();
+    new Validation(this.owner, 'owner').isDefined().isObjectId();
   }
 }
