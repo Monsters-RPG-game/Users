@@ -7,7 +7,7 @@ export default {
     let counter: number = 0;
     await Promise.all(
       toChange.map(async (e) => {
-        const skillsId = await new SkillsRooster().addDefault({ owner: e.user.toString() });
+        const skillsId = await new SkillsRooster().addDefault({ owner: e.user.toString(), singleSkills: [] });
         await Profile.updateOne({ _id: e._id }, { skills: skillsId });
         counter++;
       }),

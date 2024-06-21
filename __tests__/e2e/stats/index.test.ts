@@ -10,8 +10,8 @@ import type { IInventoryEntity } from '../../../src/modules/inventory/entity';
 import type { IPartyEntity } from '../../../src/modules/party/entity';
 import type { IAddProfileDto } from '../../../src/modules/profile/add/types';
 import type { IProfileEntity } from '../../../src/modules/profile/entity';
-import type { IStatsEntity } from '../../../src/modules/stats/entity';
 import type { ISkillsEntity } from '../../../src/modules/skills/entity';
+import type { IStatsEntity } from '../../../src/modules/stats/entity';
 import type { IGetStatsDto } from '../../../src/modules/stats/get/types';
 import type * as types from '../../../src/types';
 
