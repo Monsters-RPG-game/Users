@@ -1,5 +1,5 @@
 import AddSkillsDto from './dto';
-import { ProfileDoesNotExists } from '../../../errors';
+import { ProfileDoesNotExists, SingleSkillDoesNotExist, SingleSkillPresent } from '../../../errors';
 import ControllerFactory from '../../../tools/abstract/controller';
 import ProfileController from '../../profile/get';
 import SingleSkillController from '../../singleSkill/get';
@@ -17,19 +17,34 @@ export default class Controller extends ControllerFactory<EModules.Skills> {
     this._singleSkillController = new SingleSkillController();
   }
 
+  public get singleSkillController(): SingleSkillController {
+    return this._singleSkillController;
+  }
+
+  public get profileController(): ProfileController {
+    return this._profileController;
+  }
+
   async add(data: IAddSkillsDto, user: ILocalUser): Promise<void> {
     const payload = new AddSkillsDto(data);
-    const exist = await this._profileController.get({ id: user.userId! });
+    const exist = await this.profileController.get({ id: user.userId! });
     if (!exist) throw new ProfileDoesNotExists();
+
     const profileSkills = await this.rooster.get(exist.skills);
-    const singleSkill = await this._singleSkillController.get({ id: payload.singleSkillId });
+    const singleSkill = await this.singleSkillController.get({ id: payload.singleSkillId });
+    if (!singleSkill) throw new SingleSkillDoesNotExist();
 
     if (!profileSkills?.singleSkills) {
       await this.rooster.update(profileSkills!._id, {
         singleSkills: [{ skillId: singleSkill._id.toString() }],
       });
     }
+
     if (profileSkills?.singleSkills) {
+      const skillPresent = profileSkills.singleSkills.find(
+        (e) => e.skillId.toString() === payload.singleSkillId.toString(),
+      );
+      if (skillPresent) throw new SingleSkillPresent();
       await this.rooster.update(profileSkills._id, {
         singleSkills: [...profileSkills.singleSkills, { skillId: singleSkill._id.toString() }],
       });

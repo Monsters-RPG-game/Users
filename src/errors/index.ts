@@ -253,3 +253,12 @@ export class SingleSkillDoesNotExist extends FullError {
     this.status = 400;
   }
 }
+export class SingleSkillPresent extends FullError {
+  constructor() {
+    super('SingleSkillPresent');
+    this.message = 'Selected skill is already present in skills';
+    this.name = 'SingleSkillPresent';
+    this.code = '025';
+    this.status = 400;
+  }
+}
