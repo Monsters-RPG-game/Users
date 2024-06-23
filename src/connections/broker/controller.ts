@@ -8,6 +8,7 @@ import type NpcController from '../../modules/npc/handler';
 import type PartyController from '../../modules/party/handler';
 import type { IAddProfileDto } from '../../modules/profile/add/types';
 import type ProfileController from '../../modules/profile/handler';
+import type SkillsController from '../../modules/skills/handler';
 import type { IAddStatsDto } from '../../modules/stats/add/types';
 import type StatsController from '../../modules/stats/handler';
 import type UserController from '../../modules/user/handler';
@@ -21,6 +22,7 @@ export default class Controller {
   private readonly _inventory: InventoryController;
   private readonly _party: PartyController;
   private readonly _stats: StatsController;
+  private readonly _skills: SkillsController;
   private readonly _npc: NpcController;
 
   constructor(
@@ -29,14 +31,15 @@ export default class Controller {
     inventory: InventoryController,
     party: PartyController,
     stats: StatsController,
+    skills: SkillsController,
     npc: NpcController,
   ) {
     this._user = user;
     this._profile = profile;
     this._inventory = inventory;
     this._party = party;
-    this._party = party;
     this._stats = stats;
+    this._skills = skills;
     this._npc = npc;
   }
 
@@ -60,6 +63,10 @@ export default class Controller {
     return this._stats;
   }
 
+  private get skills(): SkillsController {
+    return this._skills;
+  }
+
   private get inventory(): InventoryController {
     return this._inventory;
   }
@@ -81,7 +88,14 @@ export default class Controller {
     const party = await this.party.addBasic(id);
     const inventory = await this.inventory.addBasic(id);
     const stats = await this.stats.addBasic(id);
-    await this.profile.addBasic(id.toString(), party.toString(), inventory.toString(), stats.toString());
+    const skills = await this.skills.addBasic(id);
+    await this.profile.addBasic(
+      id.toString(),
+      party.toString(),
+      inventory.toString(),
+      stats.toString(),
+      skills.toString(),
+    );
 
     return State.broker.send(user.tempId, undefined, enums.EMessageTypes.Send);
   }

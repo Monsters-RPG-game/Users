@@ -3,16 +3,16 @@ import type { IFakeModel, IFakeState } from '../types/data';
 import type mongoose from 'mongoose';
 
 export default abstract class TemplateFactory<T extends EFakeData> {
-  private readonly _target: IFakeModel[T];
+  private readonly _targetModel: IFakeModel[T];
   private _state: IFakeState[T] = {};
 
-  protected constructor(target: IFakeModel[T]) {
-    this._target = target;
+  protected constructor(targetModel: IFakeModel[T]) {
+    this._targetModel = targetModel;
     this.fillState();
   }
 
-  protected get target(): IFakeModel[T] {
-    return this._target;
+  protected get targetModel(): IFakeModel[T] {
+    return this._targetModel;
   }
 
   protected get data(): IFakeState[T] {
@@ -34,7 +34,7 @@ export default abstract class TemplateFactory<T extends EFakeData> {
   }
 
   async create(): Promise<mongoose.Types.ObjectId> {
-    const newElm = new this._target(this.data);
+    const newElm = new this._targetModel(this.data);
     const { _id } = await newElm.save();
     this.states.push({ ...this.data, _id });
     this.clean();
@@ -44,7 +44,7 @@ export default abstract class TemplateFactory<T extends EFakeData> {
   async cleanUp(): Promise<void> {
     await Promise.all(
       Object.values(this.states).map(async (k) => {
-        return (this._target as mongoose.Model<unknown>).findOneAndDelete({ _id: k._id! });
+        return (this._targetModel as mongoose.Model<unknown>).findOneAndDelete({ _id: k._id! });
       }),
     );
     this.states = [];

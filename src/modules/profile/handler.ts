@@ -61,14 +61,14 @@ export default class ProfileHandler extends HandlerFactory<EModules.Profiles> {
     return this.addController.add(payload, user);
   }
 
+  async addBasic(user: string, party: string, inventory: string, stats: string, skills: string): Promise<string> {
+    return this.addBasicController.add({ user, party, inventory, stats, skills } as IAddBasicProfileDto);
+  }
+
   async addExp(payload: unknown, user: types.ILocalUser): Promise<void> {
     await this.addExpController.addExp(payload as IAddExpDto);
     const updatedUser = await this.getController.getById({ id: (payload as IAddExpDto).profileId });
     return State.broker.send(user.tempId, updatedUser, enums.EMessageTypes.Send);
-  }
-
-  async addBasic(user: string, party: string, inventory: string, stats: string): Promise<string> {
-    return this.addBasicController.add({ user, party, inventory, stats } as IAddBasicProfileDto);
   }
 
   async remove(id: string): Promise<void> {
