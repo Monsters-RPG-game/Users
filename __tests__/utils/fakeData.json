@@ -245,6 +245,15 @@
       "_id": "64649e344e19dfa5f70fd7df"
     }
   ],
+"singleSkill":[
+  {
+    "_id": "64649e344e19dfa5f70fd7df",
+    "name": "testskill",
+    "power": 1,
+    "type": "attack",
+    "target":"enemy"
+  }
+],
   "skills": [
     {
       "_id": "64649e344e19dfa5f75fd7db",

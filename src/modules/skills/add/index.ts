@@ -6,7 +6,6 @@ import SingleSkillController from '../../singleSkill/get';
 import Rooster from '../rooster';
 import type { IAddSkillsDto } from './types';
 import type { EModules } from '../../../tools/abstract/enums';
-import type { ILocalUser } from '../../../types';
 
 export default class Controller extends ControllerFactory<EModules.Skills> {
   private _profileController: ProfileController;
@@ -25,9 +24,9 @@ export default class Controller extends ControllerFactory<EModules.Skills> {
     return this._profileController;
   }
 
-  async add(data: IAddSkillsDto, user: ILocalUser): Promise<void> {
+  async add(data: IAddSkillsDto): Promise<void> {
     const payload = new AddSkillsDto(data);
-    const exist = await this.profileController.get({ id: user.userId! });
+    const exist = await this.profileController.get({ id: data.owner });
     if (!exist) throw new ProfileDoesNotExists();
 
     const profileSkills = await this.rooster.get(exist.skills);

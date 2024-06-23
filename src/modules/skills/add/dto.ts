@@ -12,7 +12,7 @@ export default class AddSkillsDto implements IAddSkillsDto {
   }
 
   private validate(): void {
-    new Validation(this.owner, 'owner').isDefined().isObjectId();
-    new Validation(this.singleSkillId, 'singleSkillId').isDefined().isObjectId();
+    new Validation(this.owner, 'owner').isDefined().isString().isObjectId();
+    new Validation(this.singleSkillId, 'singleSkillId').isDefined().isString().isObjectId();
   }
 }
