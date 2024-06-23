@@ -1,4 +1,5 @@
-import { afterEach, describe, expect, it } from '@jest/globals';
+import { beforeEach, afterEach, describe, expect, it } from '@jest/globals';
+import mongoose from 'mongoose';
 import * as enums from '../../../src/enums';
 import * as errors from '../../../src/errors';
 import GetProfileController from '../../../src/modules/profile/get';
@@ -14,7 +15,6 @@ import type { IAddSkillsDto } from '../../../src/modules/skills/add/types';
 import type { ISkillsEntity } from '../../../src/modules/skills/entity';
 import type { IStatsEntity } from '../../../src/modules/stats/entity';
 import type * as types from '../../../src/types';
-import { beforeEach } from 'node:test';
 
 describe('Profile', () => {
   const db = new utils.FakeFactory();
@@ -72,6 +72,7 @@ describe('Profile', () => {
           .name(fakeSingleSkill.name)
           .create();
       });
+
       it('missing owner', async () => {
         const clone = structuredClone(payload);
         clone.owner = undefined!;
@@ -79,6 +80,7 @@ describe('Profile', () => {
           expect(err).toEqual(new errors.MissingArgError('owner'));
         });
       });
+
       it('missing singleSkillId', async () => {
         const clone = structuredClone(payload);
         clone.singleSkillId = undefined!;
@@ -103,6 +105,7 @@ describe('Profile', () => {
           .stats(fakeStats._id)
           .create();
       });
+
       it('incorrect owner', async () => {
         const clone = structuredClone(payload);
         clone.owner = 2 as unknown as string;
@@ -110,6 +113,7 @@ describe('Profile', () => {
           expect(err).toEqual(new errors.IncorrectArgTypeError('owner should be a string'));
         });
       });
+
       it('incorrect singleSkillId', async () => {
         const clone = structuredClone(payload);
         clone.singleSkillId = 2 as unknown as string;
@@ -120,27 +124,15 @@ describe('Profile', () => {
 
       it('profile does not exist', async () => {
         const clone = structuredClone(payload);
-        clone.owner = fake.user;
+        clone.owner = new mongoose.Types.ObjectId().toString();
         try {
           await addSkillsController.add(clone);
         } catch (error) {
           expect(error).toEqual(new errors.ProfileDoesNotExists());
         }
       });
-      it('singleSkill does not exist', async () => {
-        await db.profile
-          .user(localUser.userId)
-          .race(fake.race)
-          .lvl(fake.lvl)
-          .exp(fake.exp)
-          .friends(fake.friends)
-          ._id(fake._id)
-          .inventory(fakeInv._id)
-          .party(fakeParty._id)
-          .skills(fakeSkills._id)
-          .stats(fakeStats._id)
-          .create();
 
+      it('singleSkill does not exist', async () => {
         const clone = structuredClone(payload);
         clone.owner = localUser.userId!;
         clone.singleSkillId = '63e55edbe8a800060941121e';
@@ -152,6 +144,7 @@ describe('Profile', () => {
       });
     });
   });
+
   describe('Should pass', () => {
     it('added skills', async () => {
       await db.profile
@@ -166,7 +159,6 @@ describe('Profile', () => {
         .skills(fakeSkills._id)
         .stats(fakeStats._id)
         .create();
-
       await db.skills._id(fakeSkills._id).owner(localUser.userId).singleSkills().create();
 
       await db.singleSkill
