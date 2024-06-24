@@ -25,9 +25,9 @@ export const profileSchema = new mongoose.Schema({
     default: 1,
   },
   exp: {
-    type: [Number, Number],
+    type: Number,
     required: false,
-    default: [0, 10],
+    default: 1,
   },
   initialized: {
     type: Boolean,
@@ -41,6 +41,10 @@ export const profileSchema = new mongoose.Schema({
   stats: {
     type: mongoose.Types.ObjectId,
     required: [true, 'Stats not provided'],
+  },
+  skills: {
+    type: mongoose.Types.ObjectId,
+    required: [true, 'Skills not provided'],
   },
   party: {
     type: mongoose.Types.ObjectId,

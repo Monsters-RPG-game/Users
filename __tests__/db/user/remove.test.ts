@@ -6,6 +6,7 @@ import * as utils from '../../utils';
 import type { IInventoryEntity } from '../../../src/modules/inventory/entity';
 import type { IPartyEntity } from '../../../src/modules/party/entity';
 import type { IProfileEntity } from '../../../src/modules/profile/entity';
+import type { ISkillsEntity } from '../../../src/modules/skills/entity';
 import type { IStatsEntity } from '../../../src/modules/stats/entity';
 import type { IUserEntity } from '../../../src/modules/user/entity';
 
@@ -15,6 +16,7 @@ describe('Remove user', () => {
   const fakeUser = utils.fakeData.users[0] as IUserEntity;
   const fakeUser2 = utils.fakeData.users[1] as IUserEntity;
   const fakeProfile = utils.fakeData.profiles[0] as IProfileEntity;
+  const fakeSkills = utils.fakeData.skills[0] as ISkillsEntity;
   const fakeInv = utils.fakeData.inventories[0] as IInventoryEntity;
   const fakeParty = utils.fakeData.parties[0] as IPartyEntity;
   const fakeStats = utils.fakeData.stats[0] as IStatsEntity;
@@ -53,6 +55,7 @@ describe('Remove user', () => {
         .lvl(fakeProfile.lvl)
         .exp(fakeProfile.exp)
         .race(fakeProfile.race)
+        .skills(fakeSkills._id)
         .friends(fakeProfile.friends)
         .inventory(fakeInv._id)
         .party(fakeParty._id)
@@ -95,6 +98,7 @@ describe('Remove user', () => {
         .lvl(fakeProfile.lvl)
         .exp(fakeProfile.exp)
         .race(fakeProfile.race)
+        .skills(fakeSkills._id)
         .friends(fakeProfile.friends)
         .inventory(fakeInv._id)
         .party(fakeParty._id)

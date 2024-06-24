@@ -23,6 +23,13 @@ import type { IAddProfileDto } from '../../modules/profile/add/types';
 import type { IProfileEntity } from '../../modules/profile/entity';
 import type ProfileGet from '../../modules/profile/get';
 import type ProfileRooster from '../../modules/profile/rooster';
+import type { IAddSingleSkillDto } from '../../modules/singleSkill/add/types';
+import type SingleSkillGet from '../../modules/singleSkill/get';
+import type SingleSkillRooster from '../../modules/singleSkill/rooster';
+import type { IAddSkillsDto } from '../../modules/skills/add/types';
+import type { ISkillsEntity } from '../../modules/skills/entity';
+import type SkillsGet from '../../modules/skills/get';
+import type SkillsRooster from '../../modules/skills/rooster';
 import type { IAddStatsDto } from '../../modules/stats/add/types';
 import type { IStatsEntity } from '../../modules/stats/entity';
 import type StatsGet from '../../modules/stats/get';
@@ -31,6 +38,7 @@ import type { IUserEntity } from '../../modules/user/entity';
 import type UserGet from '../../modules/user/get';
 import type { IRegisterDto } from '../../modules/user/register/types';
 import type UserRooster from '../../modules/user/rooster';
+import type { ISingleSkillEntity } from 'modules/singleSkill/entity';
 
 export interface IModulesGetControllers {
   [EModules.Npc]: NpcGet;
@@ -41,6 +49,8 @@ export interface IModulesGetControllers {
   [EModules.Inventory]: InventoryGet;
   [EModules.BugReport]: BugReportGet;
   [EModules.LoginAttempt]: LoginAttemptGet;
+  [EModules.Skills]: SkillsGet;
+  [EModules.SingleSkill]: SingleSkillGet;
 }
 
 export interface IModulesControllers {
@@ -52,6 +62,8 @@ export interface IModulesControllers {
   [EModules.Party]: PartyRooster;
   [EModules.BugReport]: BugReportRooster;
   [EModules.LoginAttempt]: LoginAttemptRooster;
+  [EModules.Skills]: SkillsRooster;
+  [EModules.SingleSkill]: SingleSkillRooster;
 }
 
 export interface IRoosterAddData {
@@ -63,6 +75,8 @@ export interface IRoosterAddData {
   [EModules.Party]: IAddPartyDto;
   [EModules.BugReport]: IAddBugReport;
   [EModules.LoginAttempt]: IAddLoginAttempt;
+  [EModules.Skills]: IAddSkillsDto;
+  [EModules.SingleSkill]: IAddSingleSkillDto;
 }
 
 export interface IRoosterAddDefaultData {
@@ -74,6 +88,8 @@ export interface IRoosterAddDefaultData {
   [EModules.Party]: Partial<IPartyEntity>;
   [EModules.BugReport]: Partial<IBugReportEntity>;
   [EModules.LoginAttempt]: Partial<ILoginAttemptEntity>;
+  [EModules.Skills]: Partial<ISkillsEntity>;
+  [EModules.SingleSkill]: Partial<ISingleSkillEntity>;
 }
 
 export interface IRoosterUpdate extends IRoosterAddDefaultData {
@@ -89,6 +105,8 @@ export interface IRoosterGetData {
   [EModules.Party]: IPartyEntity | null;
   [EModules.BugReport]: IBugReportEntity | null;
   [EModules.LoginAttempt]: ILoginAttemptEntity | null;
+  [EModules.Skills]: ISkillsEntity | null;
+  [EModules.SingleSkill]: ISingleSkillEntity | null;
 }
 
 export interface IRoosterFactory<Z extends EModules> {

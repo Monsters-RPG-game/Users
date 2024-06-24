@@ -8,4 +8,6 @@ export enum EModules {
   Inventory = 'inventory',
   BugReport = 'bugReport',
   LoginAttempt = 'loginAttempt',
+  Skills = 'skills',
+  SingleSkill = 'singleSkill',
 }

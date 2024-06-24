@@ -64,21 +64,26 @@
       "type": "user"
     }
   ],
+  "skills":[
+    {
+    "_id": "64649e344e19dfa5f75fd7db",
+    "owner":"63e55edbe8a800060941121d",
+    "singleSkills": []
+    }
+  ],
   "profiles": [
     {
       "user": "63e55edbe8a800060941121d",
       "race": "human",
       "friends": [],
       "lvl": 1,
-      "exp": [
-        0,
-        10
-      ],
+      "exp": 1,
       "initialized": false,
       "inventory": "6465b8bb0466b9fe1f766225",
       "party": "64649e334e19dfa5f70fd7ba",
       "stats": "64649e344e19dfa5f75fd7db",
       "state": "map",
+      "skills": "64649e344e19dfa5f75fd7db",
       "_id": "64649e334e19dfa5f70fd7bd"
     },
     {
@@ -86,14 +91,12 @@
       "race": "human",
       "friends": [],
       "lvl": 1,
-      "exp": [
-        0,
-        10
-      ],
+      "exp": 1,
       "initialized": false,
       "inventory": "6465b8bb0466b9fe1f766229",
       "party": "64649e334e19dfa5f70fd7c1",
       "stats": "64649e344e19dfa5f74fd7db",
+      "skills": "64649e344e19dfa5f75fd7db",
       "state": "map",
       "_id": "64649e334e19dfa5f70fd7c3"
     },
@@ -102,14 +105,12 @@
       "race": "human",
       "friends": [],
       "lvl": 1,
-      "exp": [
-        0,
-        10
-      ],
+      "exp": 1,
       "initialized": true,
       "inventory": "6465b8bb0466b9fe1f76622b",
       "party": "64649e334e19dfa5f70fd7c7",
       "stats": "64649e344e19dfa5f73fd7db",
+      "skills": "64649e344e19dfa5f75fd7db",
       "state": "map",
       "_id": "64649e334e19dfa5f70fd7c9"
     },
@@ -118,14 +119,12 @@
       "race": "human",
       "friends": [],
       "lvl": 1,
-      "exp": [
-        0,
-        10
-      ],
+      "exp": 1,
       "initialized": false,
       "inventory": "6465b8bb0466b9fe1f76622d",
       "party": "64649e344e19dfa5f70fd7cd",
       "stats": "64649e344e19dfa5f72fd7db",
+      "skills": "64649e344e19dfa5f75fd7db",
       "state": "map",
       "_id": "64649e344e19dfa5f70fd7cf"
     },
@@ -134,14 +133,12 @@
       "race": "human",
       "friends": [],
       "lvl": 1,
-      "exp": [
-        0,
-        10
-      ],
+      "exp": 1,
       "initialized": false,
       "inventory": "6465b8bb0466b9fe1f76622f",
       "party": "64649e344e19dfa5f70fd7d3",
       "stats": "64649e344e19dfa5f71fd7db",
+      "skills": "64649e344e19dfa5f75fd7db",
       "state": "map",
       "_id": "64649e344e19dfa5f70fd7d5"
     },
@@ -150,14 +147,12 @@
       "race": "human",
       "friends": [],
       "lvl": 1,
-      "exp": [
-        0,
-        10
-      ],
+      "exp": 1,
       "initialized": false,
       "inventory": "6465b8bb0466b9fe1f766231",
       "party": "64649e344e19dfa5f70fd7d9",
       "stats": "64649e344e19dfa5f70fd7dc",
+      "skills": "64649e344e19dfa5f75fd7db",
       "state": "map",
       "_id": "64649e344e19dfa5f70fd7db"
     },
@@ -166,14 +161,12 @@
       "race": "human",
       "friends": [],
       "lvl": 1,
-      "exp": [
-        0,
-        10
-      ],
+      "exp": 1,
       "initialized": false,
       "inventory": "6465b8bb0466b9fe1f766233",
       "party": "64649e344e19dfa5f70fd7df",
       "stats": "64649e344e19dfa5f70fd7db",
+      "skills": "64649e344e19dfa5f75fd7db",
       "state": "map",
       "_id": "64649e344e19dfa5f70fd7e1"
     }
@@ -252,6 +245,22 @@
       "_id": "64649e344e19dfa5f70fd7df"
     }
   ],
+"singleSkill":[
+  {
+    "_id": "64649e344e19dfa5f70fd7df",
+    "name": "testskill",
+    "power": 1,
+    "type": "attack",
+    "target":"enemy"
+  }
+],
+  "skills": [
+    {
+      "_id": "64649e344e19dfa5f75fd7db",
+      "owner": "63e55edbe8a800060941121d",
+      "singleSkills": []
+    }
+  ],
   "stats": [
     {
       "_id": "64649e344e19dfa5f75fd7db",
@@ -315,10 +324,7 @@
       "name": "Clarence",
       "race": "human",
       "lvl": 1,
-      "exp": [
-        0,
-        10
-      ],
+      "exp": [0, 10],
       "inventory": "6465bd2cc9f753720afeeaa5",
       "_id": "6465bd2cc9f753720afeeaa9"
     },
@@ -326,10 +332,7 @@
       "name": "Alia",
       "race": "human",
       "lvl": 1,
-      "exp": [
-        0,
-        10
-      ],
+      "exp": [0, 10],
       "inventory": "6465bd2cc9f753720afeeaab",
       "_id": "6465bd2cc9f753720afeeaad"
     },
@@ -337,10 +340,7 @@
       "name": "Scarlet",
       "race": "human",
       "lvl": 1,
-      "exp": [
-        0,
-        10
-      ],
+      "exp": [0, 10],
       "inventory": "6465bd2cc9f753720afeeaaf",
       "_id": "6465bd2cc9f753720afeeab1"
     },
@@ -348,10 +348,7 @@
       "name": "Jonah",
       "race": "human",
       "lvl": 1,
-      "exp": [
-        0,
-        10
-      ],
+      "exp": [0, 10],
       "inventory": "6465bd2cc9f753720afeeab3",
       "_id": "6465bd2cc9f753720afeeab5"
     },
@@ -359,10 +356,7 @@
       "name": "Jeremy",
       "race": "human",
       "lvl": 1,
-      "exp": [
-        0,
-        10
-      ],
+      "exp": [0, 10],
       "inventory": "6465bd2cc9f753720afeeab7",
       "_id": "6465bd2cc9f753720afeeab9"
     },
@@ -370,10 +364,7 @@
       "name": "Amaya",
       "race": "human",
       "lvl": 1,
-      "exp": [
-        0,
-        10
-      ],
+      "exp": [0, 10],
       "inventory": "6465bd2cc9f753720afeeabb",
       "_id": "6465bd2cc9f753720afeeabd"
     },
@@ -381,10 +372,7 @@
       "name": "Harun",
       "race": "human",
       "lvl": 1,
-      "exp": [
-        0,
-        10
-      ],
+      "exp": [0, 10],
       "inventory": "6465bd2cc9f753720afeeabf",
       "_id": "6465bd2cc9f753720afeeac1"
     },
@@ -392,10 +380,7 @@
       "name": "Florence",
       "race": "human",
       "lvl": 1,
-      "exp": [
-        0,
-        10
-      ],
+      "exp": [0, 10],
       "inventory": "6465bd2cc9f753720afeeac3",
       "_id": "6465bd2cc9f753720afeeac5"
     },
@@ -403,10 +388,7 @@
       "name": "Sebastien",
       "race": "human",
       "lvl": 1,
-      "exp": [
-        0,
-        10
-      ],
+      "exp": [0, 10],
       "inventory": "6465bd2cc9f753720afeeac7",
       "_id": "6465bd2cc9f753720afeeac9"
     },
@@ -414,10 +396,7 @@
       "name": "Aarav",
       "race": "human",
       "lvl": 1,
-      "exp": [
-        0,
-        10
-      ],
+      "exp": [0, 10],
       "inventory": "6465bd2cc9f753720afeeacb",
       "_id": "6465bd2cc9f753720afeeacd"
     }

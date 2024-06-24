@@ -17,6 +17,16 @@ export enum EPartyTargets {
   Get = 'get',
 }
 
+export enum ESkillsTargets {
+  GetSkills = 'getSkills',
+  AddSkills = 'addSkills',
+}
+
+export enum ESingleSkillTargets {
+  GetSingleSkill = 'getSkill',
+  AddSingleSkill = 'addSingleSkill',
+}
+
 export enum ESharedTargets {
   RemoveUser = 'removeUser',
 }
@@ -24,6 +34,7 @@ export enum ESharedTargets {
 export enum EProfileTargets {
   Create = 'createProfile',
   Get = 'getProfile',
+  AddExp = 'addExp',
 }
 
 export enum ELogTargets {

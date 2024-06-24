@@ -7,6 +7,7 @@ import type { IInventoryEntity } from '../../../src/modules/inventory/entity';
 import type { IItemEntity } from '../../../src/modules/items/entity';
 import type { IPartyEntity } from '../../../src/modules/party/entity';
 import type { IProfileEntity } from '../../../src/modules/profile/entity';
+import type { ISkillsEntity } from '../../../src/modules/skills/entity';
 import type { IStatsEntity } from '../../../src/modules/stats/entity';
 import type { IUserEntity } from '../../../src/modules/user/entity';
 
@@ -15,6 +16,7 @@ describe('Items - drop', () => {
   const fakeUser = utils.fakeData.users[0] as IUserEntity;
   const fakeProfile = utils.fakeData.profiles[0] as IProfileEntity;
   const fakeItem = utils.fakeData.items[0] as IItemEntity;
+  const fakeSkills = utils.fakeData.skills[0] as ISkillsEntity;
   const fakeInv = utils.fakeData.inventories[0] as IInventoryEntity;
   const fakeParty = utils.fakeData.parties[0] as IPartyEntity;
   const fakeStats = utils.fakeData.stats[0] as IStatsEntity;
@@ -72,6 +74,7 @@ describe('Items - drop', () => {
           .exp(fakeProfile.exp)
           .friends(fakeProfile.friends)
           .inventory(fakeInv._id)
+          .skills(fakeSkills._id)
           .party(fakeParty._id)
           .stats(fakeStats._id)
           .create();
@@ -105,6 +108,7 @@ describe('Items - drop', () => {
         .lvl(fakeProfile.lvl)
         .exp(fakeProfile.exp)
         .friends(fakeProfile.friends)
+        .skills(fakeSkills._id)
         .inventory(fakeInv._id)
         .party(fakeParty._id)
         .stats(fakeStats._id)

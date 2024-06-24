@@ -5,4 +5,6 @@ export enum EFakeData {
   Inventory = 'inventory',
   Party = 'party',
   Stats = 'stats',
+  SingleSkill = 'singleSkill',
+  Skills = 'skills',
 }

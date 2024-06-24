@@ -6,6 +6,8 @@ import InventoryController from '../../modules/inventory/handler';
 import NpcController from '../../modules/npc/handler';
 import PartyController from '../../modules/party/handler';
 import ProfileController from '../../modules/profile/handler';
+import SingleSkillController from '../../modules/singleSkill/handler';
+import SkillsController from '../../modules/skills/handler';
 import StatsController from '../../modules/stats/handler';
 import UserController from '../../modules/user/handler';
 import type * as types from '../../types/connection';
@@ -19,6 +21,8 @@ export default class Handler {
   private readonly _bugReport: BugReportController;
   private readonly _stats: StatsController;
   private readonly _npc: NpcController;
+  private readonly _singleSkill: SingleSkillController;
+  private readonly _skills: SkillsController;
 
   constructor() {
     this._user = new UserController();
@@ -28,7 +32,17 @@ export default class Handler {
     this._bugReport = new BugReportController();
     this._npc = new NpcController();
     this._stats = new StatsController();
-    this._controller = new Controller(this.user, this.profile, this.inventory, this.party, this.stats, this.npc);
+    this._singleSkill = new SingleSkillController();
+    this._skills = new SkillsController();
+    this._controller = new Controller(
+      this.user,
+      this.profile,
+      this.inventory,
+      this.party,
+      this.stats,
+      this.skills,
+      this.npc,
+    );
   }
 
   private get user(): UserController {
@@ -59,6 +73,14 @@ export default class Handler {
     return this._npc;
   }
 
+  private get skills(): SkillsController {
+    return this._skills;
+  }
+
+  private get singleSkill(): SingleSkillController {
+    return this._singleSkill;
+  }
+
   private get controller(): Controller {
     return this._controller;
   }
@@ -69,6 +91,8 @@ export default class Handler {
         return this.controller.createProfile(payload.payload, payload.user);
       case enums.EProfileTargets.Get:
         return this.profile.get(payload.payload, payload.user);
+      case enums.EProfileTargets.AddExp:
+        return this.profile.addExp(payload.payload, payload.user);
       default:
         throw new errors.IncorrectTargetError();
     }
@@ -144,10 +168,32 @@ export default class Handler {
     }
   }
 
+  async skillsMessage(payload: types.IRabbitMessage): Promise<void> {
+    switch (payload.subTarget) {
+      case enums.ESkillsTargets.GetSkills:
+        return this.skills.get(payload.payload, payload.user);
+      case enums.ESkillsTargets.AddSkills:
+        return this.skills.add(payload.payload, payload.user);
+      default:
+        throw new errors.IncorrectTargetError();
+    }
+  }
+
+  async singleSkillMessage(payload: types.IRabbitMessage): Promise<void> {
+    switch (payload.subTarget) {
+      case enums.ESingleSkillTargets.GetSingleSkill:
+        return this.singleSkill.get(payload.payload, payload.user);
+      case enums.ESingleSkillTargets.AddSingleSkill:
+        return this.singleSkill.add(payload.payload, payload.user);
+      default:
+        throw new errors.IncorrectTargetError();
+    }
+  }
+
   async npcMessages(payload: types.IRabbitMessage): Promise<void> {
     switch (payload.subTarget) {
       case enums.ENpcTargets.GetNpc:
-        return this.npc.get(payload.payload, payload.user);
+        return this.npc.get(payload.payload, payload.user); // GET/npc
       case enums.ENpcTargets.AddNpc:
         return this.controller.createNpc(payload.payload, payload.user);
       case enums.ENpcTargets.UpdateNpc:

@@ -7,6 +7,7 @@ import * as utils from '../../utils';
 import FakeFactory from '../../utils/fakeFactory/src';
 import type { IInventoryEntity } from '../../../src/modules/inventory/entity';
 import type { IPartyEntity } from '../../../src/modules/party/entity';
+import type { ISkillsEntity } from '../../../src/modules/skills/entity';
 import type { IStatsEntity } from '../../../src/modules/stats/entity';
 import type { IRegisterDto } from '../../../src/modules/user/register/types';
 
@@ -16,6 +17,7 @@ describe('Profile', () => {
   const loginData = utils.fakeData.users[0] as IRegisterDto;
   const fakeInv = utils.fakeData.inventories[0] as IInventoryEntity;
   const fakeParty = utils.fakeData.parties[0] as IPartyEntity;
+  const fakeSkills = utils.fakeData.skills[0] as ISkillsEntity;
   const fakeStats = utils.fakeData.stats[0] as IStatsEntity;
 
   beforeAll(async () => {
@@ -50,6 +52,7 @@ describe('Profile', () => {
         .user(userId.toString())
         .race(EUserRace.Human)
         .inventory(fakeInv._id)
+        .skills(fakeSkills._id)
         .party(fakeParty._id)
         .stats(fakeStats._id)
         .create();
@@ -73,6 +76,7 @@ describe('Profile', () => {
         .race(EUserRace.Human)
         .inventory(fakeInv._id)
         .party(fakeParty._id)
+        .skills(fakeSkills._id)
         .stats(fakeStats._id)
         .create();
 
@@ -84,7 +88,7 @@ describe('Profile', () => {
       expect(user).toEqual(userId);
       expect(friends.length).toEqual(0);
       expect(lvl).toEqual(1);
-      expect(exp[0]).toEqual(0);
+      expect(exp).toEqual(1);
     });
   });
 });

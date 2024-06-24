@@ -4,6 +4,10 @@ import type { IPartyEntity } from '../../../../src/modules/party/entity';
 import type Party from '../../../../src/modules/party/model';
 import type { IProfileEntity } from '../../../../src/modules/profile/entity';
 import type Profile from '../../../../src/modules/profile/model';
+import type { ISingleSkillEntity } from '../../../../src/modules/singleSkill/entity';
+import type SingleSkill from '../../../../src/modules/singleSkill/model';
+import type { ISkillsEntity } from '../../../../src/modules/skills/entity';
+import type Skills from '../../../../src/modules/skills/model';
 import type { IStatsEntity } from '../../../../src/modules/stats/entity';
 import type Stats from '../../../../src/modules/stats/model';
 import type { IUserEntity } from '../../../../src/modules/user/entity';
@@ -20,6 +24,8 @@ export interface IFakeState {
   [EFakeData.Profile]: IFakeParam<IProfileEntity>;
   [EFakeData.Inventory]: IFakeParam<IInventoryEntity>;
   [EFakeData.Party]: IFakeParam<IPartyEntity>;
+  [EFakeData.SingleSkill]: IFakeParam<ISingleSkillEntity>;
+  [EFakeData.Skills]: IFakeParam<ISkillsEntity>;
 }
 
 export interface IFakeModel {
@@ -28,6 +34,8 @@ export interface IFakeModel {
   [EFakeData.Profile]: typeof Profile;
   [EFakeData.Inventory]: typeof Inventory;
   [EFakeData.Party]: typeof Party;
+  [EFakeData.SingleSkill]: typeof SingleSkill;
+  [EFakeData.Skills]: typeof Skills;
 }
 
 export type IAbstractBody<T> = {

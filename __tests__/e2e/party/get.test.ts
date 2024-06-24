@@ -19,30 +19,48 @@ describe('Party - get', () => {
 
   describe('Should throw', () => {
     describe('No data passed', () => {
-      it('Missing id', () => {
+      it('Missing id', async () => {
+        let err: Error | undefined = undefined;
         const clone = structuredClone(get);
         clone.id = undefined!;
 
-        controller.get(get).catch((err) => {
-          expect(err).toEqual(new errors.MissingArgError('id'));
-        });
+        try {
+          await controller.get(get);
+        } catch (error) {
+          err = error as Error;
+        }
+
+        expect(err).toEqual(new errors.PartyDoesNotExist());
       });
     });
 
     describe('Incorrect data', () => {
-      it('Incorrect id', () => {
+      it('Incorrect id', async () => {
+        let err: Error | undefined = undefined;
         const clone = structuredClone(get);
         clone.id = 'abc';
 
-        controller.get(get).catch((err) => {
-          expect(err).toEqual(new errors.IncorrectArgError('Provided party id is invalid'));
-        });
+        try {
+          await controller.get(get);
+        } catch (error) {
+          err = error as Error;
+        }
+
+        expect(err).toEqual(new errors.PartyDoesNotExist());
       });
 
-      it('Party does not exist', () => {
-        controller.get(get).catch((err) => {
-          expect(err).toEqual(new errors.PartyDoesNotExist());
-        });
+      it('Party does not exist', async () => {
+        let err: Error | undefined = undefined;
+        const clone = structuredClone(get);
+        clone.id = 'abc';
+
+        try {
+          await controller.get(get);
+        } catch (error) {
+          err = error as Error;
+        }
+
+        expect(err).toEqual(new errors.PartyDoesNotExist());
       });
     });
   });
