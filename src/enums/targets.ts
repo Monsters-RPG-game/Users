@@ -19,6 +19,7 @@ export enum EPartyTargets {
 
 export enum ESkillsTargets {
   GetSkills = 'getSkills',
+  GetDetailedSkills = 'getDetailedSkills',
   AddSkills = 'addSkills',
 }
 

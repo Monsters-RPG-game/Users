@@ -174,6 +174,8 @@ export default class Handler {
         return this.skills.get(payload.payload, payload.user);
       case enums.ESkillsTargets.AddSkills:
         return this.skills.add(payload.payload, payload.user);
+      case enums.ESkillsTargets.GetDetailedSkills:
+        return this.skills.getDetailed(payload.payload, payload.user);
       default:
         throw new errors.IncorrectTargetError();
     }
