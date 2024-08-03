@@ -7,7 +7,6 @@ const singleSkillSchema = new mongoose.Schema({
   skillId: {
     type: mongoose.Types.ObjectId,
     required: [true, 'skillId not provided'],
-    unique: true,
   },
 });
 

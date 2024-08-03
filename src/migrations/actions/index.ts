@@ -5,6 +5,7 @@ import baseEnemies from './20240602140000_base_enemies';
 import npcExp from './202406071800_npc_exp';
 import profileExp from './202406081700_profile_exp';
 import profileSkills from './202406202000_profile_skills';
+import dropIndex from './20240802200000_skills_index';
 
 export default {
   '20240301210000_profile_state': profileStatus,
@@ -14,4 +15,5 @@ export default {
   '202406071800_npc_exp': npcExp,
   '202406081700_profile_exp': profileExp,
   '202406202000_profile_skills': profileSkills,
+  '20240802200000_skills_index':dropIndex
 };
