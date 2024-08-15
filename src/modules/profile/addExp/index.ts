@@ -14,7 +14,7 @@ export default class Controller extends ControllerFactory<EModules.Profiles> {
 
   /**
    * Adds experience points to a profile and checks for level up.
-   *
+   * @param data
    */
   async addExp(data: IAddExpDto): Promise<void> {
     const payload = new AddExpDto(data);
@@ -27,7 +27,9 @@ export default class Controller extends ControllerFactory<EModules.Profiles> {
 
   /**
    * Checks if the profile should level up based on the new experience points.
-   * If not then update profile with new amount of experience
+   * If not then update profile with new amount of experience.
+   * @param exp
+   * @param profile
    */
   private async checkForNextLevel(exp: number, profile: IProfileEntity): Promise<void> {
     if (exp >= ELvlRequirements[`Level${profile.lvl + 1}`]) {

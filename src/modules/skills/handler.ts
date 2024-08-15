@@ -32,17 +32,16 @@ export default class SkillsController extends HandlerFactory<EModules.Skills> {
     return this._addController;
   }
 
+  async getDetailed(payload: unknown, user: types.ILocalUser): Promise<void> {
+    const callBack = await this.getDetailedController.get(payload as IGetDetailedSkillsDto);
+    return State.broker.send(user.tempId, callBack, enums.EMessageTypes.Send);
+  }
   private get getDetailedController(): GetDetailedController {
     return this._getDetailedController;
   }
 
   async get(payload: unknown, user: types.ILocalUser): Promise<void> {
     const callBack = await this.getController.get(payload as IGetSkillsDto);
-    return State.broker.send(user.tempId, callBack, enums.EMessageTypes.Send);
-  }
-
-  async getDetailed(payload: unknown, user: types.ILocalUser): Promise<void> {
-    const callBack = await this.getDetailedController.get(payload as IGetDetailedSkillsDto);
     return State.broker.send(user.tempId, callBack, enums.EMessageTypes.Send);
   }
 

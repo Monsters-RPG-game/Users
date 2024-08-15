@@ -13,14 +13,6 @@ export default class Controller extends ControllerFactory<EModules.Stats> {
     super(new Rooster());
   }
 
-  async add(data: IAddStatsDto, user: ILocalUser): Promise<void> {
-    const payload = new AddStatsDto(data);
-
-    const exist = await this.rooster.getByUser(user.userId!);
-    if (!exist) throw new errors.ProfileDoesNotExists();
-    await this.rooster.update(exist._id, { ...payload, ...this.getRaceStats(payload.race), initialized: true });
-  }
-
   private getRaceStats(race: ENpcRace): Record<ECharacterStats, number> {
     switch (race) {
       default:
@@ -30,5 +22,12 @@ export default class Controller extends ControllerFactory<EModules.Stats> {
           [ECharacterStats.HP]: 10,
         };
     }
+  }
+  async add(data: IAddStatsDto, user: ILocalUser): Promise<void> {
+    const payload = new AddStatsDto(data);
+
+    const exist = await this.rooster.getByUser(user.userId!);
+    if (!exist) throw new errors.ProfileDoesNotExists();
+    await this.rooster.update(exist._id, { ...payload, ...this.getRaceStats(payload.race), initialized: true });
   }
 }

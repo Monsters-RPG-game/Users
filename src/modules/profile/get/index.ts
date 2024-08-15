@@ -10,13 +10,12 @@ export default class Controller extends ControllerFactory<EModules.Profiles> {
     super(new Rooster());
   }
 
-  async get(data: IGetProfileDto): Promise<IProfileEntity | null> {
-    const { id } = new GetProfileDto(data);
-    return this.rooster.getByUser(id);
-  }
-
   async getById(data: IGetProfileDto): Promise<IProfileEntity | null> {
     const { id } = new GetProfileDto(data);
     return this.rooster.get(id);
+  }
+  async get(data: IGetProfileDto): Promise<IProfileEntity | null> {
+    const { id } = new GetProfileDto(data);
+    return this.rooster.getByUser(id);
   }
 }

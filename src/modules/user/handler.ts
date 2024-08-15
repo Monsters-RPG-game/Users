@@ -36,6 +36,10 @@ export default class UserHandler extends HandlerFactory<EModules.Users> {
     return this._addController;
   }
 
+  async getAll(payload: unknown, user: ILocalUser): Promise<void> {
+    const callback = await this.getAllController.getAll(payload as IGetAllUsersDto);
+    return State.broker.send(user.tempId, callback, enums.EMessageTypes.Send);
+  }
   private get getAllController(): GetAllController {
     return this._getAllController;
   }
@@ -52,6 +56,10 @@ export default class UserHandler extends HandlerFactory<EModules.Users> {
     return this._loginController;
   }
 
+  async getDetails(payload: unknown, user: ILocalUser): Promise<void> {
+    const callback = await this.getController.get(payload as IUserDetailsDto[]);
+    return State.broker.send(user.tempId, callback, enums.EMessageTypes.Send);
+  }
   async login(payload: unknown, user: ILocalUser): Promise<void> {
     const data = payload as ILoginDto;
 
@@ -59,7 +67,7 @@ export default class UserHandler extends HandlerFactory<EModules.Users> {
       const callback = await this.loginController.login(data);
       await this.loginAttemptController.add({ login: data.login, ip: data.ip, output: ELoginOutput.Success });
       return State.broker.send(user.tempId, callback, enums.EMessageTypes.Credentials);
-    } catch (err) {
+    } catch (_err) {
       await this.loginAttemptController.add({ login: data.login, ip: data.ip, output: ELoginOutput.Fail });
       throw new errors.IncorrectCredentialsError();
     }
@@ -67,16 +75,6 @@ export default class UserHandler extends HandlerFactory<EModules.Users> {
 
   async register(payload: IRegisterDto): Promise<string> {
     return this.addController.register(payload);
-  }
-
-  async getDetails(payload: unknown, user: ILocalUser): Promise<void> {
-    const callback = await this.getController.get(payload as IUserDetailsDto[]);
-    return State.broker.send(user.tempId, callback, enums.EMessageTypes.Send);
-  }
-
-  async getAll(payload: unknown, user: ILocalUser): Promise<void> {
-    const callback = await this.getAllController.getAll(payload as IGetAllUsersDto);
-    return State.broker.send(user.tempId, callback, enums.EMessageTypes.Send);
   }
 
   async remove(password: string, id: string): Promise<void> {
