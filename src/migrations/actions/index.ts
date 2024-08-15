@@ -15,5 +15,5 @@ export default {
   '202406071800_npc_exp': npcExp,
   '202406081700_profile_exp': profileExp,
   '202406202000_profile_skills': profileSkills,
-  '20240802200000_skills_index':dropIndex
+  '20240802200000_skills_index': dropIndex,
 };

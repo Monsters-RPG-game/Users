@@ -10,10 +10,9 @@ export default class Rooster extends RoosterFactory<ICharacter, typeof Character
     super(Character);
   }
 
-  async addBasic(filter: FilterQuery<Record<string, unknown>>): Promise<ICharacterEntity[]> {
-    return this.model.find(filter).lean();
+  async getByName(name: string, lvl: number): Promise<ICharacterEntity[]> {
+    return this.model.find({ name, lvl }).lean();
   }
-
   async getMany(filter: FilterQuery<Record<string, unknown>>, page: number): Promise<ICharacterEntity[]> {
     return this.model
       .find(filter)
@@ -21,9 +20,8 @@ export default class Rooster extends RoosterFactory<ICharacter, typeof Character
       .skip((page <= 0 ? 0 : page - 1) * 100)
       .lean();
   }
-
-  async getByName(name: string, lvl: number): Promise<ICharacterEntity[]> {
-    return this.model.find({ name, lvl }).lean();
+  async addBasic(filter: FilterQuery<Record<string, unknown>>): Promise<ICharacterEntity[]> {
+    return this.model.find(filter).lean();
   }
 
   async remove(_id: string): Promise<void> {

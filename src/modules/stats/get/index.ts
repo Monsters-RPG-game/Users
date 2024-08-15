@@ -18,6 +18,10 @@ export default class Controller extends ControllerFactory<EModules.Stats> {
     return this._npc;
   }
 
+  async getMany(data: IGetStatsDto[]): Promise<IStatsEntity[]> {
+    const payload = data.map((e) => new GetStatsDto(e));
+    return this.rooster.getMany(payload.map((e) => e.id!));
+  }
   async get(data: IGetStatsDto): Promise<IStatsEntity | null> {
     const { id, character, lvl } = new GetStatsDto(data);
     if (id) {
@@ -30,10 +34,5 @@ export default class Controller extends ControllerFactory<EModules.Stats> {
       }
     }
     return null;
-  }
-
-  async getMany(data: IGetStatsDto[]): Promise<IStatsEntity[]> {
-    const payload = data.map((e) => new GetStatsDto(e));
-    return this.rooster.getMany(payload.map((e) => e.id!));
   }
 }
