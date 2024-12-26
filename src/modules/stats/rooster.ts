@@ -12,7 +12,7 @@ export default class Rooster extends RoosterFactory<IStats, typeof Stats, EModul
 
   async getByUser(id: string): Promise<IStatsEntity | null> {
     return this.model
-      .find({ owner: id })
+      .findOne({ owner: id })
       .select({
         _id: false,
         strength: true,
@@ -21,6 +21,7 @@ export default class Rooster extends RoosterFactory<IStats, typeof Stats, EModul
       })
       .lean();
   }
+
   async getMany(ids: string[]): Promise<IStatsEntity[]> {
     return this.model
       .find({
@@ -34,6 +35,7 @@ export default class Rooster extends RoosterFactory<IStats, typeof Stats, EModul
       })
       .lean();
   }
+
   override async get(_id: unknown): Promise<IStatsEntity | null> {
     return this.model
       .findOne({ _id } as FilterQuery<Record<string, unknown>>)

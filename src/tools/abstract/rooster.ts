@@ -40,6 +40,8 @@ export default abstract class RoosterFactory<T extends Document, U extends Model
   }
 
   async get(_id: unknown): Promise<types.IRoosterGetData[Z] | null> {
-    return this.model.findOne({ _id } as FilterQuery<Record<string, unknown>>).lean();
+    return (await this.model.findOne({ _id } as FilterQuery<Record<string, unknown>>).lean()) as
+      | types.IRoosterGetData[Z]
+      | null;
   }
 }

@@ -28,6 +28,10 @@ export default class Controller extends ControllerFactory<EModules.Stats> {
 
     const exist = await this.rooster.getByUser(user.userId!);
     if (!exist) throw new errors.ProfileDoesNotExists();
-    await this.rooster.update(exist._id, { ...payload, ...this.getRaceStats(payload.race), initialized: true });
+    await this.rooster.update(exist._id.toString(), {
+      ...payload,
+      ...this.getRaceStats(payload.race),
+      initialized: true,
+    });
   }
 }

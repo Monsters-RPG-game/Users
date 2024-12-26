@@ -17,6 +17,6 @@ export default class Controller extends ControllerFactory<EModules.Profiles> {
     const exist = await this.rooster.getByUser(user.userId!);
     if (!exist) throw new errors.ProfileDoesNotExists();
     if (exist.initialized) throw new errors.ProfileAlreadyInitializedError();
-    await this.rooster.update(exist._id, { ...payload, initialized: true });
+    await this.rooster.update(exist._id.toString(), { ...payload, initialized: true });
   }
 }

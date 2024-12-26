@@ -59,7 +59,7 @@ export default class CharacterHandler extends HandlerFactory<EModules.Npc> {
       }),
     );
     const callback = npcs.map((npc) => {
-      return { ...npc, stats: stats.find((s) => s._id.toString() === npc.stats.toString()) } ?? undefined;
+      return { ...npc, stats: stats.find((s) => s._id.toString() === npc.stats.toString()) };
     });
     return State.broker.send(user.tempId, callback, enums.EMessageTypes.Send);
   }

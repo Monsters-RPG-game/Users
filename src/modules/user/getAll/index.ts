@@ -18,7 +18,7 @@ export default class Controller extends ControllerFactory<EModules.Users> {
       .filter((u): u is IUserEntity => u !== null)
       .map((u) => {
         return {
-          _id: u._id,
+          _id: u._id.toString(),
           login: u.login,
           verified: u.verified,
           type: u.type,

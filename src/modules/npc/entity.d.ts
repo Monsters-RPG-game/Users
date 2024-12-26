@@ -1,7 +1,8 @@
 import type * as enums from '../../enums';
+import type mongoose from 'mongoose';
 
 export interface ICharacterEntity {
-  _id: string;
+  _id: string | mongoose.Types.ObjectId;
   name: string;
   race: enums.ENpcRace;
   lvl: number;

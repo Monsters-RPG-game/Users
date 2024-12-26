@@ -1,3 +1,5 @@
+import type mongoose from 'mongoose';
+
 export interface ICharacterStats {
   intelligence: number;
   strength: number;
@@ -5,7 +7,7 @@ export interface ICharacterStats {
 }
 
 export interface IStatsEntity extends ICharacterStats {
-  _id: string;
-  owner: string;
+  _id: string | mongoose.Types.ObjectId;
+  owner: string | mongoose.Types.ObjectId;
   initialized: boolean;
 }

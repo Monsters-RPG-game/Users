@@ -44,7 +44,12 @@ export default class Mock {
         const party = parties.find((e) => e._id === p.party)!;
         const inventory = inventories.find((e) => e._id === p.inventory)!;
 
-        return db.profile.user(p.user).race(p.race).party(party._id).inventory(inventory._id).create();
+        return db.profile
+          .user(p.user)
+          .race(p.race)
+          .party(party._id.toString())
+          .inventory(inventory._id.toString())
+          .create();
       }),
     );
   }

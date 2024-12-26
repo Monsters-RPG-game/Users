@@ -13,6 +13,7 @@ export default class Rooster extends RoosterFactory<ICharacter, typeof Character
   async getByName(name: string, lvl: number): Promise<ICharacterEntity[]> {
     return this.model.find({ name, lvl }).lean();
   }
+
   async getMany(filter: FilterQuery<Record<string, unknown>>, page: number): Promise<ICharacterEntity[]> {
     return this.model
       .find(filter)

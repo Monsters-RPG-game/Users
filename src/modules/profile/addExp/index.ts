@@ -33,9 +33,9 @@ export default class Controller extends ControllerFactory<EModules.Profiles> {
    */
   private async checkForNextLevel(exp: number, profile: IProfileEntity): Promise<void> {
     if (exp >= ELvlRequirements[`Level${profile.lvl + 1}`]) {
-      return this.rooster.update(profile._id, { ...profile, exp, lvl: profile.lvl + 1 });
+      return this.rooster.update(profile._id.toString(), { ...profile, exp, lvl: profile.lvl + 1 });
     }
 
-    return this.rooster.update(profile._id, { ...profile, exp });
+    return this.rooster.update(profile._id.toString(), { ...profile, exp });
   }
 }

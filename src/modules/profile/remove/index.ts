@@ -15,6 +15,6 @@ export default class Controller extends ControllerFactory<EModules.Profiles> {
 
     const exist = await this.rooster.getByUser(id);
     if (!exist) throw new UserDoesNotExist();
-    await this.rooster.remove(exist._id);
+    await this.rooster.remove(exist._id.toString());
   }
 }
