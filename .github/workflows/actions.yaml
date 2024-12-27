@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: node:18
+      image: node:22
 
     steps:
       - name: Checkout code
@@ -56,7 +56,7 @@ jobs:
           cp config/devConfig.json config/testConfig.json
 
       - name: Upload config
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: config
           path: config/
@@ -66,7 +66,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: node:18
+      image: node:22
 
     steps:
       - name: Checkout code
@@ -84,7 +84,7 @@ jobs:
             ${{ runner.OS }}-node-
 
       - name: Download config
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: config
           path: config/
@@ -97,7 +97,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: node:18
+      image: node:22
 
     steps:
       - name: Checkout code
@@ -115,7 +115,7 @@ jobs:
             ${{ runner.OS }}-node-
 
       - name: Download config
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: config
           path: config/
@@ -129,7 +129,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: node:18
+      image: node:22
 
     steps:
       - name: Checkout code
@@ -147,7 +147,7 @@ jobs:
             ${{ runner.OS }}-node-
 
       - name: Download config
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: config
           path: config/

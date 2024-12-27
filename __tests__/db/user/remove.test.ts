@@ -1,14 +1,12 @@
 import { afterAll, afterEach, beforeAll, describe, expect, it } from '@jest/globals';
-import * as errors from '../../../src/errors';
-import ProfileRooster from '../../../src/modules/profile/rooster';
-import Rooster from '../../../src/modules/user/rooster';
-import * as utils from '../../utils';
-import type { IInventoryEntity } from '../../../src/modules/inventory/entity';
-import type { IPartyEntity } from '../../../src/modules/party/entity';
+import * as errors from '../../../src/errors/index.js';
+import ProfileRepository from '../../../src/modules/profile/repository/index.js';
+import Repository from '../../../src/modules/users/repository/index.js';
+import * as utils from '../../utils/index.js';
 import type { IProfileEntity } from '../../../src/modules/profile/entity';
-import type { ISkillsEntity } from '../../../src/modules/skills/entity';
-import type { IStatsEntity } from '../../../src/modules/stats/entity';
-import type { IUserEntity } from '../../../src/modules/user/entity';
+import { IUserEntity } from '../../../src/modules/users/entity.js';
+import UserModel from '../../../src/modules/users/model.js';
+import ProfileModel from '../../../src/modules/profile/model.js';
 
 describe('Remove user', () => {
   const connection = new utils.Connection();
@@ -16,10 +14,6 @@ describe('Remove user', () => {
   const fakeUser = utils.fakeData.users[0] as IUserEntity;
   const fakeUser2 = utils.fakeData.users[1] as IUserEntity;
   const fakeProfile = utils.fakeData.profiles[0] as IProfileEntity;
-  const fakeSkills = utils.fakeData.skills[0] as ISkillsEntity;
-  const fakeInv = utils.fakeData.inventories[0] as IInventoryEntity;
-  const fakeParty = utils.fakeData.parties[0] as IPartyEntity;
-  const fakeStats = utils.fakeData.stats[0] as IStatsEntity;
 
   beforeAll(async () => {
     await connection.connect();
@@ -35,49 +29,42 @@ describe('Remove user', () => {
 
   describe('Should throw', () => {
     it('No data in database', async () => {
-      const rooster = new Rooster();
-      const user = await rooster.get(fakeUser._id);
+      const repository = new Repository(UserModel);
+      const user = await repository.get(fakeUser._id);
 
       expect(user).toEqual(null);
     });
 
     it('Removing not yours account', async () => {
       await db.user
-        ._id(fakeUser._id)
+        ._id(fakeUser._id as string)
         .login(fakeUser.login)
         .password(fakeUser.password)
         .email(fakeUser.email)
         .verified(fakeUser.verified)
         .create();
+
       await db.profile
-        ._id(fakeProfile._id)
+        ._id(fakeProfile._id as string)
         .user(fakeProfile.user)
-        .lvl(fakeProfile.lvl)
-        .exp(fakeProfile.exp)
-        .race(fakeProfile.race)
-        .skills(fakeSkills._id)
-        .friends(fakeProfile.friends)
-        .inventory(fakeInv._id)
-        .party(fakeParty._id)
-        .stats(fakeStats._id)
         .create();
 
-      const rooster = new Rooster();
-      const profileRooster = new ProfileRooster();
+      const repository = new Repository(UserModel);
+      const profileRepository = new ProfileRepository(ProfileModel);
 
-      const user = await rooster.get(fakeUser._id);
-      const profile = await profileRooster.get(fakeProfile._id);
+      const user = await repository.get(fakeUser._id);
+      const profile = await profileRepository.get(fakeProfile._id);
       expect(user?._id.toString()).toEqual(fakeUser._id);
       expect(profile?._id.toString()).toEqual(fakeProfile._id);
 
       try {
-        await rooster.remove(fakeUser2._id);
+        await repository.remove(fakeUser2._id as string);
       } catch (err) {
         expect(err).toEqual(new errors.NoPermission());
       }
 
-      const user2 = await rooster.get(fakeUser._id);
-      const profile2 = await profileRooster.get(fakeProfile._id);
+      const user2 = await repository.get(fakeUser._id);
+      const profile2 = await profileRepository.get(fakeProfile._id);
       expect(user2?._id.toString()).toEqual(fakeUser._id);
       expect(profile2?._id.toString()).toEqual(fakeProfile._id);
     });
@@ -86,35 +73,27 @@ describe('Remove user', () => {
   describe('Should pass', () => {
     it('Removed', async () => {
       await db.user
-        ._id(fakeUser._id)
+        ._id(fakeUser._id as string)
         .login(fakeUser.login)
         .password(fakeUser.password)
         .email(fakeUser.email)
         .verified(fakeUser.verified)
         .create();
       await db.profile
-        ._id(fakeProfile._id)
+        ._id(fakeProfile._id as string)
         .user(fakeProfile.user)
-        .lvl(fakeProfile.lvl)
-        .exp(fakeProfile.exp)
-        .race(fakeProfile.race)
-        .skills(fakeSkills._id)
-        .friends(fakeProfile.friends)
-        .inventory(fakeInv._id)
-        .party(fakeParty._id)
-        .stats(fakeStats._id)
         .create();
-      const rooster = new Rooster();
-      const profileRooster = new ProfileRooster();
+      const repository = new Repository(UserModel);
+      const profileRepository = new ProfileRepository(ProfileModel);
 
-      const user = await rooster.get(fakeUser._id);
-      const profile = await profileRooster.get(fakeProfile._id);
+      const user = await repository.get(fakeUser._id);
+      const profile = await profileRepository.get(fakeProfile._id);
       expect(user?._id.toString()).toEqual(fakeUser._id);
       expect(profile?._id.toString()).toEqual(fakeProfile._id);
 
-      await rooster.remove(fakeUser._id);
+      await repository.remove(fakeUser._id as string);
 
-      const user2 = await rooster.get(fakeUser._id);
+      const user2 = await repository.get(fakeUser._id);
       expect(user2?._id).toEqual(undefined);
     });
   });

@@ -10,7 +10,6 @@ coverage
 
 # Transpiled files
 build/
-dist/
 
 # VS Code
 .vscode
@@ -28,7 +27,6 @@ yarn.lock
 
 # Misc
 .DS_Store
-package-lock.json
 
 /img/**/*
 img/*

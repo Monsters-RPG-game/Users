@@ -1,8 +1,8 @@
+import Log from 'simpleLogger';
 import migrations from './actions';
-import MongoConnection from './connection';
-import getModel from './model';
-import Log from '../tools/logger';
-import type { IMigration, IMigrationFile } from './types';
+import MongoConnection from './connection.js';
+import getModel from './model.js';
+import type { IMigration, IMigrationFile } from './types.js';
 import type { Connection } from 'mongoose';
 
 export default class Migrations {
@@ -36,7 +36,7 @@ export default class Migrations {
 
     const lastMigration = await this.getLastMigration();
     lastMigration.forEach((m) => {
-      delete migrations[m];
+      delete migrations[m as keyof typeof migrations];
     });
 
     if (Object.keys(migrations).length === 0) {

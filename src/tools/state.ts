@@ -1,11 +1,22 @@
-import type Broker from '../connections/broker';
-import type Mongo from '../connections/mongo';
-import type { IState } from '../types';
+import Log from 'simpleLogger';
+import type Bootstrap from './bootstrap.js';
+import type Broker from '../connections/broker/index.js';
+import type Mongo from '../connections/mongo/index.js';
+import type { IState } from '../types/index.js';
 
 class State implements IState {
-  private _broker: Broker | null = null;
-
   private _mongo: Mongo | null = null;
+  private _broker: Broker | null = null;
+  private _controllers: Bootstrap | null = null;
+
+  get mongo(): Mongo {
+    return this._mongo!;
+  }
+
+  set mongo(value: Mongo) {
+    this._mongo = value;
+  }
+
   get broker(): Broker {
     return this._broker!;
   }
@@ -14,12 +25,18 @@ class State implements IState {
     this._broker = value;
   }
 
-  get mongo(): Mongo {
-    return this._mongo!;
+  get controllers(): Bootstrap {
+    return this._controllers!;
   }
 
-  set mongo(value: Mongo) {
-    this._mongo = value;
+  set controllers(val: Bootstrap) {
+    this._controllers = val;
+  }
+
+  @Log.decorateSyncLog('State', 'App closed')
+  kill(): void {
+    this.mongo.disconnect();
+    this.broker.close();
   }
 }
 

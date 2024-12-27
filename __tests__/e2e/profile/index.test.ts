@@ -1,55 +1,29 @@
 import { afterEach, describe, expect, it } from '@jest/globals';
 import mongoose from 'mongoose';
-import * as enums from '../../../src/enums';
-import * as errors from '../../../src/errors';
-import AddController from '../../../src/modules/profile/add';
-import GetController from '../../../src/modules/profile/get';
-import * as utils from '../../utils';
-import { fakeData } from '../../utils';
-import type { IInventoryEntity } from '../../../src/modules/inventory/entity';
-import type { IPartyEntity } from '../../../src/modules/party/entity';
-import type { IAddProfileDto } from '../../../src/modules/profile/add/types';
-import type { IProfileEntity } from '../../../src/modules/profile/entity';
-import type { IGetProfileDto } from '../../../src/modules/profile/get/types';
-import type { ISkillsEntity } from '../../../src/modules/skills/entity';
-import type { IStatsEntity } from '../../../src/modules/stats/entity';
+import * as enums from '../../../src/enums/index.js';
+import * as errors from '../../../src/errors/index.js';
+import GetController from '../../../src/modules/profile/subModules/get/index.js';
+import * as utils from '../../utils/index.js';
+import type { IGetProfileDto } from '../../../src/modules/profile/subModules/get/types.js';
 import type * as types from '../../../src/types';
+import ProfileModel from '../../../src/modules/profile/model.js';
+import ProfileRepository from '../../../src/modules/profile/repository/index.js';
+import GetProfileDto from '../../../src/modules/profile/subModules/get/dto.js';
 
 describe('Profile', () => {
   const db = new utils.FakeFactory();
   const id = utils.fakeData.users[0]!._id;
-  const race: IAddProfileDto = {
-    race: enums.EUserRace.Human,
-    location: new mongoose.Types.ObjectId().toString(),
-  };
-  const fake = fakeData.profiles[1] as IProfileEntity;
-  const fakeInv = fakeData.inventories[0] as IInventoryEntity;
-  const fakeParty = fakeData.parties[0] as IPartyEntity;
-  const fakeStats = fakeData.stats[0] as IStatsEntity;
-  const fakeSkills = utils.fakeData.skills[0] as ISkillsEntity;
-  const userId: IGetProfileDto = {
+   const getProfileDto: IGetProfileDto = {
     id,
   };
-  const localUser: types.ILocalUser = {
-    userId: undefined,
-    tempId: 'tempId',
-    validated: true,
-    type: enums.EUserTypes.User,
-  };
-  const localUser2: types.ILocalUser = {
+  const localUser3: types.IUserBrokerInfo = {
     userId: new mongoose.Types.ObjectId().toString(),
     tempId: 'tempId',
     validated: true,
     type: enums.EUserTypes.User,
   };
-  const localUser3: types.ILocalUser = {
-    userId: new mongoose.Types.ObjectId().toString(),
-    tempId: 'tempId',
-    validated: true,
-    type: enums.EUserTypes.User,
-  };
-  const addController = new AddController();
-  const getController = new GetController();
+  const profileRepo = new ProfileRepository(ProfileModel)
+  const getController = new GetController(profileRepo);
 
   afterEach(async () => {
     await db.cleanUp();
@@ -57,64 +31,40 @@ describe('Profile', () => {
 
   describe('Should throw', () => {
     describe('No data passed', () => {
-      it('Missing race', () => {
-        const clone = structuredClone(race);
-        clone.race = undefined!;
-
-        addController.add(clone, localUser).catch((err) => {
-          expect(err).toEqual(new errors.MissingArgError('race'));
-        });
-      });
-
-      it('Missing userId', () => {
-        const clone = structuredClone(userId);
+      it('Missing userId', async () => {
+         let error: types.IFullError | null = null
+        const target = new errors.MissingArgError('id')
+        const clone = structuredClone(getProfileDto);
         clone.id = undefined!;
 
-        getController.get(clone).catch((err) => {
-          expect(err).toEqual(new errors.MissingArgError('id'));
-        });
+        try {
+          await getController.execute(new GetProfileDto(clone))
+        } catch (err) {
+          error = err as types.IFullError
+        }
+
+          expect(error?.message).toEqual(target.message);
+          expect(error?.code).toEqual(target.code);
+          expect(error?.name).toEqual(target.name);
       });
     });
 
     describe('Incorrect data', () => {
-      it('Incorrect race', () => {
-        const clone = structuredClone(race);
-        clone.race = 'test' as enums.EUserRace;
-
-        addController.add(clone, localUser).catch((err) => {
-          expect(err).toEqual(new errors.IncorrectArgTypeError('race has incorrect type'));
-        });
-      });
-
-      it('Incorrect userId', () => {
-        const clone = structuredClone(userId);
+      it('Incorrect userId', async () => {
+         let error: types.IFullError | null = null
+        const target = new errors.IncorrectArgTypeError('id should be objectId')
+        const clone = structuredClone(getProfileDto);
         clone.id = 'asd';
 
-        getController.get(clone).catch((err) => {
-          expect(err).toEqual(new errors.IncorrectArgTypeError('id should be objectId'));
-        });
-      });
-
-      it('Profile already exists', async () => {
-        await db.profile
-          .user(localUser2.userId)
-          .race(race.race)
-          .inventory(fakeInv._id)
-          .party(fakeParty._id)
-          .stats(fakeStats._id)
-          .skills(fakeSkills._id)
-          .create();
-
         try {
-          await addController.add(race, localUser2);
+          await getController.execute(new GetProfileDto(clone))
         } catch (err) {
-          expect(err).not.toBeUndefined();
+          error = err as types.IFullError
         }
-      });
 
-      it('Profile does not exist', async () => {
-        const profile = await getController.get(userId);
-        expect(profile).toBeNull();
+          expect(error?.message).toEqual(target.message);
+          expect(error?.code).toEqual(target.code);
+          expect(error?.name).toEqual(target.name);
       });
     });
   });
@@ -123,42 +73,11 @@ describe('Profile', () => {
     it('Got profile', async () => {
       await db.profile
         .user(localUser3.userId)
-        .race(fake.race)
-        .lvl(fake.lvl)
-        .exp(fake.exp)
-        .friends(fake.friends)
-        .skills(fakeSkills._id)
-        .inventory(fakeInv._id)
-        .party(fakeParty._id)
-        .stats(fakeStats._id)
         .create();
 
-      const profile = (await getController.get({ id: localUser3.userId! }))!;
+      const profile = (await getController.execute(new GetProfileDto({ id: localUser3.userId! })))!;
 
       expect(profile.user.toString()).toEqual(localUser3.userId);
-      expect(profile.lvl).toEqual(fake.lvl);
-      expect(profile.race).toEqual(fake.race);
-      expect(profile.friends).toEqual(fake.friends);
-    });
-
-    it('Initialized profile', async () => {
-      await db.profile
-        .user(localUser2.userId)
-        .race(fake.race)
-        .lvl(fake.lvl)
-        .exp(fake.exp)
-        .friends(fake.friends)
-        .inventory(fakeInv._id)
-        .party(fakeParty._id)
-        .skills(fakeSkills._id)
-        .stats(fakeStats._id)
-        .create();
-
-      try {
-        await addController.add(race, localUser2);
-      } catch (err) {
-        expect(err).toBeUndefined();
-      }
     });
   });
 });

@@ -1,9 +1,9 @@
 import { describe, expect, it } from '@jest/globals';
-import * as errors from '../../../src/errors';
-import RegisterDto from '../../../src/modules/user/register/dto';
-import * as utils from '../../utils';
-import { generateRandomName } from '../../utils';
-import type { IRegisterDto } from '../../../src/modules/user/register/types';
+import * as errors from '../../../src/errors/index.js';
+import RegisterDto from '../../../src/modules/users/subModules/register/dto.js';
+import * as utils from '../../utils/index.js';
+import { generateRandomName } from '../../utils/index.js';
+import type { IRegisterDto } from '../../../src/modules/users/subModules/register/types.js';
 
 describe('Login', () => {
   const fakeUser = utils.fakeData.users[0] as IRegisterDto;
@@ -27,7 +27,7 @@ describe('Login', () => {
       Object.keys(register).forEach((k) => {
         return it(`Missing ${k}`, () => {
           const clone = structuredClone(register);
-          delete clone[k];
+          delete clone[k as keyof typeof clone];
 
           try {
             new RegisterDto(clone);

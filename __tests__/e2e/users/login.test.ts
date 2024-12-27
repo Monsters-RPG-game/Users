@@ -1,13 +1,18 @@
 import { afterEach, beforeEach, describe, expect, it } from '@jest/globals';
-import * as errors from '../../../src/errors';
-import Controller from '../../../src/modules/user/login';
-import * as utils from '../../utils';
-import type { ILoginDto } from '../../../src/modules/user/login/types';
+import type * as types from '../../../src/types/index.js'
+import * as errors from '../../../src/errors/index.js';
+import Controller from '../../../src/modules/users/subModules/login/index.js';
+import * as utils from '../../utils/index.js';
+import type { ILoginDto } from '../../../src/modules/users/subModules/login/types.js';
+import UserRepository from '../../../src/modules/users/repository/index.js';
+import UserModel from '../../../src/modules/users/model.js';
+import LoginDto from '../../../src/modules/users/subModules/login/dto.js';
 
 describe('Login', () => {
   const db = new utils.FakeFactory();
-  const loginData = { ...utils.fakeData.users[0], ip: '127.0.0.1' } as ILoginDto;
-  const controller = new Controller();
+  const loginDto = { ...utils.fakeData.users[0], ip: '127.0.0.1' } as ILoginDto;
+  const repo = new UserRepository(UserModel)
+  const controller = new Controller(repo);
 
   afterEach(async () => {
     await db.cleanUp();
@@ -15,28 +20,46 @@ describe('Login', () => {
 
   describe('Should throw', () => {
     describe('No data passed', () => {
-      it('Missing login', () => {
-        const clone = structuredClone(loginData);
+      it('Missing login', async () => {
+        let error: types.IFullError | null = null
+        const target = new errors.MissingArgError('login')
+        const clone = structuredClone(loginDto);
         clone.login = undefined!;
-        controller.login(clone).catch((err) => {
-          expect(err).toEqual(new errors.MissingArgError('login'));
-        });
-      });
 
-      it('Missing password', () => {
-        const clone = structuredClone(loginData);
+        try {
+          await controller.execute(new LoginDto(clone))
+        } catch (err) {
+          error = err as types.IFullError
+        }
+
+        expect(error?.message).toEqual(target.message);
+        expect(error?.code).toEqual(target.code);
+        expect(error?.name).toEqual(target.name)
+     });
+
+      it('Missing password', async () => {
+        let error: types.IFullError | null = null
+        const target = new errors.MissingArgError('password')
+        const clone = structuredClone(loginDto);
         clone.password = undefined!;
-        controller.login(clone).catch((err) => {
-          expect(err).toEqual(new errors.MissingArgError('password'));
-        });
+
+        try {
+          await controller.execute(new LoginDto(clone))
+        } catch (err) {
+          error = err as types.IFullError
+        }
+
+        expect(error?.message).toEqual(target.message);
+        expect(error?.code).toEqual(target.code);
+        expect(error?.name).toEqual(target.name)
       });
     });
 
     describe('Incorrect data', () => {
       beforeEach(async () => {
         await db.user
-          .login(loginData.login)
-          .password(loginData.password)
+          .login(loginDto.login)
+          .password(loginDto.password)
           .email('test@test.test')
           .verified(false)
           .create();
@@ -46,16 +69,38 @@ describe('Login', () => {
         await db.cleanUp();
       });
 
-      it('Login incorrect', () => {
-        controller.login({ ...loginData, login: 'a' }).catch((err) => {
-          expect(err).toEqual(new errors.IncorrectArgLengthError('login', 3, 30));
-        });
+      it('Login incorrect', async () => {
+        let error: types.IFullError | null = null
+        const target = new errors.IncorrectArgLengthError('login', 3, 30)
+        const clone = structuredClone(loginDto);
+        clone.password = undefined!;
+
+        try {
+          await controller.execute(new LoginDto({ ...loginDto, login: 'a' }))
+        } catch (err) {
+          error = err as types.IFullError
+        }
+
+        expect(error?.message).toEqual(target.message);
+        expect(error?.code).toEqual(target.code);
+        expect(error?.name).toEqual(target.name)
       });
 
-      it('Password incorrect', () => {
-        controller.login({ ...loginData, password: 'a' }).catch((err) => {
-          expect(err).toEqual(new errors.IncorrectArgLengthError('password', 6, 200));
-        });
+      it('Password incorrect', async () => {
+        let error: types.IFullError | null = null
+        const target = new errors.IncorrectArgLengthError('password', 6, 200)
+        const clone = structuredClone(loginDto);
+        clone.password = undefined!;
+
+        try {
+          await controller.execute(new LoginDto({ ...loginDto, password: 'a' }))
+        } catch (err) {
+          error = err as types.IFullError
+        }
+
+        expect(error?.message).toEqual(target.message);
+        expect(error?.code).toEqual(target.code);
+        expect(error?.name).toEqual(target.name)
       });
     });
   });
@@ -63,13 +108,13 @@ describe('Login', () => {
   describe('Should pass', () => {
     it('Validated', async () => {
       await db.user
-        .login(loginData.login)
-        .password(loginData.password)
+        .login(loginDto.login)
+        .password(loginDto.password)
         .email('test@test.test')
         .verified(false)
         .create();
 
-      const { id } = await controller.login(loginData);
+      const id = await controller.execute(new LoginDto(loginDto));
       expect(id).not.toBeUndefined();
       expect(id.length).not.toBeLessThan(10);
     });

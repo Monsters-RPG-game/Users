@@ -1,43 +1,23 @@
-import type { IInventoryEntity } from '../../../../src/modules/inventory/entity';
-import type Inventory from '../../../../src/modules/inventory/model';
-import type { IPartyEntity } from '../../../../src/modules/party/entity';
-import type Party from '../../../../src/modules/party/model';
-import type { IProfileEntity } from '../../../../src/modules/profile/entity';
-import type Profile from '../../../../src/modules/profile/model';
-import type { ISingleSkillEntity } from '../../../../src/modules/singleSkill/entity';
-import type SingleSkill from '../../../../src/modules/singleSkill/model';
-import type { ISkillsEntity } from '../../../../src/modules/skills/entity';
-import type Skills from '../../../../src/modules/skills/model';
-import type { IStatsEntity } from '../../../../src/modules/stats/entity';
-import type Stats from '../../../../src/modules/stats/model';
-import type { IUserEntity } from '../../../../src/modules/user/entity';
-import type User from '../../../../src/modules/user/model';
-import type { EFakeData } from '../enums';
+import type { IProfileEntity } from '../../../../src/modules/profile/entity.js';
+import type Profile from '../../../../src/modules/profile/model.js';
+import type { IUserEntity } from '../../../../src/modules/users/entity.js';
+import type User from '../../../../src/modules/users/model.js';
+import type { EFakeData } from '../enums/index.js';
 
 export type IFakeParam<T> = {
   [P in keyof T]?: T[P];
 };
 
 export interface IFakeState {
-  [EFakeData.Stats]: IFakeParam<IStatsEntity>;
   [EFakeData.User]: IFakeParam<IUserEntity>;
   [EFakeData.Profile]: IFakeParam<IProfileEntity>;
-  [EFakeData.Inventory]: IFakeParam<IInventoryEntity>;
-  [EFakeData.Party]: IFakeParam<IPartyEntity>;
-  [EFakeData.SingleSkill]: IFakeParam<ISingleSkillEntity>;
-  [EFakeData.Skills]: IFakeParam<ISkillsEntity>;
 }
 
 export interface IFakeModel {
-  [EFakeData.Stats]: typeof Stats;
   [EFakeData.User]: typeof User;
   [EFakeData.Profile]: typeof Profile;
-  [EFakeData.Inventory]: typeof Inventory;
-  [EFakeData.Party]: typeof Party;
-  [EFakeData.SingleSkill]: typeof SingleSkill;
-  [EFakeData.Skills]: typeof Skills;
 }
 
 export type IAbstractBody<T> = {
-  [P in keyof T]: ([arg]?: typeof P) => this;
+  [P in keyof T]: (arg?: T[P]) => IAbstractBody<T>;
 };

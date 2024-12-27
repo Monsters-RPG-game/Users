@@ -1,13 +1,18 @@
-import TemplateFactory from './abstracts';
-import * as enums from '../../../../src/enums';
-import Profile from '../../../../src/modules/profile/model';
-import type { IProfileEntity } from '../../../../src/modules/profile/entity';
-import type { EFakeData } from '../enums';
-import type { IAbstractBody } from '../types/data';
+import TemplateFactory from './abstracts.js';
+import Profile from '../../../../src/modules/profile/model.js';
+import type { IProfileEntity } from '../../../../src/modules/profile/entity.js';
+import type { EFakeData } from '../enums/index.js';
+import type { IAbstractBody } from '../types/data.js';
+import mongoose from 'mongoose';
 
 export default class FakeProfile extends TemplateFactory<EFakeData.Profile> implements IAbstractBody<IProfileEntity> {
   constructor() {
     super(Profile);
+  }
+
+  _id(id?: string | mongoose.Types.ObjectId): this {
+    this.data._id = id;
+    return this;
   }
 
   user(user?: string): this {
@@ -15,74 +20,10 @@ export default class FakeProfile extends TemplateFactory<EFakeData.Profile> impl
     return this;
   }
 
-  race(race?: enums.EUserRace): this {
-    this.data.race = race;
-    return this;
-  }
-
-  friends(friends?: string[]): this {
-    this.data.friends = friends;
-    return this;
-  }
-
-  lvl(lvl?: number): this {
-    this.data.lvl = lvl;
-    return this;
-  }
-
-  exp(exp?: number): this {
-    this.data.exp = exp;
-    return this;
-  }
-
-  _id(id?: string): this {
-    this.data._id = id;
-    return this;
-  }
-
-  initialized(initialized: boolean): this {
-    this.data.initialized = initialized;
-    return this;
-  }
-
-  inventory(inventory: string): this {
-    this.data.inventory = inventory;
-    return this;
-  }
-
-  party(party: string): this {
-    this.data.party = party;
-    return this;
-  }
-
-  state(state: enums.ECharacterState): this {
-    this.data.state = state;
-    return this;
-  }
-
-  stats(stats: string): this {
-    this.data.stats = stats;
-    return this;
-  }
-
-  skills(skills: string): this {
-    this.data.skills = skills;
-    return this;
-  }
-
   protected override fillState(): void {
     this.data = {
       _id: undefined,
-      exp: 1,
-      friends: [],
-      lvl: 1,
-      race: undefined,
       user: undefined,
-      party: undefined,
-      inventory: undefined,
-      initialized: false,
-      stats: undefined,
-      state: enums.ECharacterState.Map,
     };
   }
 }

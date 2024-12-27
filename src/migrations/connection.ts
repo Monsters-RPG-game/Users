@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
-import getConfig from '../tools/configLoader';
-import Log from '../tools/logger';
+import Log from 'simpleLogger';
+import getConfig from '../tools//configLoader.js';
 import type { Connection, ConnectOptions } from 'mongoose';
 
 export default class MongoConnection {

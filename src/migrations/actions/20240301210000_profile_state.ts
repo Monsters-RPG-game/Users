@@ -1,5 +1,5 @@
-import { ECharacterState } from '../../enums';
-import Profile from '../../modules/profile/model';
+import { ECharacterState } from '../../enums/index.js';
+import Profile from '../../modules/profile/model.js';
 import type { QueryWithHelpers, UpdateWriteOpResult } from 'mongoose';
 
 export default {

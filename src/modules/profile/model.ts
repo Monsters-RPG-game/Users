@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
-import * as enums from '../../enums';
-import type { IProfile } from './types';
+import type { IProfile } from './types.js';
 
 export const profileSchema = new mongoose.Schema({
   user: {
@@ -8,57 +7,10 @@ export const profileSchema = new mongoose.Schema({
     required: [true, 'user not provided'],
     unique: true,
   },
-  race: {
-    type: String,
-    enum: enums.EUserRace,
-    required: [true, 'Race not provided'],
-    default: enums.EUserRace.Human,
-  },
-  friends: {
-    type: [String],
-    required: false,
-    default: [],
-  },
-  lvl: {
-    type: Number,
-    required: false,
-    default: 1,
-  },
-  exp: {
-    type: Number,
-    required: false,
-    default: 1,
-  },
   initialized: {
     type: Boolean,
     required: false,
     default: false,
-  },
-  inventory: {
-    type: mongoose.Types.ObjectId,
-    required: [true, 'inventory not provided'],
-  },
-  stats: {
-    type: mongoose.Types.ObjectId,
-    required: [true, 'Stats not provided'],
-  },
-  skills: {
-    type: mongoose.Types.ObjectId,
-    required: [true, 'Skills not provided'],
-  },
-  party: {
-    type: mongoose.Types.ObjectId,
-    required: [true, 'party not provided'],
-  },
-  location: {
-    type: mongoose.Types.ObjectId,
-    required: false,
-  },
-  state: {
-    type: String,
-    enum: enums.ECharacterState,
-    required: [true, 'state not provided'],
-    default: enums.ECharacterState.Map,
   },
 });
 

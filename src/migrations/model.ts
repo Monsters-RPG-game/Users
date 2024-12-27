@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import type { IMigration } from './types';
+import type { IMigration } from './types.js';
 import type { Connection } from 'mongoose';
 
 const migrationSchema = new mongoose.Schema<IMigration>({

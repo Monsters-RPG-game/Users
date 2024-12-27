@@ -1,13 +1,11 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
-import { fakeData, FakeFactory } from '../../../__tests__/utils';
-import { EFakeData } from '../../../__tests__/utils/fakeFactory/enums';
-import Log from '../../tools/logger';
-import type { IFakeState } from '../../../__tests__/utils/fakeFactory/types/data';
-import type { IInventoryEntity } from '../../modules/inventory/entity';
-import type { IPartyEntity } from '../../modules/party/entity';
-import type { IProfileEntity } from '../../modules/profile/entity';
-import type { IUserEntity } from '../../modules/user/entity';
+import Log from 'simpleLogger';
+import { EFakeData } from '../../../__tests__/utils/fakeFactory/enums/index.js';
+import { fakeData, FakeFactory } from '../../../__tests__/utils/index.js';
+import type { IFakeState } from '../../../__tests__/utils/fakeFactory/types/data.js';
+import type { IProfileEntity } from '../../modules/profile/entity.js';
+import type { IUserEntity } from '../../modules/users/entity.js';
 
 export default class Mock {
   private readonly _fakeFactory: FakeFactory | undefined = undefined;
@@ -31,20 +29,14 @@ export default class Mock {
   private async fulfillDatabase(): Promise<void> {
     const users = fakeData.users as IUserEntity[];
     const profiles = fakeData.profiles as IProfileEntity[];
-    const inventories = fakeData.inventories as IInventoryEntity[];
-    const parties = fakeData.parties as IPartyEntity[];
 
     await this.fillData(EFakeData.User, users);
-    await this.fillData(EFakeData.Inventory, inventories);
-    await this.fillData(EFakeData.Party, parties);
 
     await Promise.all(
       profiles.map(async (p) => {
         const db = new FakeFactory();
-        const party = parties.find((e) => e._id === p.party)!;
-        const inventory = inventories.find((e) => e._id === p.inventory)!;
 
-        return db.profile.user(p.user).race(p.race).party(party._id).inventory(inventory._id).create();
+        return db.profile.user(p.user).create();
       }),
     );
   }
@@ -55,10 +47,16 @@ export default class Mock {
     await Promise.all(
       params.map(async (p) => {
         for (const m of Object.getOwnPropertyNames(Object.getPrototypeOf(target))) {
-          if (m === 'constructor' || m === 'create' || m === 'fillState' || typeof target[m] !== 'function') continue;
+          if (
+            m === 'constructor' ||
+            m === 'create' ||
+            m === 'fillState' ||
+            typeof target[m as keyof typeof target] !== 'function'
+          )
+            continue;
 
-          const method = target[m] as (arg: unknown) => void;
-          method.call(target, p[m]);
+          const method = target[m as keyof typeof target] as (arg: unknown) => void;
+          method.call(target, p[m as keyof typeof p]);
         }
         await target.create();
       }),

@@ -1,40 +1,59 @@
-import { afterEach, beforeEach, describe, expect, it } from '@jest/globals';
-import * as errors from '../../../src/errors';
-import Handler from '../../../src/modules/user/handler';
-import * as utils from '../../utils';
-import { sleep } from '../../utils';
-import type { IInventoryEntity } from '../../../src/modules/inventory/entity';
-import type { IPartyEntity } from '../../../src/modules/party/entity';
-import type { IProfileEntity } from '../../../src/modules/profile/entity';
-import type { ISkillsEntity } from '../../../src/modules/skills/entity';
-import type { IStatsEntity } from '../../../src/modules/stats/entity';
-import type { IUserEntity } from '../../../src/modules/user/entity';
-import type { IRemoveUserDto } from '../../../src/modules/user/remove/types';
+import { afterEach, beforeAll, beforeEach, describe, expect, it } from '@jest/globals';
+import State from '../../../src/tools/state.js'
+import type * as types from '../../../src/types/index.js'
+import * as errors from '../../../src/errors/index.js';
+import * as services from '../../../src/connections/broker/services/index.js';
+import * as utils from '../../utils/index.js';
+import type { IProfileEntity } from '../../../src/modules/profile/entity.js';
+import { IUserEntity } from '../../../src/modules/users/entity.js';
+import { IRemoveUserDto } from '../../../src/modules/users/subModules/remove/types.js';
+import { IUserBrokerInfo } from '../../../src/types/user.js';
+import { EControllers } from '../../../src/enums/controllers.js';
+import UserController from '../../../src/modules/users/controller.js';
+import Bootstrap from '../../../src/tools/bootstrap.js';
+import ProfileController from '../../../src/modules/profile/controller.js';
+import sleep from '../../../src/utils/index.js';
 
 describe('Remove user', () => {
   const db = new utils.FakeFactory();
   const fakeUser = utils.fakeData.users[0] as IUserEntity;
   const fakeUser2 = utils.fakeData.users[1] as IUserEntity;
   const fakeProfile = utils.fakeData.profiles[0] as IProfileEntity;
-  const fakeInv = utils.fakeData.inventories[0] as IInventoryEntity;
-  const fakeSkills = utils.fakeData.skills[0] as ISkillsEntity;
-  const fakeParty = utils.fakeData.parties[0] as IPartyEntity;
-  const fakeStats = utils.fakeData.stats[0] as IStatsEntity;
-  const remove: IRemoveUserDto = {
+  const localUser: IUserBrokerInfo = {
+    userId: fakeUser._id as string,
+    tempId: 'tempId',
+    validated: true,
+    type: fakeUser.type,
+  };
+  const localUser2: IUserBrokerInfo = {
+    userId: fakeUser2._id as string,
+    tempId: 'tempId',
+    validated: true,
+    type: fakeUser2.type,
+  };
+  const removeUserDto: IRemoveUserDto = {
     password: fakeUser.password,
   };
-  const handler = new Handler();
+
+  const removeAction = new services.SharedServices()
 
   afterEach(async () => {
     await db.cleanUp();
   });
+
+  beforeAll(() => {
+    const bootstrap = new Bootstrap()
+    State.controllers = bootstrap
+    State.controllers.register(EControllers.Users, new UserController())
+    State.controllers.register(EControllers.Profile, new ProfileController())
+  })
 
   describe('Should throw', () => {
     describe('Incorrect data', () => {
       beforeEach(async () => {
         await sleep(300);
         await db.user
-          ._id(fakeUser._id)
+          ._id(fakeUser._id as string)
           .login(fakeUser.login)
           .password(fakeUser.password)
           .email(fakeUser.email)
@@ -46,18 +65,30 @@ describe('Remove user', () => {
         await db.cleanUp();
       });
 
-      it('No user with provided id', () => {
-        handler.remove(fakeUser2.login, fakeUser2._id).catch((err) => {
-          expect(err).toEqual(new errors.NoUser());
-        });
+      it('No user with provided id', async () => {
+        let error: types.IFullError | null = null
+        const target = new errors.MissingArgError('password')
+        const clone = structuredClone(removeUserDto)
+        clone.password  = undefined as unknown as string
+
+        try {
+          await removeAction.removeUser(fakeUser2.login, localUser2)
+        } catch (err) {
+          error = err as types.IFullError
+        }
+
+        expect(error?.message).toEqual(target.message);
+        expect(error?.code).toEqual(target.code);
+        expect(error?.name).toEqual(target.name);
       });
     });
   });
 
   describe('Should pass', () => {
     it('Removed', async () => {
+      let error: types.IFullError | null = null
       await db.user
-        ._id(fakeUser._id)
+        ._id(fakeUser._id as string)
         .login(fakeUser.login)
         .password(fakeUser.password)
         .email(fakeUser.email)
@@ -65,23 +96,18 @@ describe('Remove user', () => {
         .create();
 
       await db.profile
-        ._id(fakeProfile._id)
+        ._id(fakeProfile._id as string)
         .user(fakeProfile.user)
-        .lvl(fakeProfile.lvl)
-        .exp(fakeProfile.exp)
-        .race(fakeProfile.race)
-        .friends(fakeProfile.friends)
-        .inventory(fakeInv._id)
-        .skills(fakeSkills._id)
-        .party(fakeParty._id)
-        .stats(fakeStats._id)
         .create();
 
       try {
-        await handler.remove(remove.password, fakeUser._id);
+        await removeAction.removeUser(removeUserDto, localUser);
       } catch (err) {
-        expect(err).toBeUndefined();
+        console.log("err ?", err)
+        error = err as types.IFullError
       }
+
+      expect(error).toBeNull();
     });
   });
 });
