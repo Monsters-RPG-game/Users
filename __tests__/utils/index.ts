@@ -1,6 +1,6 @@
-import Connection from './connections';
+import Connection from './connections.js';
 import fakeData from './fakeData.json';
-import FakeFactory from './fakeFactory/src';
+import FakeFactory from './fakeFactory/src/index.js';
 
 const generateRandomName = (): string => {
   const vocabulary = 'ABCDEFGHIJKLMNOUPRSTUWZabcdefghijklmnouprstuwz';
@@ -11,12 +11,4 @@ const generateRandomName = (): string => {
   return name;
 };
 
-const sleep = async (time: number): Promise<void> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve();
-    }, time);
-  });
-};
-
-export { fakeData, Connection, FakeFactory, generateRandomName, sleep };
+export { fakeData, Connection, FakeFactory, generateRandomName };

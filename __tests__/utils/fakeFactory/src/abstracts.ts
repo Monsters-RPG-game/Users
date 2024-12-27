@@ -1,18 +1,15 @@
-import type { EFakeData } from '../enums';
-import type { IFakeModel, IFakeState } from '../types/data';
+import type { EFakeData } from '../enums/index.js';
+import type { IFakeModel, IFakeState } from '../types/data.js';
 import type mongoose from 'mongoose';
 
 export default abstract class TemplateFactory<T extends EFakeData> {
   private readonly _targetModel: IFakeModel[T];
   private _state: IFakeState[T] = {};
 
+  private _states: IFakeState[T][] = [];
   protected constructor(targetModel: IFakeModel[T]) {
     this._targetModel = targetModel;
     this.fillState();
-  }
-
-  protected get targetModel(): IFakeModel[T] {
-    return this._targetModel;
   }
 
   protected get data(): IFakeState[T] {
@@ -23,14 +20,16 @@ export default abstract class TemplateFactory<T extends EFakeData> {
     this._state = value;
   }
 
-  private _states: IFakeState[T][] = [];
-
   protected get states(): IFakeState[T][] {
     return this._states;
   }
 
   protected set states(value: IFakeState[T][]) {
     this._states = value;
+  }
+
+  protected get targetModel(): IFakeModel[T] {
+    return this._targetModel;
   }
 
   async create(): Promise<mongoose.Types.ObjectId> {
@@ -56,7 +55,7 @@ export default abstract class TemplateFactory<T extends EFakeData> {
 
   private clean(): void {
     Object.entries(this.data).forEach((e) => {
-      if (typeof e[1] === 'number') e[1] = 0;
+      if (typeof e[1] === 'number') (e[1] as number) = 0;
       if (typeof e[1] === 'string') e[1] = undefined!;
       if (typeof e[1] === 'boolean') e[1] = false;
       if (typeof e[1] === 'undefined') e[1] = undefined!;

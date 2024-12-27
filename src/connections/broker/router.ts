@@ -1,8 +1,8 @@
-import Handler from './handler';
-import * as enums from '../../enums';
-import * as errors from '../../errors';
-import Log from '../../tools/logger';
-import type * as types from '../../types';
+import Log from 'simpleLogger';
+import Handler from './handler.js';
+import * as enums from '../../enums/index.js';
+import * as errors from '../../errors/index.js';
+import type * as types from '../../types/index.js';
 
 export default class Router {
   private readonly _handler: Handler;
@@ -21,24 +21,8 @@ export default class Router {
     switch (payload.target) {
       case enums.EMessageTargets.Profile:
         return this.handler.profileMessage(payload);
-      case enums.EMessageTargets.CharacterState:
-        return this.handler.characterStateMessage(payload);
       case enums.EMessageTargets.User:
         return this.handler.userMessage(payload);
-      case enums.EMessageTargets.Inventory:
-        return this.handler.inventoryMessage(payload);
-      case enums.EMessageTargets.Party:
-        return this.handler.partyMessage(payload);
-      case enums.EMessageTargets.BugReport:
-        return this.handler.bugReportMessage(payload);
-      case enums.EMessageTargets.Stats:
-        return this.handler.statsMessage(payload);
-      case enums.EMessageTargets.Npc:
-        return this.handler.npcMessages(payload);
-      case enums.EMessageTargets.Skills:
-        return this.handler.skillsMessage(payload);
-      case enums.EMessageTargets.SingleSkill:
-        return this.handler.singleSkillMessage(payload);
       default:
         throw new errors.IncorrectTargetError();
     }

@@ -1,12 +1,9 @@
-import type Broker from '../broker';
-import type Mongo from '../tools/mongo';
+import type Broker from '../connections/broker/index.js';
+import type Mongo from '../connections/mongo/index.js';
+import type Bootstrap from '../tools/bootstrap.js';
 
 export interface IState {
-  broker: Broker;
   mongo: Mongo;
-}
-
-export interface IConfigInterface {
-  amqpURI: string;
-  mongoURI: string;
+  broker: Broker;
+  controllers: Bootstrap;
 }

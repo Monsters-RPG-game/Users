@@ -1,17 +1,18 @@
-import TemplateFactory from './abstracts';
-import User from '../../../../src/modules/user/model';
-import { hashPassword } from '../../../../src/modules/user/utils';
-import type * as enums from '../../../../src/enums';
-import type { IUserEntity } from '../../../../src/modules/user/entity';
-import type { EFakeData } from '../enums';
-import type { IAbstractBody } from '../types/data';
+import TemplateFactory from './abstracts.js';
+import User from '../../../../src/modules/users/model.js';
+import { hashPassword } from '../../../../src/modules/users/utils.js';
+import type * as enums from '../../../../src/enums/index.js';
+import type { IUserEntity } from '../../../../src/modules/users/entity.js';
+import type { EFakeData } from '../enums/index.js';
+import type { IAbstractBody } from '../types/data.js';
+import mongoose from 'mongoose';
 
 export default class FakeUser extends TemplateFactory<EFakeData.User> implements IAbstractBody<IUserEntity> {
   constructor() {
     super(User);
   }
 
-  _id(id?: string): this {
+  _id(id?: string | mongoose.Types.ObjectId): this {
     this.data._id = id;
     return this;
   }

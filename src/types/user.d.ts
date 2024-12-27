@@ -1,12 +1,8 @@
-import type * as enums from '../enums';
+import type * as enums from '../enums/index.js';
 
-export interface ILocalUser {
+export interface IUserBrokerInfo {
   userId: string | undefined;
   tempId: string;
   validated: boolean;
   type: enums.EUserTypes;
-}
-
-export interface IUserCredentials {
-  id: string;
 }

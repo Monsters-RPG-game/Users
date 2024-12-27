@@ -1,13 +1,13 @@
 import { describe, expect, it } from '@jest/globals';
-import * as errors from '../../../src/errors';
-import LoginDto from '../../../src/modules/user/login/dto';
-import * as utils from '../../utils';
-import type { ILoginDto } from '../../../src/modules/user/login/types';
-import type { IRegisterDto } from '../../../src/modules/user/register/types';
+import * as errors from '../../../src/errors/index.js';
+import * as utils from '../../utils/index.js';
+import type { ILoginDto } from '../../../src/modules/users/subModules/login/types.js';
+import type { IRegisterDto } from '../../../src/modules/users/subModules/register/types.js';
+import LoginDto from '../../../src/modules/users/subModules/login/dto.js'
 
 describe('Login', () => {
   const fakeUser = utils.fakeData.users[0] as IRegisterDto;
-  const login: ILoginDto = {
+  const loginDto: ILoginDto = {
     login: 'Test',
     password: 'Test123',
     ip: '127.0.0.1',
@@ -15,10 +15,10 @@ describe('Login', () => {
 
   describe('Should throw', () => {
     describe('No data passed', () => {
-      Object.keys(login).forEach((k) => {
+      Object.keys(loginDto).forEach((k) => {
         return it(`Missing ${k}`, () => {
-          const clone = structuredClone(login);
-          delete clone[k];
+          const clone = structuredClone(loginDto);
+          delete clone[k as keyof typeof clone];
 
           try {
             new LoginDto(clone);
@@ -34,7 +34,7 @@ describe('Login', () => {
         const clone = structuredClone(fakeUser);
         clone.login = 'bc';
         try {
-          new LoginDto({ ...clone, ip: login.ip });
+          new LoginDto({ ...clone, ip: loginDto.ip });
         } catch (err) {
           expect(err).toEqual(new errors.IncorrectArgLengthError('login', 3, 30));
         }
@@ -45,7 +45,7 @@ describe('Login', () => {
         clone.login =
           'asssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss';
         try {
-          new LoginDto({ ...clone, ip: login.ip });
+          new LoginDto({ ...clone, ip: loginDto.ip });
         } catch (err) {
           expect(err).toEqual(new errors.IncorrectArgLengthError('login', 3, 30));
         }
@@ -55,7 +55,7 @@ describe('Login', () => {
         const clone = structuredClone(fakeUser);
         clone.password = 'abc';
         try {
-          new LoginDto({ ...clone, ip: login.ip });
+          new LoginDto({ ...clone, ip: loginDto.ip });
         } catch (err) {
           expect(err).toEqual(new errors.IncorrectArgLengthError('password', 6, 200));
         }
@@ -66,8 +66,8 @@ describe('Login', () => {
   describe('Should pass', () => {
     it('Validated login', () => {
       try {
-        const data = new LoginDto(login);
-        expect(data.password).toEqual(login.password);
+        const data = new LoginDto(loginDto);
+        expect(data.password).toEqual(loginDto.password);
       } catch (err) {
         expect(err).toBeUndefined();
       }

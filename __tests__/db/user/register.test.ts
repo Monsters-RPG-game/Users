@@ -1,8 +1,9 @@
 import { afterAll, afterEach, beforeAll, describe, expect, it } from '@jest/globals';
-import * as enums from '../../../src/enums';
-import Rooster from '../../../src/modules/user/rooster';
-import * as utils from '../../utils';
-import type { IRegisterDto } from '../../../src/modules/user/register/types';
+import * as enums from '../../../src/enums/index.js';
+import Repository from '../../../src/modules/users/repository/index.js';
+import * as utils from '../../utils/index.js';
+import type { IRegisterDto } from '../../../src/modules/users/subModules/register/types.js';
+import UserModel from '../../../src/modules/users/model.js';
 
 describe('Register', () => {
   const connection = new utils.Connection();
@@ -23,7 +24,7 @@ describe('Register', () => {
 
   describe('Should throw', () => {
     it('No data in database', async () => {
-      const rooster = new Rooster();
+      const rooster = new Repository(UserModel);
       const user = await rooster.getByEmail(registerData.email);
 
       expect(user).toEqual(null);
@@ -37,7 +38,7 @@ describe('Register', () => {
         .verified(false)
         .create();
 
-      const rooster = new Rooster();
+      const rooster = new Repository(UserModel);
       const user = await rooster.getByLogin('a');
 
       expect(user).toEqual(null);
@@ -46,7 +47,7 @@ describe('Register', () => {
 
   describe('Should pass', () => {
     it('Validated', async () => {
-      const rooster = new Rooster();
+      const rooster = new Repository(UserModel);
       await rooster.add(registerData);
       const user = await rooster.getByLogin(registerData.login);
       const { login, password, email, verified, _id, type } = user!;

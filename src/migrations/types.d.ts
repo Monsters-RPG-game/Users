@@ -1,7 +1,8 @@
-import type mongoose, { QueryWithHelpers, UpdateWriteOpResult } from 'mongoose';
+import type { QueryWithHelpers, UpdateWriteOpResult } from 'mongoose';
+import type mongoose from 'mongoose';
 
 interface IMigrationEntity {
-  _id: string;
+  _id: string | mongoose.Types.ObjectId;
   dbName: string;
   changes: string[];
 }

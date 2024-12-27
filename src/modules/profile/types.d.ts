@@ -1,4 +1,4 @@
-import type { IProfileEntity } from './entity';
+import type { IProfileEntity } from './entity.js';
 import type mongoose from 'mongoose';
 
 export interface IProfile extends IProfileEntity, mongoose.Document {

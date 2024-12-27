@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
-import getConfig from '../../tools/configLoader';
-import Log from '../../tools/logger';
+import Log from 'simpleLogger';
+import getConfig from '../../tools/configLoader.js';
 import type { ConnectOptions } from 'mongoose';
 
 export default class Mongo {
@@ -8,12 +8,14 @@ export default class Mongo {
     process.env.NODE_ENV === 'test' ? await this.startMockServer() : await this.startServer();
   }
 
-  async disconnect(): Promise<void> {
-    await mongoose.disconnect();
+  disconnect(): void {
+    mongoose.disconnect().catch((err) => {
+      Log.error('Mongo', 'Cannot disconnect', (err as Error).message);
+    });
   }
 
   private async startMockServer(): Promise<void> {
-    const MockServer = await import('./mock');
+    const MockServer = await import('./mock.js');
     const mock = new MockServer.default();
     await mock.init();
   }
@@ -21,6 +23,7 @@ export default class Mongo {
   private async startServer(): Promise<void> {
     await mongoose.connect(getConfig().mongoURI, {
       dbName: 'Users',
+      serverSelectionTimeoutMS: 5000,
     } as ConnectOptions);
     Log.log('Mongo', 'Started server');
   }

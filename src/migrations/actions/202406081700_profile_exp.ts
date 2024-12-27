@@ -1,4 +1,4 @@
-import Profile from '../../modules/profile/model';
+import Profile from '../../modules/profile/model.js';
 import type { QueryWithHelpers, UpdateWriteOpResult } from 'mongoose';
 
 export default {
