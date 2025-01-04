@@ -1,4 +1,4 @@
 {
-  "amqpURI": "rabbitUrl",
-  "mongoURI": "mongodb://user:password@localhost:27017/Users"
+  "amqpURI": "amqp://user:password@address:port",
+  "mongoURI": "mongodb://user:password@address:port",
 }

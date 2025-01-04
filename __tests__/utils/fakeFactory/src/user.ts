@@ -1,7 +1,5 @@
 import TemplateFactory from './abstracts.js';
 import User from '../../../../src/modules/users/model.js';
-import { hashPassword } from '../../../../src/modules/users/utils.js';
-import type * as enums from '../../../../src/enums/index.js';
 import type { IUserEntity } from '../../../../src/modules/users/entity.js';
 import type { EFakeData } from '../enums/index.js';
 import type { IAbstractBody } from '../types/data.js';
@@ -22,34 +20,15 @@ export default class FakeUser extends TemplateFactory<EFakeData.User> implements
     return this;
   }
 
-  email(email?: string): this {
-    this.data.email = email;
-    return this;
-  }
-
-  password(password?: string): this {
-    if (password) this.data.password = hashPassword(password);
-    return this;
-  }
-
-  type(type?: enums.EUserTypes): this {
-    this.data.type = type;
-    return this;
-  }
-
-  verified(verified?: boolean): this {
-    this.data.verified = verified;
+  oidcId(oidcId?: string): this {
+    this.data.oidcId = oidcId;
     return this;
   }
 
   protected override fillState(): void {
     this.data = {
       _id: undefined,
-      email: undefined,
-      login: undefined,
-      password: undefined,
-      type: undefined,
-      verified: false,
+      oidcId: undefined,
     };
   }
 }

@@ -19,8 +19,6 @@ export default class GetAllUsersController implements IAbstractSubController<IUs
         return {
           _id: u._id.toString(),
           login: u.login,
-          verified: u.verified,
-          type: u.type,
         };
       });
   }

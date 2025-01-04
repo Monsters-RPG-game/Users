@@ -5,7 +5,9 @@ import type { ConnectOptions } from 'mongoose';
 
 export default class Mongo {
   async init(): Promise<void> {
-    process.env.NODE_ENV === 'test' ? await this.startMockServer() : await this.startServer();
+    process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'testDev'
+      ? await this.startMockServer()
+      : await this.startServer();
   }
 
   disconnect(): void {
@@ -25,6 +27,7 @@ export default class Mongo {
       dbName: 'Users',
       serverSelectionTimeoutMS: 5000,
     } as ConnectOptions);
+
     Log.log('Mongo', 'Started server');
   }
 }
