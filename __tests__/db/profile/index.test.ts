@@ -32,15 +32,13 @@ describe('Profile', () => {
     });
 
     it('Incorrect target', async () => {
-      const userId = await db.user
+      const oidcId = await db.user
         .login(loginData.login)
-        .password(loginData.password)
-        .email(loginData.email)
-        .verified(false)
+        .oidcId(loginData.oidcId)
         .create();
 
       await db.profile
-        .user(userId.toString())
+        .user(oidcId.toString())
         .create();
 
       const repository = new Repository(ProfileModel);
@@ -51,21 +49,19 @@ describe('Profile', () => {
 
   describe('Should pass', () => {
     it('Validated', async () => {
-      const userId = await db.user
+      const oidcId = await db.user
         .login(loginData.login)
-        .password(loginData.password)
-        .email(loginData.email)
-        .verified(false)
+        .oidcId(loginData.oidcId)
         .create();
       await db.profile
-        .user(userId.toString())
+        .user(oidcId.toString())
         .create();
 
       const repository = new Repository(ProfileModel);
-      const profile = await repository.getByUser(userId.toString());
+      const profile = await repository.getByUser(oidcId.toString());
       const { user } = profile!;
 
-      expect(user).toEqual(userId);
+      expect(user).toEqual(oidcId);
     });
   });
 });

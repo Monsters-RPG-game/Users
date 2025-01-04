@@ -1,6 +1,5 @@
 import { afterEach, describe, expect, it } from '@jest/globals';
 import mongoose from 'mongoose';
-import * as enums from '../../../src/enums/index.js';
 import * as errors from '../../../src/errors/index.js';
 import GetController from '../../../src/modules/profile/subModules/get/index.js';
 import * as utils from '../../utils/index.js';
@@ -19,8 +18,6 @@ describe('Profile', () => {
   const localUser3: types.IUserBrokerInfo = {
     userId: new mongoose.Types.ObjectId().toString(),
     tempId: 'tempId',
-    validated: true,
-    type: enums.EUserTypes.User,
   };
   const profileRepo = new ProfileRepository(ProfileModel)
   const getController = new GetController(profileRepo);

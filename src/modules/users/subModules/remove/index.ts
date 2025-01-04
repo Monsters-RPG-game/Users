@@ -10,6 +10,6 @@ export default class RemoveUserController implements IAbstractSubController<void
   private accessor repo: UserRepository;
 
   async execute(data: RemoveUserDto): Promise<void> {
-    await this.repo.remove(data.id);
+    await this.repo.remove(data.userId);
   }
 }

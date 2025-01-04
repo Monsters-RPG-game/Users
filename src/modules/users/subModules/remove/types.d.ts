@@ -1,3 +1,3 @@
 export interface IRemoveUserDto {
-  password: string;
+  userId: string;
 }

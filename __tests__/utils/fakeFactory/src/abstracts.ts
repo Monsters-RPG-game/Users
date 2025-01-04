@@ -57,7 +57,7 @@ export default abstract class TemplateFactory<T extends EFakeData> {
     Object.entries(this.data).forEach((e) => {
       if (typeof e[1] === 'number') (e[1] as number) = 0;
       if (typeof e[1] === 'string') e[1] = undefined!;
-      if (typeof e[1] === 'boolean') e[1] = false;
+      if (typeof e[1] === 'boolean') (e[1] as boolean) = false;
       if (typeof e[1] === 'undefined') e[1] = undefined!;
     });
   }

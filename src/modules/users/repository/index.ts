@@ -18,12 +18,12 @@ export default class UserRepository
       .lean();
   }
 
-  async getByEmail(data: string): Promise<IUserEntity | null> {
-    return this.model.findOne({ email: data }).lean();
-  }
-
   async getByLogin(data: string): Promise<IUserEntity | null> {
     return this.model.findOne({ login: data }).lean();
+  }
+
+  async getByOidcId(data: string): Promise<IUserEntity | null> {
+    return this.model.findOne({ oidcId: data }).lean();
   }
 
   async remove(id: string): Promise<void> {

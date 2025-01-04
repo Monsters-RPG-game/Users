@@ -1,6 +1,5 @@
 import Log from 'simpleLogger';
 import * as enums from '../enums/index.js';
-import LoginAttemptController from '../modules/loginAttempt/controller.js';
 import ProfileController from '../modules/profile/controller.js';
 import UsersController from '../modules/users/controller.js';
 import type * as types from '../types/index.js';
@@ -41,7 +40,6 @@ export default class Bootstrap {
 
     this.register(enums.EControllers.Users, new UsersController());
     this.register(enums.EControllers.Profile, new ProfileController());
-    this.register(enums.EControllers.LoginAttempt, new LoginAttemptController());
   }
 
   /**

@@ -3,7 +3,7 @@ export enum EUserTargets {
   Login = 'login',
   GetName = 'getName',
   DebugGetAll = 'debugGetAll',
-  LoginTry = 'loginTry',
+  RemoveAccount = 'removeAccount',
 }
 
 export enum ESharedTargets {

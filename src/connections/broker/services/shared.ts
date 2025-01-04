@@ -6,18 +6,15 @@ import RegisterUserDto from '../../../modules/users/subModules/register/dto.js';
 import RemoveUserDto from '../../../modules/users/subModules/remove/dto.js';
 import State from '../../../tools/state.js';
 import type { IRegisterDto } from '../../../modules/users/subModules/register/types.js';
-import type { IRemoveUserDto } from '../../../modules/users/subModules/remove/types.js';
 import type { IUserBrokerInfo } from '../../../types/user.js';
 
 export default class SharedService {
-  async removeUser(payload: unknown, user: IUserBrokerInfo): Promise<void> {
+  async removeUser(user: IUserBrokerInfo): Promise<void> {
     const removeUserAction = getController(enums.EControllers.Users, enums.EUserActions.Remove);
     const removeProfileAction = getController(enums.EControllers.Profile, enums.EProfileActions.Remove);
 
-    const { password, id } = new RemoveUserDto(payload as IRemoveUserDto, user.userId as string);
-
-    await removeUserAction.execute(new RemoveUserDto({ password }, id));
-    await removeProfileAction.execute(new RemoveProfileDto({ id }));
+    await removeUserAction.execute(new RemoveUserDto(user.userId as string));
+    await removeProfileAction.execute(new RemoveProfileDto({ id: user.userId as string }));
 
     return State.broker.send(user.tempId, undefined, enums.EMessageTypes.Send);
   }

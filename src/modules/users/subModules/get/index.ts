@@ -13,7 +13,9 @@ export default class GetUserController implements IAbstractSubController<IUserDe
   async execute(data: GetUserDto[]): Promise<IUserDetails[]> {
     const users = await Promise.all(
       data.map(async (u) => {
-        return u.id ? this.repo.get(u.id) : this.repo.getByLogin(u.name as string);
+        if (u.id) return this.repo.get(u.id);
+        if (u.name) return this.repo.getByLogin(u.name);
+        return this.repo.getByOidcId(u.oidcId as string);
       }),
     );
 
@@ -23,8 +25,6 @@ export default class GetUserController implements IAbstractSubController<IUserDe
         return {
           _id: u._id.toString(),
           login: u.login,
-          verified: u.verified,
-          type: u.type,
         };
       });
   }

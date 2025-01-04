@@ -27,7 +27,7 @@ describe('Get details', () => {
     describe('Missing data', () => {
       it('Missing data', async () => {
         let error: types.IFullError | null = null
-        const target = new errors.MissingArgError('id')
+        const target = new errors.MissingArgError('name')
         const clone = structuredClone(getUserDto);
         delete clone.name;
         delete clone.id;
@@ -86,9 +86,7 @@ describe('Get details', () => {
       await db.user
         ._id(fakeUser._id as string)
         .login(fakeUser.login)
-        .password(fakeUser.password)
-        .email(fakeUser.email)
-        .verified(fakeUser.verified)
+        .oidcId(fakeUser.oidcId)
         .create();
 
       const [user] = await controller.execute([new GetUserDto(getUserDto)]);

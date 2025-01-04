@@ -26,27 +26,25 @@ export default class Handler {
     return this._sharedServices;
   }
 
-  async profileMessage(payload: types.IRabbitMessage): Promise<void> {
-    switch (payload.subTarget) {
+  async profileMessage(message: types.IRabbitMessage): Promise<void> {
+    switch (message.subTarget) {
       case enums.EProfileTargets.Get:
-        return this.profileServices.get(payload.payload, payload.user);
+        return this.profileServices.get(message.payload, message.user);
       default:
         throw new errors.IncorrectTargetError();
     }
   }
 
-  async userMessage(payload: types.IRabbitMessage): Promise<void> {
-    switch (payload.subTarget) {
-      case enums.EUserTargets.Login:
-        return this.userServices.login(payload.payload, payload.user);
+  async userMessage(message: types.IRabbitMessage): Promise<void> {
+    switch (message.subTarget) {
       case enums.EUserTargets.Register:
-        return this.sharedServices.register(payload.payload, payload.user);
+        return this.sharedServices.register(message.payload, message.user);
       case enums.EUserTargets.GetName:
-        return this.userServices.getDetails(payload.payload, payload.user);
+        return this.userServices.getDetails(message.payload, message.user);
       case enums.EUserTargets.DebugGetAll:
-        return this.userServices.getAll(payload.payload, payload.user);
+        return this.userServices.getAll(message.payload, message.user);
       case enums.ESharedTargets.RemoveUser:
-        return this.sharedServices.removeUser(payload.payload, payload.user);
+        return this.sharedServices.removeUser(message.user);
       default:
         throw new errors.IncorrectTargetError();
     }
