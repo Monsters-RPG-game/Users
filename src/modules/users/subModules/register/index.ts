@@ -1,3 +1,4 @@
+import Log from 'simpleLogger';
 import * as errors from '../../../../errors/index.js';
 import type RegisterUserDto from './dto.js';
 import type { IAbstractSubController } from '../../../../types/index.js';
@@ -14,7 +15,13 @@ export default class RegisterUserController implements IAbstractSubController<st
     const { login } = data;
     const byLogin = await this.repo.getByLogin(login);
 
-    if (byLogin) throw new errors.UsernameAlreadyInUseError();
+    if (byLogin) {
+      Log.error(
+        'Register',
+        'Got error that user is already registered using the same username. Either username was somehow faked, or Authorizations service bugged out. THIS IS CRITICAL!',
+      );
+      throw new errors.InternalError();
+    }
 
     return this.repo.add(data);
   }

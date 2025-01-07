@@ -1,6 +1,6 @@
 {
   "name": "users",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Part of microservice application, which manages user requests",
   "productName": "Users",
   "author": "https://github.com/Virus288",

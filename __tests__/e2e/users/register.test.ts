@@ -43,28 +43,6 @@ describe('Register', () => {
           expect(error?.name).toEqual(target.name);
       });
     });
-
-    describe('Incorrect data', () => {
-      it('Already registered', async () => {
-        let error: types.IFullError | null = null
-        const target = new errors.UsernameAlreadyInUseError()
-
-        await db.user
-          .login(registerDto.login)
-          .oidcId(registerDto.oidcId)
-          .create();
-
-        try {
-          await controller.execute(new RegisterUserDto(registerDto))
-        } catch (err) {
-          error = err as types.IFullError
-        }
-
-          expect(error?.message).toEqual(target.message);
-          expect(error?.code).toEqual(target.code);
-          expect(error?.name).toEqual(target.name);
-      });
-    });
   });
 
   describe('Should pass', () => {
