@@ -199,6 +199,13 @@ This application has multiple tests written in jest. In addition to that, you ca
 
 Additional docs can be found in `docs` folder 
 
+### 4.9 Errors
+
+If you are planning on adding custom errors, please double check their codes. Each service has specific codes for errors. In case of this service:
+
+- 1-99 - Generic errors
+- 200 - 299 - Errors specific to this service
+
 ## 5. Style
 
 This application uses my personal eslint settings. They are EXTREMELY strict and will force you to write specific type of code with unified style across whole project. This is `MY` config. You may not like it so please, modify it to your heart desire.
