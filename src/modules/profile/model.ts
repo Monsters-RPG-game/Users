@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { EDbCollections } from '../../enums/index.js';
 import type { IProfile } from './types.js';
 
 export const profileSchema = new mongoose.Schema({
@@ -14,5 +15,5 @@ export const profileSchema = new mongoose.Schema({
   },
 });
 
-const Profile = mongoose.model<IProfile>('Profile', profileSchema);
+const Profile = mongoose.model<IProfile>('Profile', profileSchema, EDbCollections.Profiles);
 export default Profile;

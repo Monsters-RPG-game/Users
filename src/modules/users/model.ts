@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { EDbCollections } from '../../enums/index.js';
 import type { IUser } from './types.js';
 
 export const userSchema = new mongoose.Schema({
@@ -12,5 +13,5 @@ export const userSchema = new mongoose.Schema({
   },
 });
 
-const User = mongoose.model<IUser>('User', userSchema);
+const User = mongoose.model<IUser>('User', userSchema, EDbCollections.Users);
 export default User;

@@ -49,9 +49,7 @@ export default abstract class TemplateFactory<T extends EFakeData> {
     this.states = [];
   }
 
-  protected fillState(): void {
-    // abstract
-  }
+  protected abstract fillState(): void
 
   private clean(): void {
     Object.entries(this.data).forEach((e) => {
