@@ -1,4 +1,4 @@
 {
-  "amqpURI": "amqp://user:password@address:port",
-  "mongoURI": "mongodb://user:password@address:port",
+  "amqpURL": "amqp://user:password@address:port",
+  "mongoURL": "mongodb://user:password@address:port",
 }

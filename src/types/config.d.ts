@@ -1,4 +1,4 @@
 export interface IConfigInterface {
-  amqpURI: string;
-  mongoURI: string;
+  amqpURL: string;
+  mongoURL: string;
 }

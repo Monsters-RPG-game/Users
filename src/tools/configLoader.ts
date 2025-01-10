@@ -7,7 +7,7 @@ import fs from 'fs';
  * @returns {void} Void.
  */
 const preValidate = (config: types.IConfigInterface): void => {
-  const configKeys = ['mongoURI', 'amqpURI'];
+  const configKeys = ['mongoURL', 'amqpURL'];
   configKeys.forEach((k) => {
     if (config[k as keyof types.IConfigInterface] === undefined || config[k as keyof types.IConfigInterface] === null)
       throw new Error(`Config is incorrect. ${k} is missing in config or is set to undefined`);
