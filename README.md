@@ -138,14 +138,14 @@ TestConfig will be used, if you run your application on dev servers. This config
 Each config includes few elements:
 ```json
 {
-  "mongoURI": "mongodb://user:password@adress:port",
-  "amqpURI": "amqp://user:password@adress:port"
+  "mongoURL": "mongodb://user:password@adress:port",
+  "amqpURL": "amqp://user:password@adress:port"
 }
 ```
 
-mongoURI is address for mongoDB
+mongoURL is address for mongoDB
 
-amqpURI is address for rabbitMQ
+amqpURL is address for rabbitMQ
 
 ## 4. Docs
 
