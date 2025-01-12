@@ -28,12 +28,12 @@
     {
       "_id": "63e55edbe8a800060941126d",
       "login": "Jack",
-      "_id": "63e55edbe8a800060941126d"
+      "oidcId": "63e55edbe8a800060941126d"
     },
     {
       "_id": "63e55edbe8a800060941127d",
       "login": "Mary",
-      "_id": "63e55edbe8a800060941127d"
+      "oidcId": "63e55edbe8a800060941127d"
     }
   ],
   "profiles": [

@@ -1,8 +1,9 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import Log from 'simpleLogger';
+import FakeData from '../../../__tests__/utils/fakeData.json' with { type: 'json' };
 import { EFakeData } from '../../../__tests__/utils/fakeFactory/enums/index.js';
-import { fakeData, FakeFactory } from '../../../__tests__/utils/index.js';
+import { FakeFactory } from '../../../__tests__/utils/index.js';
 import type { IFakeState } from '../../../__tests__/utils/fakeFactory/types/data.js';
 import type { IProfileEntity } from '../../modules/profile/entity.js';
 import type { IUserEntity } from '../../modules/users/entity.js';
@@ -17,7 +18,6 @@ export default class Mock {
   private get fakeFactory(): FakeFactory {
     return this._fakeFactory!;
   }
-
   async init(): Promise<void> {
     const server = await MongoMemoryServer.create();
     await mongoose.connect(server.getUri());
@@ -27,8 +27,8 @@ export default class Mock {
   }
 
   private async fulfillDatabase(): Promise<void> {
-    const users = fakeData.users as IUserEntity[];
-    const profiles = fakeData.profiles as IProfileEntity[];
+    const users = FakeData.users as IUserEntity[];
+    const profiles = FakeData.profiles as IProfileEntity[];
 
     await this.fillData(EFakeData.User, users);
 
