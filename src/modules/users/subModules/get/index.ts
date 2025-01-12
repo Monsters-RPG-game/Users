@@ -1,3 +1,4 @@
+import GetUserEntity from './entity.js';
 import type GetUserDto from './dto.js';
 import type { IAbstractSubController } from '../../../../types/index.js';
 import type { IUserDetails, IUserEntity } from '../../entity.js';
@@ -19,13 +20,6 @@ export default class GetUserController implements IAbstractSubController<IUserDe
       }),
     );
 
-    return users
-      .filter((u): u is IUserEntity => u !== null)
-      .map((u) => {
-        return {
-          _id: u._id.toString(),
-          login: u.login,
-        };
-      });
+    return users.filter((u): u is IUserEntity => u !== null).map((u) => new GetUserEntity(u as IUserDetails));
   }
 }

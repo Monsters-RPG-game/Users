@@ -1,3 +1,4 @@
+import GetProfileEntity from './entity.js';
 import type GetProfileDto from './dto.js';
 import type { IAbstractSubController } from '../../../../types/index.js';
 import type { IProfileEntity } from '../../entity.js';
@@ -15,6 +16,7 @@ export default class GetProfileController implements IAbstractSubController<IPro
   private accessor repo: ProfileRepository;
 
   async execute(data: GetProfileDto): Promise<IProfileEntity | null> {
-    return this.repo.getByUser(data.id);
+    const response = await this.repo.getByUser(data.id);
+    return response ? new GetProfileEntity(response) : null;
   }
 }

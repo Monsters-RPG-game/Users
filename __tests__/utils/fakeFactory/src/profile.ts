@@ -20,10 +20,16 @@ export default class FakeProfile extends TemplateFactory<EFakeData.Profile> impl
     return this;
   }
 
+  initialized(initialized?: boolean): this {
+    this.data.initialized = initialized;
+    return this;
+  }
+
   protected override fillState(): void {
     this.data = {
       _id: undefined,
       user: undefined,
+      initialized: false
     };
   }
 }

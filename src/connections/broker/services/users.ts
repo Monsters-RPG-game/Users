@@ -5,7 +5,7 @@ import GetAllUsersDto from '../../../modules/users/subModules/getAll/dto.js';
 import RegisterUserDto from '../../../modules/users/subModules/register/dto.js';
 import RemoveUserDto from '../../../modules/users/subModules/remove/dto.js';
 import State from '../../../tools/state.js';
-import type { IGetUserDto } from '../../../modules/users/subModules/get/types';
+import type { IGetUserDto } from '../../../modules/users/subModules/get/types.js';
 import type { IGetAllUsersDto } from '../../../modules/users/subModules/getAll/types.js';
 import type { IRegisterDto } from '../../../modules/users/subModules/register/types.js';
 import type { IUserBrokerInfo } from '../../../types/index.js';

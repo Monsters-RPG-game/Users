@@ -9,7 +9,7 @@ export const userSchema = new mongoose.Schema({
   },
   oidcId: {
     type: String,
-    required: [true, 'User not provided'],
+    required: [true, 'Oidc not provided'],
   },
 });
 

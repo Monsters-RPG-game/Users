@@ -1,5 +1,5 @@
 import Connection from './connections.js';
-import fakeData from './fakeData.json';
+import fakeData from './fakeData.json' with { type: "json" };
 import FakeFactory from './fakeFactory/src/index.js';
 
 const generateRandomName = (): string => {
