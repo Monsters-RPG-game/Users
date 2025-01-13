@@ -15,7 +15,7 @@ const config: JestConfigWithTsJest = {
   testTimeout: 10000,
   passWithNoTests: true,
   moduleNameMapper: {
-    '^simpleLogger$': '<rootDir>/node_modules/simpleLogger/lib/index.js',
+    '^simpl-loggar$': '<rootDir>/node_modules/simpl-loggar/lib/index.js',
     '^(\\.{1,2}/.*)\\.js$': '$1',
   },
   transform: {

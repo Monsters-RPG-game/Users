@@ -1,4 +1,4 @@
-import Log from 'simpleLogger';
+import Log from 'simpl-loggar';
 import * as errors from '../../../../errors/index.js';
 import type RegisterUserDto from './dto.js';
 import type { IAbstractSubController } from '../../../../types/index.js';

@@ -1,4 +1,4 @@
-import Log from 'simpleLogger';
+import Log from 'simpl-loggar';
 import * as enums from '../enums/index.js';
 import ProfileController from '../modules/profile/controller.js';
 import UsersController from '../modules/users/controller.js';
