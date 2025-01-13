@@ -1,6 +1,6 @@
 {
   "name": "users",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Part of microservice application, which manages user requests",
   "productName": "Users",
   "author": "https://github.com/Virus288",
@@ -26,7 +26,7 @@
     "amqplib": "0.10.5",
     "bcrypt": "5.1.1",
     "mongoose": "8.9.2",
-    "simpleLogger": "github:Virus288/SimpleLogger"
+    "simpl-loggar": "^0.5.3"
   },
   "devDependencies": {
     "@eslint/compat": "^1.2.2",

@@ -1,6 +1,6 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
-import Log from 'simpleLogger';
+import Log from 'simpl-loggar';
 
 export default class Connection {
   async connect(): Promise<void> {

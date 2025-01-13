@@ -1,5 +1,5 @@
 import amqplib from 'amqplib';
-import Log from 'simpleLogger';
+import Log from 'simpl-loggar';
 import Router from './router.js';
 import * as enums from '../../enums/index.js';
 import { NotConnectedError } from '../../errors/index.js';

@@ -18,8 +18,8 @@ export default class GetUserDto implements IGetUserDto {
   private validate(): void {
     if (!this.name && !this.id && !this.oidcId) throw new MissingArgError('name');
 
-    if (this.name) new Validation(this.name, 'name').isDefined().isString();
-    if (this.id) new Validation(this.id, 'id').isDefined().isString().isObjectId();
-    if (this.oidcId) new Validation(this.oidcId, 'oidcId').isDefined().isString().isObjectId();
+    if (this.name !== undefined) new Validation(this.name, 'name').isDefined().isString();
+    if (this.id !== undefined) new Validation(this.id, 'id').isDefined().isString().isObjectId();
+    if (this.oidcId !== undefined) new Validation(this.oidcId, 'oidcId').isDefined().isString().isObjectId();
   }
 }
