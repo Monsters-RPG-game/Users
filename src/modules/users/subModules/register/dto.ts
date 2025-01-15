@@ -14,6 +14,6 @@ export default class RegisterUserDto implements IRegisterDto {
 
   validate(): void {
     new Validation(this.login, 'login').isDefined().isString().hasMinLength(1);
-    new Validation(this.oidcId, 'oidcId').isDefined().isString().hasMinLength(1);
+    new Validation(this.oidcId, 'oidcId').isDefined().isString().hasMinLength(1).isObjectId();
   }
 }
