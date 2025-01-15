@@ -11,7 +11,7 @@ import UserModel from '../../../src/modules/users/model.js';
 import RegisterUserDto from '../../../src/modules/users/subModules/register/dto.js';
 import GetUserDto from '../../../src/modules/users/subModules/get/dto.js';
 
-describe('Register', () => {
+describe('User - register', () => {
   const db = new utils.FakeFactory();
   const registerDto = utils.fakeData.users[3] as IRegisterDto;
   const repo = new UserRepository(UserModel)

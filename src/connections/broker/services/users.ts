@@ -34,6 +34,6 @@ export default class UserService {
   async remove(id: string): Promise<void> {
     const removeAccountAction = getController(enums.EControllers.Users, enums.EUserActions.Remove);
 
-    await removeAccountAction.execute(new RemoveUserDto(id));
+    await removeAccountAction.execute(new RemoveUserDto({ userId: id }));
   }
 }

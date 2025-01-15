@@ -13,7 +13,7 @@ export default class SharedService {
     const removeUserAction = getController(enums.EControllers.Users, enums.EUserActions.Remove);
     const removeProfileAction = getController(enums.EControllers.Profile, enums.EProfileActions.Remove);
 
-    await removeUserAction.execute(new RemoveUserDto(user.userId as string));
+    await removeUserAction.execute(new RemoveUserDto({ userId: user.userId as string }));
     await removeProfileAction.execute(new RemoveProfileDto({ id: user.userId as string }));
 
     return State.broker.send(user.tempId, undefined, enums.EMessageTypes.Send);

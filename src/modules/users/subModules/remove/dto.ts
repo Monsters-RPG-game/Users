@@ -4,8 +4,8 @@ import type { IRemoveUserDto } from './types.js';
 export default class RemoveUserDto implements IRemoveUserDto {
   userId: string;
 
-  constructor(userId: string) {
-    this.userId = userId;
+  constructor(data: IRemoveUserDto) {
+    this.userId = data.userId;
 
     this.validate();
   }

@@ -9,7 +9,7 @@ import UserRepository from '../../../src/modules/users/repository/index.js';
 import UserModel from '../../../src/modules/users/model.js';
 import GetUserDto from '../../../src/modules/users/subModules/get/dto.js';
 
-describe('Get details', () => {
+describe('User - get details', () => {
   const db = new utils.FakeFactory();
   const fakeUser = utils.fakeData.users[0] as IUserEntity;
   const getUserDto: IGetUserDto = {
