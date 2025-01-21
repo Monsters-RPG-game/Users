@@ -12,4 +12,4 @@ buildDocker:
 	docker build -t monsters/monsters-users .
 
 buildTestDocker:
-	docker build --build-arg NODE_ENV=testDev -t monsters/monsters-users-test .
+	docker build --build-arg NODE_ENV=development -t monsters/monsters-users-test .
