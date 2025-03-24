@@ -26,7 +26,7 @@
     "amqplib": "0.10.5",
     "bcrypt": "5.1.1",
     "mongoose": "8.10.2",
-    "simpl-loggar": "0.5.5"
+    "simpl-loggar": "0.7.0"
   },
   "devDependencies": {
     "@eslint/compat": "^1.2.2",
