@@ -5,7 +5,6 @@ import GetController from '../../../src/modules/profile/subModules/get/index.js'
 import * as utils from '../../utils/index.js';
 import type { IGetProfileDto } from '../../../src/modules/profile/subModules/get/types.js';
 import type * as types from '../../../src/types';
-import ProfileModel from '../../../src/modules/profile/model.js';
 import ProfileRepository from '../../../src/modules/profile/repository/index.js';
 import GetProfileDto from '../../../src/modules/profile/subModules/get/dto.js';
 
@@ -19,7 +18,7 @@ describe('Profile', () => {
     userId: new mongoose.Types.ObjectId().toString(),
     tempId: 'tempId',
   };
-  const profileRepo = new ProfileRepository(ProfileModel)
+  const profileRepo = ProfileRepository.createInstance()
   const getController = new GetController(profileRepo);
 
   afterEach(async () => {

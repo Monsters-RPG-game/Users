@@ -7,14 +7,13 @@ import * as utils from '../../utils/index.js';
 import type { IGetUserDto } from '../../../src/modules/users/subModules/get/types.js';
 import type { IRegisterDto } from '../../../src/modules/users/subModules/register/types.js';
 import UserRepository from '../../../src/modules/users/repository/index.js';
-import UserModel from '../../../src/modules/users/model.js';
 import RegisterUserDto from '../../../src/modules/users/subModules/register/dto.js';
 import GetUserDto from '../../../src/modules/users/subModules/get/dto.js';
 
 describe('User - register', () => {
   const db = new utils.FakeFactory();
   const registerDto = utils.fakeData.users[3] as IRegisterDto;
-  const repo = new UserRepository(UserModel)
+  const repo = UserRepository.createInstance()
   const controller = new Controller(repo);
   const getUserDto: IGetUserDto = {
     name: registerDto.login,

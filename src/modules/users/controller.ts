@@ -1,4 +1,3 @@
-import UserModel from './model.js';
 import UserRepository from './repository/index.js';
 import * as enums from '../../enums/index.js';
 import GetController from './subModules/get/index.js';
@@ -13,7 +12,7 @@ export default class UserController extends AbstractController<enums.EController
    * @returns Void.
    */
   protected init(): void {
-    const userRepo = new UserRepository(UserModel);
+    const userRepo = UserRepository.createInstance();
 
     this.register(enums.EUserActions.Get, new GetController(userRepo));
     this.register(enums.EUserActions.GetAll, new GetAllUsersController(userRepo));

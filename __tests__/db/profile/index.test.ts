@@ -4,7 +4,6 @@ import Repository from '../../../src/modules/profile/repository/index.js';
 import * as utils from '../../utils/index.js';
 import FakeFactory from '../../utils/fakeFactory/src/index.js';
 import type { IRegisterDto } from '../../../src/modules/users/subModules/register/types.js';
-import ProfileModel from '../../../src/modules/profile/model.js';
 
 describe('Profile', () => {
   const connection = new utils.Connection();
@@ -25,7 +24,7 @@ describe('Profile', () => {
 
   describe('Should throw', () => {
     it('No data in database', async () => {
-      const repository = new Repository(ProfileModel);
+      const repository = Repository.createInstance();
       const profile = await repository.get(new mongoose.Types.ObjectId().toString());
 
       expect(profile).toEqual(null);
@@ -41,7 +40,7 @@ describe('Profile', () => {
         .user(oidcId.toString())
         .create();
 
-      const repository = new Repository(ProfileModel);
+      const repository = Repository.createInstance();
       const profile = await repository.get(new mongoose.Types.ObjectId().toString());
       expect(profile).toEqual(null);
     });
@@ -57,7 +56,7 @@ describe('Profile', () => {
         .user(oidcId.toString())
         .create();
 
-      const repository = new Repository(ProfileModel);
+      const repository = Repository.createInstance();
       const profile = await repository.getByUser(oidcId.toString());
       const { user } = profile!;
 

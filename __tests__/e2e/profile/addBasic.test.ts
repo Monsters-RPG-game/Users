@@ -4,7 +4,6 @@ import AddController from '../../../src/modules/profile/subModules/addBasic/inde
 import * as utils from '../../utils/index.js';
 import type { IAddBasicProfileDto } from '../../../src/modules/profile/subModules/addBasic/types.js';
 import type * as types from '../../../src/types';
-import ProfileModel from '../../../src/modules/profile/model.js';
 import ProfileRepository from '../../../src/modules/profile/repository/index.js';
 import AddBasicProfileDto from '../../../src/modules/profile/subModules/addBasic/dto.js';
 import FakeData from '../../utils/fakeData.json';
@@ -14,7 +13,7 @@ describe('Profile - add basic', () => {
    const addProfileDto: IAddBasicProfileDto = {
     user: FakeData.users[0]!._id,
   };
-  const profileRepo = new ProfileRepository(ProfileModel)
+  const profileRepo = ProfileRepository.createInstance()
   const addController = new AddController(profileRepo);
 
   afterEach(async () => {
