@@ -2,14 +2,14 @@ import GetUserEntity from './entity.js';
 import type GetUserDto from './dto.js';
 import type { IAbstractSubController } from '../../../../types/index.js';
 import type { IUserDetails, IUserEntity } from '../../entity.js';
-import type UserRepository from '../../repository/index.js';
+import type { IUserRepository } from '../../repository/types.js';
 
 export default class GetUserController implements IAbstractSubController<IUserDetails[]> {
-  constructor(repo: UserRepository) {
+  constructor(repo: IUserRepository) {
     this.repo = repo;
   }
 
-  private accessor repo: UserRepository;
+  private accessor repo: IUserRepository;
 
   async execute(data: GetUserDto[]): Promise<IUserDetails[]> {
     const users = await Promise.all(

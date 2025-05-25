@@ -6,7 +6,6 @@ import * as utils from '../../utils/index.js';
 import type { IUserEntity } from '../../../src/modules/users/entity.js';
 import type { IGetUserDto } from '../../../src/modules/users/subModules/get/types.js';
 import UserRepository from '../../../src/modules/users/repository/index.js';
-import UserModel from '../../../src/modules/users/model.js';
 import GetUserDto from '../../../src/modules/users/subModules/get/dto.js';
 
 describe('User - get details', () => {
@@ -16,7 +15,7 @@ describe('User - get details', () => {
     id: fakeUser._id as string,
     name: fakeUser.login,
   };
-  const userRepo = new UserRepository(UserModel)
+  const userRepo = UserRepository.createInstance()
   const controller = new Controller(userRepo);
 
   afterEach(async () => {

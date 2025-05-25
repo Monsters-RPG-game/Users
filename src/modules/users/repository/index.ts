@@ -1,32 +1,71 @@
-import AbstractRepository from '../../../tools/abstractions/repository.js';
+import Log from 'simpl-loggar';
+import MongoUserRepository from './logic/mongo.js';
+import { NoRepositoryControllerSpecified } from '../../../errors/index.js';
+import getConfig from '../../../tools/configLoader.js';
+import User from '../model.js';
 import type { IUserRepository } from './types.js';
-import type * as enums from '../../../enums/index.js';
 import type { IUserEntity } from '../entity.js';
-import type User from '../model.js';
-import type { IUser } from '../types.js';
+import type { IRegisterDto } from '../subModules/register/types.js';
+import type mongoose from 'mongoose';
+import type { FilterQuery } from 'mongoose';
 
-export default class UserRepository
-  extends AbstractRepository<IUser, typeof User, enums.EControllers.Users>
-  implements IUserRepository
-{
-  async getAll(page: number): Promise<IUserEntity[]> {
-    return this.model
-      .find()
-      .sort({ createdAt: 1 })
-      .limit(100)
-      .skip((page <= 0 ? 0 : page - 1) * 100)
-      .lean();
+class UserRepository implements IUserRepository {
+  constructor(repository: IUserRepository) {
+    this.repository = repository;
   }
 
-  async getByLogin(data: string): Promise<IUserEntity | null> {
-    return this.model.findOne({ login: data }).lean();
-  }
+  private accessor repository: IUserRepository;
 
-  async getByOidcId(data: string): Promise<IUserEntity | null> {
-    return this.model.findOne({ oidcId: data }).lean();
+  async addDefault(data: Partial<IUserEntity>): Promise<string> {
+    return this.repository.addDefault(data);
   }
 
   async remove(id: string): Promise<void> {
-    await this.model.findOneAndDelete({ _id: id });
+    return this.repository.remove(id);
   }
+
+  async getByOidcId(id: string): Promise<IUserEntity | null> {
+    return this.repository.getByOidcId(id);
+  }
+
+  async getByLogin(login: string): Promise<IUserEntity | null> {
+    return this.repository.getByLogin(login);
+  }
+
+  async getAll(page: number = 1): Promise<IUserEntity[]> {
+    return this.repository.getAll(page);
+  }
+
+  async get(id: string | mongoose.Types.ObjectId): Promise<IUserEntity | null> {
+    return this.repository.get(id);
+  }
+
+  async update(id: string, data: Partial<IUserEntity>): Promise<void> {
+    return this.repository.update(id, data);
+  }
+
+  async add(data: IRegisterDto): Promise<string> {
+    return this.repository.add(data);
+  }
+
+  async count(filter: FilterQuery<Record<string, unknown>>): Promise<number> {
+    return this.repository.count(filter);
+  }
+}
+
+export default class UserFacade {
+  static createInstance(): IUserRepository {
+    const repositoryTarget = getConfig().repository;
+
+    switch (repositoryTarget) {
+      case 'mongo':
+        UserFacade.instance = new UserRepository(new MongoUserRepository(User));
+        return UserFacade.instance;
+      default:
+        Log.error('No repository controller specified. Please specify type of controller in config files');
+        throw new NoRepositoryControllerSpecified();
+    }
+  }
+
+  private static accessor instance: IUserRepository | undefined = undefined;
 }

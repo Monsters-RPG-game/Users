@@ -2,14 +2,14 @@ import Log from 'simpl-loggar';
 import * as errors from '../../../../errors/index.js';
 import type RegisterUserDto from './dto.js';
 import type { IAbstractSubController } from '../../../../types/index.js';
-import type UserRepository from '../../repository/index.js';
+import type { IUserRepository } from '../../repository/types.js';
 
 export default class RegisterUserController implements IAbstractSubController<string> {
-  constructor(repo: UserRepository) {
+  constructor(repo: IUserRepository) {
     this.repo = repo;
   }
 
-  private accessor repo: UserRepository;
+  private accessor repo: IUserRepository;
 
   async execute(data: RegisterUserDto): Promise<string> {
     const { login } = data;

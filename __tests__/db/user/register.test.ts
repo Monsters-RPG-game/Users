@@ -2,7 +2,6 @@ import { afterAll, afterEach, beforeAll, describe, expect, it } from '@jest/glob
 import Repository from '../../../src/modules/users/repository/index.js';
 import * as utils from '../../utils/index.js';
 import type { IRegisterDto } from '../../../src/modules/users/subModules/register/types.js';
-import UserModel from '../../../src/modules/users/model.js';
 
 describe('Register', () => {
   const connection = new utils.Connection();
@@ -23,7 +22,7 @@ describe('Register', () => {
 
   describe('Should throw', () => {
     it('No data in database', async () => {
-      const rooster = new Repository(UserModel);
+      const rooster = Repository.createInstance();
       const user = await rooster.getByLogin(registerData.login);
 
       expect(user).toEqual(null);
@@ -35,7 +34,7 @@ describe('Register', () => {
         .oidcId(registerData.oidcId)
         .create();
 
-      const rooster = new Repository(UserModel);
+      const rooster = Repository.createInstance();
       const user = await rooster.getByLogin('a');
 
       expect(user).toEqual(null);
@@ -44,7 +43,7 @@ describe('Register', () => {
 
   describe('Should pass', () => {
     it('Validated', async () => {
-      const rooster = new Repository(UserModel);
+      const rooster = Repository.createInstance();
       await rooster.add(registerData);
       const user = await rooster.getByLogin(registerData.login);
       const { login, oidcId, _id } = user!;

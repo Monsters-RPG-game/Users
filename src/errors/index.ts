@@ -1,4 +1,3 @@
-// eslint-disable-next-line max-classes-per-file
 export class FullError extends Error {
   code = '000';
   status = 500;
@@ -412,6 +411,35 @@ export class UnregisteredControllerError extends FullError {
     super(`Controllers with target ${target} were not registered !`);
     this.name = 'UnregisteredControllerError';
     this.code = '014';
+    this.status = 500;
+  }
+}
+
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     NoRepositoryControllerSpecified:
+ *       type: object
+ *       properties:
+ *         name:
+ *           type: string
+ *           description: Error name describing the error cause.
+ *           example: 'NoRepositoryControllerSpecified'
+ *         code:
+ *           type: string
+ *           description: Unique code associated with the error.
+ *           example: '16'
+ *         message:
+ *           type: string
+ *           description: Error message describing the error cause.
+ *           example: "No repository controller specified"
+ */
+export class NoRepositoryControllerSpecified extends FullError {
+  constructor() {
+    super('No repository controller specified');
+    this.name = 'NoRepositoryControllerSpecified';
+    this.code = '16';
     this.status = 500;
   }
 }

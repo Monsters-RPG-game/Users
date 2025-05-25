@@ -1,4 +1,3 @@
-import ProfileModel from './model.js';
 import ProfileRepository from './repository/index.js';
 import * as enums from '../../enums/index.js';
 import AddBasicProfileController from './subModules/addBasic/index.js';
@@ -12,7 +11,7 @@ export default class ProfileController extends AbstractController<enums.EControl
    * @returns Void.
    */
   protected init(): void {
-    const profileRepo = new ProfileRepository(ProfileModel);
+    const profileRepo = ProfileRepository.createInstance();
 
     this.register(enums.EProfileActions.AddBasic, new AddBasicProfileController(profileRepo));
     this.register(enums.EProfileActions.Get, new GetProfileController(profileRepo));

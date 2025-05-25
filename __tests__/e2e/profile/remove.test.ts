@@ -5,7 +5,6 @@ import RemoveController from '../../../src/modules/profile/subModules/remove/ind
 import * as utils from '../../utils/index.js';
 import type { IRemoveProfileDto } from '../../../src/modules/profile/subModules/remove/types.js';
 import type * as types from '../../../src/types';
-import ProfileModel from '../../../src/modules/profile/model.js';
 import ProfileRepository from '../../../src/modules/profile/repository/index.js';
 import RemoveProfileDto from '../../../src/modules/profile/subModules/remove/dto.js';
 
@@ -19,7 +18,7 @@ describe('Profile - remove', () => {
     userId: new mongoose.Types.ObjectId().toString(),
     tempId: 'tempId',
   };
-  const profileRepo = new ProfileRepository(ProfileModel)
+  const profileRepo = ProfileRepository.createInstance()
   const removeController = new RemoveController(profileRepo);
 
   afterEach(async () => {
