@@ -68,7 +68,7 @@ describe('User - remove', () => {
 
   describe('Should pass', () => {
     it('Validated', async () => {
-      new FakeUser()._id(removeDto.userId).login(utils.fakeData.users[0]!.login).oidcId(utils.fakeData.users[0]!.oidcId).create()
+      await new FakeUser()._id(removeDto.userId).login(utils.fakeData.users[0]!.login).oidcId(utils.fakeData.users[0]!.oidcId).create()
       const getController = new GetController(repo);
 
       await controller.execute(new RemoveUserDto(removeDto));

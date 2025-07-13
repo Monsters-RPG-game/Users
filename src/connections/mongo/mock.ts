@@ -18,12 +18,19 @@ export default class Mock {
   private get fakeFactory(): FakeFactory {
     return this._fakeFactory!;
   }
+
   async init(): Promise<void> {
     const server = await MongoMemoryServer.create();
     await mongoose.connect(server.getUri());
 
     await this.fulfillDatabase();
     Log.log('Mongo', 'Started mock server');
+  }
+
+  disconnect(): void {
+    mongoose.disconnect().catch((err) => {
+      Log.error('Mongo', 'Cannot disconnect', (err as Error).message);
+    });
   }
 
   private async fulfillDatabase(): Promise<void> {
