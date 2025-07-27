@@ -42,14 +42,14 @@ TestConfig will be used, if you run your application on dev servers. This config
 Each config includes few elements:
 ```json
 {
-  "amqpURL": "amqp://user:password@address:port",
-  "mongoURL": "mongodb://user:password@adress:port"
+  "mongoURL": "mongodb://user:password@adress:port",
+  "amqpURL": "amqp://user:password@adress:port"
 }
 ```
 
 mongoURL is address for mongoDB
 
-rabbitURL is address for rabbitMQ
+amqpURL is address for rabbitMQ
 
 ## 3. Preparing data
 

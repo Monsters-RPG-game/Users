@@ -1,5 +1,5 @@
-import Connection from './connections.js';
-import fakeData from './fakeData.json' with { type: "json" };
+import mongoose from 'mongoose';
+import fakeData from './fakeData.json'
 import FakeFactory from './fakeFactory/src/index.js';
 
 const generateRandomName = (): string => {
@@ -11,4 +11,8 @@ const generateRandomName = (): string => {
   return name;
 };
 
-export { fakeData, Connection, FakeFactory, generateRandomName };
+const cleanDb = async (): Promise<void> => {
+  await mongoose.connection.dropDatabase();
+}
+
+export { fakeData, FakeFactory, generateRandomName, cleanDb };
