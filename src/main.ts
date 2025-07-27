@@ -40,7 +40,6 @@ class App {
   private async handleInit(): Promise<void> {
     this.configLogger();
 
-    const mongo = new Mongo();
     const controllers = new Bootstrap();
     const broker = new Broker();
 
@@ -48,7 +47,7 @@ class App {
     State.controllers = controllers;
 
     State.controllers.init();
-    State.mongo = await mongo.create();
+    State.mongo = await Mongo.create();
     await broker.init();
 
     Log.log('Server', 'Server started');
