@@ -1,8 +1,8 @@
 {
   "mongo": {
-    "url": "mongodb://user:password@address:port",
-    "db": "database",
-    "testDb": "database-test"
+    "url": "mongodb://user:password@mongodb:27017",
+    "db": "users",
+    "testDb": "users-test"
   },
   "amqp": {
     "url": "amqp://user:password@address:port",
