@@ -1,7 +1,7 @@
 import Log from 'simpl-loggar';
 import MongoUserRepository from './logic/mongo.js';
 import { NoRepositoryControllerSpecified } from '../../../errors/index.js';
-import getConfig from '../../../tools/configLoader.js';
+import ConfigLoader from '../../../tools/config/index.js';
 import User from '../model.js';
 import type { IUserRepository } from './types.js';
 import type { IUserEntity } from '../entity.js';
@@ -55,7 +55,7 @@ class UserRepository implements IUserRepository {
 
 export default class UserFacade {
   static createInstance(): IUserRepository {
-    const repositoryTarget = getConfig().repository;
+    const repositoryTarget = ConfigLoader.getConfig().repository;
 
     switch (repositoryTarget) {
       case 'mongo':

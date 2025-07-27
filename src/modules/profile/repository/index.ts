@@ -2,7 +2,7 @@ import Log from 'simpl-loggar';
 import Profile from '../model.js';
 import MongoProfileRepository from './logic/mongo.js';
 import { NoRepositoryControllerSpecified } from '../../../errors/index.js';
-import getConfig from '../../../tools/configLoader.js';
+import ConfigLoader from '../../../tools/config/index.js';
 import type { IProfileRepository } from './types.js';
 import type { IProfileEntity } from '../entity.js';
 import type { IAddBasicProfileDto } from '../subModules/addBasic/types.js';
@@ -47,7 +47,7 @@ class ProfileRepository implements IProfileRepository {
 
 export default class ProfileFacade {
   static createInstance(): IProfileRepository {
-    const repositoryTarget = getConfig().repository;
+    const repositoryTarget = ConfigLoader.getConfig().repository;
 
     switch (repositoryTarget) {
       case 'mongo':
