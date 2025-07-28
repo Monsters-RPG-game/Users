@@ -1,4 +1,4 @@
-import { MissingArgError } from '../../../../errors/index.js';
+import { MissingArgError } from '@monsters/validator';
 import Validation from '../../../../tools/validation.js';
 import type { IGetUserDto } from './types.js';
 

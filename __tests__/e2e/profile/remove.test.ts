@@ -1,12 +1,12 @@
 import { afterEach, describe, expect, it } from '@jest/globals';
 import mongoose from 'mongoose';
-import * as errors from '../../../src/errors/index.js';
 import RemoveController from '../../../src/modules/profile/subModules/remove/index.js';
 import * as utils from '../../utils/index.js';
 import type { IRemoveProfileDto } from '../../../src/modules/profile/subModules/remove/types.js';
 import type * as types from '../../../src/types';
 import ProfileRepository from '../../../src/modules/profile/repository/index.js';
 import RemoveProfileDto from '../../../src/modules/profile/subModules/remove/dto.js';
+import { IncorrectArgTypeError, MissingArgError } from '@monsters/validator';
 
 describe('Profile - remove', () => {
   const db = new utils.FakeFactory();
@@ -29,7 +29,7 @@ describe('Profile - remove', () => {
     describe('No data passed', () => {
       it('Missing userId', async () => {
          let error: types.IFullError | null = null
-        const target = new errors.MissingArgError('id')
+        const target = new MissingArgError('id')
         const clone = structuredClone(removeProfileDto);
         clone.id = undefined!;
 
@@ -48,7 +48,7 @@ describe('Profile - remove', () => {
     describe('Incorrect data', () => {
       it('Incorrect userId', async () => {
          let error: types.IFullError | null = null
-        const target = new errors.IncorrectArgTypeError('id should be objectId')
+        const target = new IncorrectArgTypeError('id should be objectId')
         const clone = structuredClone(removeProfileDto);
         clone.id = 'asd';
 

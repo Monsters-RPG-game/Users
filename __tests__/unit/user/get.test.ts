@@ -1,9 +1,9 @@
 import { describe, expect, it } from '@jest/globals';
 import type { IFullError } from '../../../src/types/index.js'
-import * as errors from '../../../src/errors/index.js';
 import GetUserDto from '../../../src/modules/users/subModules/get/dto.js';
 import { generateRandomName } from '../../utils/index.js';
 import type { IGetUserDto } from '../../../src/modules/users/subModules/get/types.js';
+import { IncorrectArgTypeError, MissingArgError } from '@monsters/validator';
 import mongoose from 'mongoose';
 
 describe('User - get', () => {
@@ -17,7 +17,7 @@ describe('User - get', () => {
     describe('No data passed', () => {
          it(`No data provided`, () => {
           let error: IFullError | undefined = undefined
-          const target = new errors.MissingArgError('name')
+          const target = new MissingArgError('name')
           const clone = structuredClone(register);
           delete clone.name;
           delete clone.id
@@ -36,7 +36,7 @@ describe('User - get', () => {
 
     describe('Incorrect params', () => {
       it(`Incorrect name`, () => {
-        const target = new errors.IncorrectArgTypeError('name should be a string')
+        const target = new IncorrectArgTypeError('name should be a string')
         let error: IFullError | undefined = undefined
         const clone = structuredClone(register);
         clone.name = 123 as unknown as string
@@ -52,7 +52,7 @@ describe('User - get', () => {
       });
 
       it(`Incorrect oidcId`, () => {
-        const target = new errors.IncorrectArgTypeError('oidcId should be a string')
+        const target = new IncorrectArgTypeError('oidcId should be a string')
         let error: IFullError | undefined = undefined
         const clone = structuredClone(register);
         clone.oidcId = 123 as unknown as string
@@ -68,7 +68,7 @@ describe('User - get', () => {
       });
 
       it(`Incorrect id`, () => {
-        const target = new errors.IncorrectArgTypeError('id should be a string')
+        const target = new IncorrectArgTypeError('id should be a string')
         let error: IFullError | undefined = undefined
         const clone = structuredClone(register);
         clone.id = 123 as unknown as string
@@ -84,7 +84,7 @@ describe('User - get', () => {
       });
 
       it(`OidcId is too short`, () => {
-        const target = new errors.IncorrectArgTypeError('oidcId should be objectId')
+        const target = new IncorrectArgTypeError('oidcId should be objectId')
         let error: IFullError | undefined = undefined
         const clone = structuredClone(register);
         clone.oidcId = '1'
@@ -100,7 +100,7 @@ describe('User - get', () => {
       });
 
       it(`Id is too short`, () => {
-        const target = new errors.IncorrectArgTypeError('id should be objectId')
+        const target = new IncorrectArgTypeError('id should be objectId')
         let error: IFullError | undefined = undefined
         const clone = structuredClone(register);
         clone.id = '1'

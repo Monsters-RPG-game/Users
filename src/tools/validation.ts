@@ -1,6 +1,5 @@
-import RawValidation from '@monsters/validator';
+import RawValidation, { IncorrectArgTypeError } from '@monsters/validator';
 import mongoose from 'mongoose';
-import * as errors from '../errors/index.js';
 
 export default class Validation extends RawValidation {
   /**
@@ -12,7 +11,7 @@ export default class Validation extends RawValidation {
     const value = v as string;
 
     if (!mongoose.Types.ObjectId.isValid(value)) {
-      throw new errors.IncorrectArgTypeError(`${name} should be objectId`);
+      throw new IncorrectArgTypeError(`${name} should be objectId`);
     }
 
     return this;
@@ -26,12 +25,12 @@ export default class Validation extends RawValidation {
     const { v, name } = this;
     const value = v as string[];
 
-    if (!Array.isArray(value)) throw new errors.IncorrectArgTypeError(`${name} should be array`);
+    if (!Array.isArray(value)) throw new IncorrectArgTypeError(`${name} should be array`);
     if (value.length === 0) return this;
 
     value.forEach((e) => {
       if (!mongoose.Types.ObjectId.isValid(e))
-        throw new errors.IncorrectArgTypeError(`${name}.${e} should be objectId`);
+        throw new IncorrectArgTypeError(`${name}.${e} should be objectId`);
     });
 
     return this;

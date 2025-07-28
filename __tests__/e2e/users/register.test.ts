@@ -1,6 +1,5 @@
 import { afterEach, describe, expect, it } from '@jest/globals';
 import type * as types from '../../../src/types/index.js'
-import * as errors from '../../../src/errors/index.js';
 import GetController from '../../../src/modules/users/subModules/get/index.js';
 import Controller from '../../../src/modules/users/subModules/register/index.js';
 import * as utils from '../../utils/index.js';
@@ -9,6 +8,7 @@ import type { IRegisterDto } from '../../../src/modules/users/subModules/registe
 import UserRepository from '../../../src/modules/users/repository/index.js';
 import RegisterUserDto from '../../../src/modules/users/subModules/register/dto.js';
 import GetUserDto from '../../../src/modules/users/subModules/get/dto.js';
+import { MissingArgError } from '@monsters/validator';
 
 describe('User - register', () => {
   const db = new utils.FakeFactory();
@@ -27,7 +27,7 @@ describe('User - register', () => {
     describe('No data passed', () => {
       it('Missing login', async () => {
         let error: types.IFullError | null = null
-        const target = new errors.MissingArgError('login')
+        const target = new MissingArgError('login')
         const clone = structuredClone(registerDto);
         clone.login = undefined!;
 
