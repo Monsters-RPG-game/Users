@@ -1,6 +1,5 @@
 import { afterEach, describe, expect, it } from '@jest/globals';
 import type * as types from '../../../src/types/index.js'
-import * as errors from '../../../src/errors/index.js';
 import GetController from '../../../src/modules/users/subModules/get/index.js';
 import Controller from '../../../src/modules/users/subModules/remove/index.js';
 import * as utils from '../../utils/index.js';
@@ -10,6 +9,7 @@ import GetUserDto from '../../../src/modules/users/subModules/get/dto.js';
 import { IRemoveUserDto } from '../../../src/modules/users/subModules/remove/types.js';
 import RemoveUserDto from '../../../src/modules/users/subModules/remove/dto.js';
 import FakeUser from '../../utils/fakeFactory/src/user.js';
+import { IncorrectArgTypeError, MissingArgError } from '@monsters/validator';
 
 describe('User - remove', () => {
   const db = new utils.FakeFactory();
@@ -30,7 +30,7 @@ describe('User - remove', () => {
     describe('No data passed', () => {
       it('Missing id', async () => {
         let error: types.IFullError | null = null
-        const target = new errors.MissingArgError('userId')
+        const target = new MissingArgError('userId')
         const clone = structuredClone(removeDto);
         clone.userId = undefined!;
 
@@ -49,7 +49,7 @@ describe('User - remove', () => {
     describe('Incorrect params', () => {
       it('Id is not objectId', async () => {
         let error: types.IFullError | null = null
-        const target = new errors.IncorrectArgTypeError('userId should be objectId')
+        const target = new IncorrectArgTypeError('userId should be objectId')
         const clone = structuredClone(removeDto);
         clone.userId = 'asd';
 

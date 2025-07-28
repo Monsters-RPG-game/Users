@@ -1,12 +1,12 @@
 import { afterEach, describe, expect, it } from '@jest/globals';
 import type * as types from '../../../src/types/index.js'
-import * as errors from '../../../src/errors/index.js';
 import Controller from '../../../src/modules/users/subModules/get/index.js';
 import * as utils from '../../utils/index.js';
 import type { IUserEntity } from '../../../src/modules/users/entity.js';
 import type { IGetUserDto } from '../../../src/modules/users/subModules/get/types.js';
 import UserRepository from '../../../src/modules/users/repository/index.js';
 import GetUserDto from '../../../src/modules/users/subModules/get/dto.js';
+import { IncorrectArgTypeError, MissingArgError } from '@monsters/validator';
 
 describe('User - get details', () => {
   const db = new utils.FakeFactory();
@@ -26,7 +26,7 @@ describe('User - get details', () => {
     describe('Missing data', () => {
       it('Missing data', async () => {
         let error: types.IFullError | null = null
-        const target = new errors.MissingArgError('name')
+        const target = new MissingArgError('name')
         const clone = structuredClone(getUserDto);
         delete clone.name;
         delete clone.id;
@@ -46,7 +46,7 @@ describe('User - get details', () => {
     describe('Incorrect data', () => {
       it('Id not proper id', async () => {
         let error: types.IFullError | null = null
-        const target = new errors.IncorrectArgTypeError('id should be objectId')
+        const target = new IncorrectArgTypeError('id should be objectId')
         const clone = structuredClone(getUserDto);
         clone.id = 'aa';
 
@@ -63,7 +63,7 @@ describe('User - get details', () => {
 
       it('Name is not typeof string', async () => {
         let error: types.IFullError | null = null
-        const target = new errors.IncorrectArgTypeError('name should be a string')
+        const target = new IncorrectArgTypeError('name should be a string')
         const clone = structuredClone(getUserDto);
         clone.name = 2 as unknown as string;
 
