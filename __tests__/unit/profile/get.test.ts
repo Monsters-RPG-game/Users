@@ -1,9 +1,9 @@
 import { describe, expect, it } from '@jest/globals';
 import mongoose from 'mongoose';
-import * as errors from '../../../src/errors/index.js';
 import GetProfileDto from '../../../src/modules/profile/subModules/get/dto.js';
 import type { IGetProfileDto } from '../../../src/modules/profile/subModules/get/types.js';
 import type { IFullError } from '../../../src/types/index.js'
+import { IncorrectArgTypeError, MissingArgError } from '@monsters/validator';
 
 describe('Profile - get', () => {
   const userId: IGetProfileDto = {
@@ -13,7 +13,7 @@ describe('Profile - get', () => {
   describe('Should throw', () => {
     describe('No data passed', () => {
       it('Missing userId', () => {
-        const target = new errors.MissingArgError('id')
+        const target = new MissingArgError('id')
         let error: IFullError | undefined  = undefined
         const clone = structuredClone(userId);
         clone.id = undefined!;
@@ -31,7 +31,7 @@ describe('Profile - get', () => {
 
     describe('Incorrect data', () => {
       it('Incorrect userId', () => {
-        const target = new errors.IncorrectArgTypeError('id should be objectId')
+        const target = new IncorrectArgTypeError('id should be objectId')
         let error: IFullError | undefined = undefined
         const clone = structuredClone(userId);
         clone.id = 'asd';

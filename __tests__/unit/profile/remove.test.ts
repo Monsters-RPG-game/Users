@@ -1,9 +1,9 @@
 import { describe, expect, it } from '@jest/globals';
 import mongoose from 'mongoose';
 import { IFullError } from '../../../src/types/index.js'
-import * as errors from '../../../src/errors/index.js';
 import RemoveProfileDto from '../../../src/modules/profile/subModules/remove/dto.js';
 import type { IRemoveProfileDto } from '../../../src/modules/profile/subModules/remove/types.js';
+import { IncorrectArgTypeError, MissingArgError } from '@monsters/validator';
 
 describe('Profile - remove', () => {
   const userId: IRemoveProfileDto = {
@@ -13,7 +13,7 @@ describe('Profile - remove', () => {
   describe('Should throw', () => {
     describe('No data passed', () => {
       it('Missing id', () => {
-        const target = new errors.MissingArgError('id')
+        const target = new MissingArgError('id')
         let error: IFullError | undefined = undefined
         const clone = structuredClone(userId);
         clone.id = undefined!;
@@ -31,7 +31,7 @@ describe('Profile - remove', () => {
 
     describe('Incorrect data', () => {
       it('Incorrect userId', () => {
-        const target = new errors.IncorrectArgTypeError('id should be objectId')
+        const target = new IncorrectArgTypeError('id should be objectId')
         let error: IFullError | undefined = undefined
         const clone = structuredClone(userId);
         clone.id = 'asd';

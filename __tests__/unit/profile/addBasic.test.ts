@@ -1,9 +1,9 @@
 import { describe, expect, it } from '@jest/globals';
 import mongoose from 'mongoose';
 import { IFullError } from '../../../src/types/index.js'
-import * as errors from '../../../src/errors/index.js';
 import AddBasicProfileDto from '../../../src/modules/profile/subModules/addBasic/dto.js';
 import type { IAddBasicProfileDto } from '../../../src/modules/profile/subModules/addBasic/types.js';
+import { IncorrectArgTypeError, MissingArgError } from '@monsters/validator';
 
 describe('Profile - add basic', () => {
   const userId: IAddBasicProfileDto = {
@@ -13,7 +13,7 @@ describe('Profile - add basic', () => {
   describe('Should throw', () => {
     describe('No data passed', () => {
       it('Missing user', () => {
-        const target = new errors.MissingArgError('user')
+        const target = new MissingArgError('user')
         let error: IFullError | undefined = undefined
         const clone = structuredClone(userId);
         clone.user = undefined!;
@@ -31,7 +31,7 @@ describe('Profile - add basic', () => {
 
     describe('Incorrect data', () => {
       it('Incorrect userId', () => {
-        const target = new errors.IncorrectArgTypeError('user should be objectId')
+        const target = new IncorrectArgTypeError('user should be objectId')
         let error: IFullError | undefined = undefined
         const clone = structuredClone(userId);
         clone.user = 'asd';

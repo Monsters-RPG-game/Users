@@ -1,5 +1,4 @@
 import { afterEach, describe, expect, it } from '@jest/globals';
-import * as errors from '../../../src/errors/index.js';
 import AddController from '../../../src/modules/profile/subModules/addBasic/index.js';
 import * as utils from '../../utils/index.js';
 import type { IAddBasicProfileDto } from '../../../src/modules/profile/subModules/addBasic/types.js';
@@ -7,6 +6,7 @@ import type * as types from '../../../src/types';
 import ProfileRepository from '../../../src/modules/profile/repository/index.js';
 import AddBasicProfileDto from '../../../src/modules/profile/subModules/addBasic/dto.js';
 import FakeData from '../../utils/fakeData.json';
+import { IncorrectArgTypeError, MissingArgError } from '@monsters/validator';
 
 describe('Profile - add basic', () => {
   const db = new utils.FakeFactory();
@@ -24,7 +24,7 @@ describe('Profile - add basic', () => {
     describe('No data passed', () => {
       it('Missing user', async () => {
          let error: types.IFullError | null = null
-        const target = new errors.MissingArgError('user')
+        const target = new MissingArgError('user')
         const clone = structuredClone(addProfileDto);
         clone.user = undefined!;
 
@@ -43,7 +43,7 @@ describe('Profile - add basic', () => {
     describe('Incorrect data', () => {
       it('Incorrect login', async () => {
          let error: types.IFullError | null = null
-        const target = new errors.IncorrectArgTypeError('user should be a string')
+        const target = new IncorrectArgTypeError('user should be a string')
         const clone = structuredClone(addProfileDto);
         clone.user = 123 as unknown as string;
 
